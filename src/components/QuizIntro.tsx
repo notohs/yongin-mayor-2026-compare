@@ -28,8 +28,9 @@ function QuizIntro({
   quizThemes,
 }: QuizIntroProps) {
   const trimmed = nickname.trim();
-  const canStart = trimmed.length > 0;
   const { policy, verify } = countSteps(candidates, quizThemes);
+  const hasQuestions = policy + verify > 0;
+  const canStart = trimmed.length > 0 && hasQuestions;
 
   const candidateName = (id: number) =>
     candidates.find((candidate) => candidate.id === id)?.name ?? `기호 ${id}`;
@@ -70,7 +71,9 @@ function QuizIntro({
             </button>
           </div>
           <p className={styles.Hint}>
-            결과는 닉네임과 함께 이 브라우저에만 저장되며, 외부로 전송되지 않습니다.
+            {hasQuestions
+              ? '결과는 닉네임과 함께 이 브라우저에만 저장되며, 외부로 전송되지 않습니다.'
+              : '이 선거구는 아직 퀴즈를 만들 공약·검증 자료가 부족합니다. 관리자 콘솔의 “데이터 직접 편집”에서 공약을 채우면 퀴즈가 생성됩니다.'}
           </p>
         </form>
       </div>
