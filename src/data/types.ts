@@ -108,6 +108,19 @@ export interface BulletinData {
   groups: PolicyGroup[];
 }
 
+/**
+ * 선관위 제출 자료 등록 현황 (성실 제출 참고 지표)
+ * 선거공보 / 선거공약서 / 5대공약 — 후보가 등록했는지 여부
+ */
+export interface MaterialSubmission {
+  /** 선거공보 등록 */
+  bulletin: boolean;
+  /** 선거공약서 등록 */
+  pledgeBook: boolean;
+  /** 5대공약 등록 */
+  fivePledges: boolean;
+}
+
 /** 후보자 단일 레코드 */
 export interface Candidate {
   /** 기호 */
@@ -148,6 +161,8 @@ export interface Candidate {
   military: MilitaryRecord;
   /** 재산 */
   assets: AssetRecord;
+  /** 선관위 제출 자료 등록 현황 (성실 제출 지표) */
+  materials: MaterialSubmission;
 }
 
 /** 선거 메타 정보 */

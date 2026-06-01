@@ -1,0 +1,59 @@
+@use '../styles/variables' as *;
+
+.MaterialStatus {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.Item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.Mark {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.Label {
+  color: $color-text;
+  font-weight: 600;
+}
+
+.State {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ok {
+  .Mark {
+    background-color: $color-positive;
+  }
+  .State {
+    color: $color-positive;
+  }
+}
+
+.missing {
+  .Mark {
+    background-color: $color-danger;
+  }
+  .Label {
+    color: $color-danger;
+  }
+  .State {
+    color: $color-danger;
+  }
+}

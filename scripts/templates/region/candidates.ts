@@ -37,6 +37,8 @@ import type { Candidate } from '../../types';
 //     tax: { totalPaid: 0, candidatePaid: 0, currentArrears: 0, hasArrearsRecord: false },
 //     military: { candidate: '병역 사항', completed: true, dependentCompleted: null },
 //     assets: { total: 0, candidate: 0, spouse: 0, breakdown: '' },
+//     // 선관위 자료 제출 현황(성실 제출 지표). 미등록은 false.
+//     materials: { bulletin: true, pledgeBook: true, fivePledges: true },
 //   },
 // ];
 export const candidates: Candidate[] = [];

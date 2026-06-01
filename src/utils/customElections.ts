@@ -5,6 +5,7 @@ import type {
   CriminalRecord,
   Election,
   ElectionMeta,
+  MaterialSubmission,
   MilitaryRecord,
   Pledge,
   PledgeCategory,
@@ -77,6 +78,16 @@ function normMilitary(raw: unknown): MilitaryRecord {
   };
 }
 
+function normMaterials(raw: unknown): MaterialSubmission {
+  const m = (raw ?? {}) as Record<string, unknown>;
+  // 명시가 없으면 제출한 것으로 간주(true), 명시된 경우만 반영
+  return {
+    bulletin: m.bulletin !== false,
+    pledgeBook: m.pledgeBook !== false,
+    fivePledges: m.fivePledges !== false,
+  };
+}
+
 function normAssets(raw: unknown): AssetRecord {
   const a = (raw ?? {}) as Record<string, unknown>;
   return {
@@ -109,6 +120,7 @@ function normCandidate(raw: unknown, index: number): Candidate {
     tax: normTax(c.tax),
     military: normMilitary(c.military),
     assets: normAssets(c.assets),
+    materials: normMaterials(c.materials),
   };
 }
 

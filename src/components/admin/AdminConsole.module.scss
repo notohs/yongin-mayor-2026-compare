@@ -119,6 +119,33 @@
   line-height: 1.5;
 }
 
+.Field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.FieldLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-sub;
+}
+
+.TextInput {
+  font-size: 15px;
+  padding: 11px 14px;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  background-color: $color-surface-muted;
+  color: $color-text;
+
+  &:focus {
+    outline: none;
+    border-color: $color-party-dp;
+    background-color: $color-surface;
+  }
+}
+
 .Upload {
   display: flex;
   flex-direction: column;

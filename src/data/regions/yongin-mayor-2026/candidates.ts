@@ -138,6 +138,7 @@ export const candidates: Candidate[] = [
       spouse: 257339,
       breakdown: '모 95,904 · 장남 21,202 · 차녀 21,332 (천원)',
     },
+    materials: { bulletin: true, pledgeBook: false, fivePledges: true },
   },
   {
     id: 2,
@@ -286,6 +287,7 @@ export const candidates: Candidate[] = [
       spouse: 3572020,
       breakdown: '직계존속(부·모) 고지거부 · 장남 고지거부',
     },
+    materials: { bulletin: true, pledgeBook: true, fivePledges: true },
   },
   {
     id: 4,
@@ -437,5 +439,6 @@ export const candidates: Candidate[] = [
       spouse: 0,
       breakdown: '직계존속(부·모) 고지거부 · 직계비속 0',
     },
+    materials: { bulletin: true, pledgeBook: false, fivePledges: true },
   },
 ];

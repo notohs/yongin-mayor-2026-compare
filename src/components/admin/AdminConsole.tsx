@@ -30,6 +30,7 @@ const NEC_LINKS = [
 
 /** 관리자 콘솔: NEC 자료 링크 → PDF 업로드·추출 → 선거구 초안 → 미리보기·저장 */
 function AdminConsole({ customElections, onChange, onExit }: AdminConsoleProps) {
+  const [regionName, setRegionName] = useState('');
   const [extracts, setExtracts] = useState<PdfExtractResult[]>([]);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState('');
@@ -57,7 +58,7 @@ function AdminConsole({ customElections, onChange, onExit }: AdminConsoleProps) 
   };
 
   const handleBuildDraft = () => {
-    const draft = buildDraftElection(extracts.map((x) => x.text));
+    const draft = buildDraftElection(extracts.map((x) => x.text), regionName);
     setDraftJson(JSON.stringify(draft, null, 2));
     setError('');
   };
@@ -133,7 +134,21 @@ function AdminConsole({ customElections, onChange, onExit }: AdminConsoleProps) 
 
         {/* STEP 2 */}
         <section className={styles.Step}>
-          <h2 className={styles.StepTitle}>2. PDF 업로드 → 자동 추출</h2>
+          <h2 className={styles.StepTitle}>2. 선거구명 입력 & 후보 PDF 일괄 업로드</h2>
+          <label className={styles.Field}>
+            <span className={styles.FieldLabel}>선거구명</span>
+            <input
+              className={styles.TextInput}
+              type="text"
+              value={regionName}
+              placeholder="예: 경기도지사 선거"
+              onChange={(e) => setRegionName(e.target.value)}
+            />
+          </label>
+          <p className={styles.StepDesc}>
+            이 선거구에 출마한 <strong>모든 후보의 선거공보·선거공약서·5대공약 PDF를 한 번에</strong>{' '}
+            선택/드롭하세요. 파일들에서 후보(기호·이름·정당)를 함께 인식합니다.
+          </p>
           <label className={styles.Upload}>
             <input
               type="file"
@@ -142,7 +157,7 @@ function AdminConsole({ customElections, onChange, onExit }: AdminConsoleProps) 
               disabled={busy}
               onChange={(e) => handleFiles(e.target.files)}
             />
-            <span>{busy ? '처리 중…' : '여기로 PDF 선택/드롭'}</span>
+            <span>{busy ? '처리 중…' : '후보 PDF 여러 개 한 번에 선택/드롭'}</span>
           </label>
           {progress ? <p className={styles.Progress}>{progress}</p> : null}
 

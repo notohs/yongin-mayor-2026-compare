@@ -11,7 +11,12 @@ interface CandidateSummaryCardProps {
 
 /** 종합 비교 화면 상단의 후보 요약 카드 */
 function CandidateSummaryCard({ candidate, onOpenDetail }: CandidateSummaryCardProps) {
-  const { criminal, assets } = candidate;
+  const { criminal, assets, materials } = candidate;
+  const missingMaterials = [
+    materials.bulletin ? null : '선거공보',
+    materials.pledgeBook ? null : '선거공약서',
+    materials.fivePledges ? null : '5대공약',
+  ].filter((v): v is string => v !== null);
 
   return (
     <article className={styles.CandidateSummaryCard}>
@@ -51,6 +56,14 @@ function CandidateSummaryCard({ candidate, onOpenDetail }: CandidateSummaryCardP
           <StatusChip
             tone={assets.total < 0 ? 'warning' : 'neutral'}
             label={`재산 ${formatMoney(assets.total)}`}
+          />
+          <StatusChip
+            tone={missingMaterials.length > 0 ? 'danger' : 'positive'}
+            label={
+              missingMaterials.length > 0
+                ? `${missingMaterials.join('·')} 미제출`
+                : '자료 3종 제출'
+            }
           />
         </div>
 

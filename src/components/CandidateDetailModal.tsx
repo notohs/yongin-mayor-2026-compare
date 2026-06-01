@@ -5,6 +5,7 @@ import CandidateBadge from './CandidateBadge';
 import PledgeCard from './PledgeCard';
 import BulletinPolicies from './BulletinPolicies';
 import StatusChip from './StatusChip';
+import MaterialStatus from './MaterialStatus';
 import styles from './CandidateDetailModal.module.scss';
 
 interface CandidateDetailModalProps {
@@ -103,6 +104,11 @@ function CandidateDetailModal({
                 </ul>
               </InfoItem>
             </div>
+          </section>
+
+          <section className={styles.Block}>
+            <h3 className={styles.BlockTitle}>선관위 자료 제출 현황</h3>
+            <MaterialStatus materials={candidate.materials} />
           </section>
 
           <section className={styles.Block}>

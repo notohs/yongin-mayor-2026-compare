@@ -70,20 +70,21 @@ function guessCandidates(text: string): Candidate[] {
       tax: { totalPaid: 0, candidatePaid: 0, currentArrears: 0, hasArrearsRecord: false },
       military: { candidate: '', completed: true, dependentCompleted: null },
       assets: { total: 0, candidate: 0, spouse: null, breakdown: '' },
+      // 자료 제출 현황: 기본 제출(true). 미등록 후보는 콘솔에서 false로 바꿔주세요.
+      materials: { bulletin: true, pledgeBook: true, fivePledges: true },
     }));
 }
 
 /**
  * 추출 텍스트에서 선거구 초안(Election)을 best-effort로 만든다.
- * 선거명·후보(기호/이름/정당)는 자동 추정하고, 나머지 상세는 사용자가 채운다.
+ * 선거구명(regionName)이 주어지면 그대로 쓰고, 없으면 텍스트에서 추정한다.
+ * 후보(기호/이름/정당)는 자동 추정하고, 나머지 상세는 사용자가 채운다.
  */
-export function buildDraftElection(texts: string[], idHint?: string): Election {
+export function buildDraftElection(texts: string[], regionName?: string): Election {
   const all = texts.join('\n');
-  const region = guessRegion(all) || '○○선거';
+  const region = (regionName && regionName.trim()) || guessRegion(all) || '○○선거';
   const candidates = guessCandidates(all);
-  const id =
-    idHint ||
-    `custom-${region.replace(/[^가-힣A-Za-z0-9]/g, '') || 'region'}-${new Date().getFullYear()}`;
+  const id = `custom-${region.replace(/[^가-힣A-Za-z0-9]/g, '') || 'region'}-${new Date().getFullYear()}`;
 
   return {
     id,

@@ -3,6 +3,7 @@ import { formatMoney, formatThousandWon } from '../utils/format';
 import CompareGrid, { type CompareRow } from './CompareGrid';
 import SectionTitle from './SectionTitle';
 import StatusChip from './StatusChip';
+import MaterialStatus from './MaterialStatus';
 import styles from './VerificationView.module.scss';
 
 interface VerificationViewProps {
@@ -10,6 +11,11 @@ interface VerificationViewProps {
 }
 
 const verificationRows: CompareRow[] = [
+  {
+    key: 'materials',
+    label: '선관위 자료 제출',
+    render: (c) => <MaterialStatus materials={c.materials} />,
+  },
   {
     key: 'education',
     label: '학력',
@@ -104,7 +110,7 @@ function VerificationView({ candidates }: VerificationViewProps) {
     <div className={styles.VerificationView}>
       <SectionTitle
         title="인물·검증 항목 비교"
-        description="중앙선거관리위원회 후보자정보공개자료 기준입니다. 재산·납세는 천원 단위로 신고된 금액입니다."
+        description="중앙선거관리위원회 후보자정보공개자료 기준입니다. ‘선관위 자료 제출’의 미등록은 자료를 성실히 제출했는지에 대한 참고 지표입니다. 재산·납세는 천원 단위로 신고된 금액입니다."
       />
       <CompareGrid candidates={candidates} rows={verificationRows} />
     </div>
