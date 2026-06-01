@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Candidate } from '../data/types';
-import type { QuizThemeDef } from '../data/quizThemes';
+import type { QuizThemeDef } from '../data/types';
 import {
   buildQuizSteps,
   computeScores,

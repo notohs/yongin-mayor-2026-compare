@@ -1,15 +1,7 @@
-import type { Candidate, ElectionMeta } from './types';
+import type { Candidate } from '../../types';
 
 // 출처: 중앙선거관리위원회 후보자정보공개자료 및 후보자 제출 5대 공약(2026 제9회 전국동시지방선거 용인특례시장 선거)
 // 금액 단위: 천원. 재산 음수(△)는 채무 초과를 의미.
-
-export const electionMeta: ElectionMeta = {
-  region: '용인특례시장',
-  title: '용인특례시장 후보 비교',
-  subtitle: '제9회 전국동시지방선거 · 2026',
-  note: '공약·인적사항은 후보자가 제출한 선거공보 및 후보자정보공개자료를 그대로 정리한 것입니다.',
-  source: '중앙선거관리위원회 후보자정보공개자료 · 후보자 5대 공약',
-};
 
 export const candidates: Candidate[] = [
   {

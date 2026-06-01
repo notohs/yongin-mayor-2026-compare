@@ -1,26 +1,4 @@
-import type { PledgeCategory } from './types';
-
-/** 퀴즈 선택지 1개 정의 (후보·공약 연결 + 익명 요약) */
-export interface QuizOptionDef {
-  /** 연결된 후보 기호 */
-  candidateId: number;
-  /** 연결된 5대 공약 순위(candidate.pledges 의 rank). 공보 기반 문항은 생략 */
-  pledgeRank?: number;
-  /** pledgeRank가 없을 때 결과 공개용 출처 제목(예: '선거공보 · 교육·보육') */
-  sourceTitle?: string;
-  /** 후보를 드러내지 않는 접근 요약(퀴즈 화면에 표시) */
-  blurb: string;
-}
-
-/** 퀴즈 1문항(테마) 정의 */
-export interface QuizThemeDef {
-  id: string;
-  /** 대표 분야(아이콘·라벨용) */
-  category: PledgeCategory;
-  /** 사용자에게 보이는 질문 */
-  question: string;
-  options: QuizOptionDef[];
-}
+import type { QuizThemeDef } from '../../types';
 
 // 비슷한 주제에서 세 후보의 서로 다른 접근을 한 문항으로 묶었다.
 // blurb 는 어느 후보인지 알 수 없도록 정책 내용만 중립적으로 요약한다.

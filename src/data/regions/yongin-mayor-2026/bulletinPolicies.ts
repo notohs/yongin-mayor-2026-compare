@@ -1,4 +1,4 @@
-import type { BulletinData } from './types';
+import type { BulletinData } from '../../types';
 
 // 선거공보(공약집)에서 추출한 5대 공약 외 분야별 세부 공약.
 // 현근택(1-0): 이미지 PDF → OCR + 시각 판독. 「용인 도약 10대 공약」 및 분야별 '1등 도시' 공약.

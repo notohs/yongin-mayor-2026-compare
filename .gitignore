@@ -3,3 +3,9 @@ dist
 *.log
 .DS_Store
 .claude
+
+# 원자료(저작권)·OCR 추출 중간물은 커밋하지 않음
+data-sources/**/*.pdf
+data-sources/**/*.png
+data-sources/**/*.jpg
+_ingest/

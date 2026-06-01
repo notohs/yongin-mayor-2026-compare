@@ -159,3 +159,45 @@ export interface ElectionMeta {
   note: string;
   source: string;
 }
+
+/** 공약 블라인드 퀴즈 선택지 정의 (후보·공약 연결 + 익명 요약) */
+export interface QuizOptionDef {
+  /** 연결된 후보 기호 */
+  candidateId: number;
+  /** 연결된 5대 공약 순위(candidate.pledges 의 rank). 공보 기반 문항은 생략 */
+  pledgeRank?: number;
+  /** pledgeRank가 없을 때 결과 공개용 출처 제목(예: '선거공보 · 교육·보육') */
+  sourceTitle?: string;
+  /** 후보를 드러내지 않는 접근 요약(퀴즈 화면에 표시) */
+  blurb: string;
+}
+
+/** 공약 블라인드 퀴즈 1문항(테마) 정의 */
+export interface QuizThemeDef {
+  id: string;
+  /** 대표 분야(아이콘·라벨용) */
+  category: PledgeCategory;
+  /** 사용자에게 보이는 질문 */
+  question: string;
+  options: QuizOptionDef[];
+}
+
+/**
+ * 하나의 선거(선거구) 단위 데이터 묶음.
+ * 새 선거구를 추가하려면 src/data/regions/<id>/ 폴더를 만들고 이 형태의 election 객체를 export 한다.
+ * regions/index.ts 가 폴더를 자동으로 수집해 앱 전체(종합비교·공약비교·인물검증·공약퀴즈)에 반영한다.
+ */
+export interface Election {
+  /** 선거구 식별자(폴더명과 동일 권장) */
+  id: string;
+  /** 선택기 정렬 순서(작을수록 먼저) */
+  order?: number;
+  /** 선거/지역 메타 */
+  meta: ElectionMeta;
+  /** 후보 목록(동일 Candidate 포맷) */
+  candidates: Candidate[];
+  /** 후보별 선거공보 세부 공약(기호 → BulletinData) */
+  bulletinPolicies: Record<number, BulletinData>;
+  /** 공약 퀴즈 정책 문항(검증 문항은 후보 데이터에서 자동 생성) */
+  quizThemes: QuizThemeDef[];
+}

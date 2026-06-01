@@ -1,13 +1,16 @@
 {
-  "name": "yongin-mayor-election-2026",
+  "name": "election-candidate-compare",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
-  "description": "2026 용인특례시장 선거 후보 비교 웹",
+  "description": "선거구별 후보 공약·인물 비교 웹 (종합비교·공약비교·인물검증·공약퀴즈)",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "new:region": "node scripts/new-region.mjs",
+    "ingest": "node scripts/ingest.mjs",
+    "gen:data": "node scripts/gen-data.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

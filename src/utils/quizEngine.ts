@@ -1,5 +1,5 @@
 import type { Candidate, Pledge, PledgeCategory } from '../data/types';
-import type { QuizThemeDef } from '../data/quizThemes';
+import type { QuizThemeDef } from '../data/types';
 
 /** 단일 선택 가중치 */
 export const SINGLE_WEIGHT = 1;
