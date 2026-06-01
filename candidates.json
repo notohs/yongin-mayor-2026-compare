@@ -165,6 +165,11 @@
             "spouse": 257339,
             "breakdown": "모 95,904 · 장남 21,202 · 차녀 21,332 (천원)"
           },
+          "materials": {
+            "bulletin": true,
+            "pledgeBook": false,
+            "fivePledges": true
+          },
           "bulletin": {
             "note": "선거공보 「용인 도약 10대 공약」 및 분야별 ‘1등 도시’ 공약 (이미지 PDF OCR·판독)",
             "groups": [
@@ -473,6 +478,11 @@
             "spouse": 3572020,
             "breakdown": "직계존속(부·모) 고지거부 · 장남 고지거부"
           },
+          "materials": {
+            "bulletin": true,
+            "pledgeBook": true,
+            "fivePledges": true
+          },
           "bulletin": {
             "note": "선거공보 분야별 정책공약집 (읍·면·동별 공약 목록은 비교 균형상 제외)",
             "groups": [
@@ -759,6 +769,11 @@
             "candidate": -36601,
             "spouse": 0,
             "breakdown": "직계존속(부·모) 고지거부 · 직계비속 0"
+          },
+          "materials": {
+            "bulletin": true,
+            "pledgeBook": false,
+            "fivePledges": true
           },
           "bulletin": {
             "note": "선거공보가 표지·인적사항 중심으로, 별도 분야별 세부 공약은 5대 공약으로 갈음합니다.",
