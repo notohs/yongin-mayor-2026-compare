@@ -69,14 +69,33 @@ npm run preview  # 빌드 결과 미리보기
 
 ## 다른 지역(선거) 추가하기
 
-데이터는 **선거(지역) 단위로 묶여** 있어, 용인 외 다른 시·구 자료를 추가하면 그대로 동작합니다.
+데이터는 **선거구 단위 모듈**(`src/data/regions/<id>/`)로 묶여 있고, `regions/index.ts` 가 폴더를
+자동 수집합니다. 추가 방법은 두 가지입니다.
 
-1. 새 지역 후보를 `Candidate[]` 포맷으로 작성(필요 시 선거공보 세부 공약 `bulletinPolicies`).
-2. 그 지역 정책 퀴즈 문항(`QuizThemeDef[]`)을 작성. (검증 문항은 후보 데이터에서 자동 생성)
-3. [`src/data/elections.ts`](src/data/elections.ts)의 `elections` 배열에 `Election` 객체로 추가.
+### A. 코드로 영구 추가 (CLI)
 
-지역이 둘 이상이면 헤더에 **지역 선택기**가 자동으로 나타나며, 비교·공약·검증·퀴즈가 선택한 지역
-기준으로 동작합니다. 각 선거는 `id`로 구분되고 퀴즈 결과도 지역별로 저장됩니다.
+1. `npm run new:region <id>` — 모듈 + `data-sources/<id>/` 스캐폴딩.
+2. `data-sources/<id>/` 에 선거공보·공약집 PDF를 넣고 `npm run ingest <id>` 로 텍스트/OCR 추출.
+3. `src/data/regions/<id>/` 모듈을 채우면 빌드 시 자동 노출. (자세히: [DATA_GUIDE.md](DATA_GUIDE.md))
+
+### B. 관리자 콘솔로 즉시 추가 (브라우저, 코드 없이)
+
+헤더의 **🛠 관리자 콘솔** 버튼:
+
+1. **선관위 자료 링크**(정책·공약마당 / 선거통계시스템)로 가서 후보 PDF를 내려받습니다.
+2. PDF를 콘솔에 **업로드** → 브라우저 안에서 텍스트 추출(이미지 PDF는 **tesseract.js 한국어 OCR**,
+   외부 전송 없음). 추출 결과로 **선거구 초안(JSON)** 을 자동 생성(선거명·후보 기호/이름/정당 추정).
+3. JSON을 보완한 뒤 **미리보기 적용** → `localStorage` 에 저장되어 지역 선택기에 추가되고,
+   종합비교·공약비교·인물검증·공약퀴즈 4개 화면에서 바로 분석됩니다.
+4. **JSON 내보내기** 로 받은 파일을 `src/data/regions/<id>/` 모듈로 옮겨 커밋하면 영구 반영됩니다.
+
+> 콘솔은 보조 입력 도구입니다. 스캔 PDF의 한국어 OCR은 느리고 오탈자가 있어, 생성된 초안은
+> **검토·보완이 필요한 데이터**입니다(공약 분류·전과/재산 수치 등). 관련 코드:
+> [`AdminConsole`](src/components/admin/AdminConsole.tsx) · [`pdfExtract`](src/utils/pdfExtract.ts) ·
+> [`draftElection`](src/utils/draftElection.ts) · [`customElections`](src/utils/customElections.ts)
+
+지역이 둘 이상이면 헤더에 **지역 선택기**가 자동으로 나타나며, 모든 화면이 선택한 지역 기준으로
+동작합니다. 각 선거는 `id`로 구분되고 퀴즈 결과도 지역별로 저장됩니다.
 
 ## 데이터 구조
 

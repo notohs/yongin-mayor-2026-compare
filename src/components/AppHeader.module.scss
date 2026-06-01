@@ -29,6 +29,27 @@
   border-radius: $radius-pill;
 }
 
+.TopActions {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.AdminButton {
+  border: none;
+  background-color: $color-surface;
+  color: $color-text-sub;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: $radius-pill;
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
 .Selector {
   display: inline-flex;
   align-items: center;

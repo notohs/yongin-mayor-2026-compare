@@ -13,3 +13,12 @@
   margin: 0 auto;
   padding: $space-lg $space-lg $space-2xl;
 }
+
+.Loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-sub;
+  font-weight: 600;
+}

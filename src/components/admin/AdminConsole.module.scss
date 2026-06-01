@@ -1,0 +1,302 @@
+@use 'sass:color';
+@use '../../styles/variables' as *;
+
+.AdminConsole {
+  min-height: 100vh;
+  background-color: $color-bg;
+}
+
+.Bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm;
+  background-color: $color-text;
+  color: #fff;
+  padding: $space-md $space-lg;
+}
+
+.BarTitle {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.ExitButton {
+  border: none;
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: $radius-pill;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.28);
+  }
+}
+
+.Body {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: $space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.Privacy {
+  font-size: 13.5px;
+  color: $color-text-sub;
+  line-height: 1.6;
+  background-color: rgba($color-positive, 0.08);
+  padding: $space-md;
+  border-radius: $radius-md;
+}
+
+.Step {
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.StepTitle {
+  font-size: 17px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.StepDesc {
+  font-size: 14px;
+  color: $color-text-sub;
+  line-height: 1.6;
+
+  code {
+    background-color: $color-surface-muted;
+    padding: 1px 6px;
+    border-radius: $radius-sm;
+    font-size: 13px;
+  }
+}
+
+.Links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.LinkCard {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  background-color: $color-surface-muted;
+  border-radius: $radius-md;
+  padding: $space-md;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.LinkLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: $color-party-dp;
+}
+
+.LinkDesc {
+  font-size: 13px;
+  color: $color-text-sub;
+  line-height: 1.5;
+}
+
+.Upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+  border: 2px dashed $color-border;
+  border-radius: $radius-md;
+  padding: $space-xl;
+  cursor: pointer;
+  color: $color-text-sub;
+  font-weight: 600;
+
+  &:hover {
+    border-color: $color-party-dp;
+    color: $color-text;
+  }
+
+  input {
+    cursor: pointer;
+  }
+}
+
+.Progress {
+  font-size: 13px;
+  color: $color-text-sub;
+}
+
+.Extracts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.Extract {
+  background-color: $color-surface-muted;
+  border-radius: $radius-md;
+  padding: $space-sm $space-md;
+
+  summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: $color-text;
+  }
+}
+
+.ExtractText {
+  width: 100%;
+  height: 180px;
+  margin-top: $space-sm;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  padding: $space-sm;
+  resize: vertical;
+}
+
+.JsonEditor {
+  width: 100%;
+  height: 320px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-md;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: $color-party-dp;
+  }
+}
+
+.RowActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.Button {
+  border: none;
+  background-color: $color-surface-muted;
+  color: $color-text;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: $radius-md;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($color-surface-muted, $lightness: -4%);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.PrimaryButton {
+  border: none;
+  background-color: $color-text;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: $radius-md;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.GhostButton {
+  border: none;
+  background-color: $color-surface-muted;
+  color: $color-text-sub;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: $radius-pill;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.DangerButton {
+  border: none;
+  background-color: rgba($color-danger, 0.1);
+  color: $color-danger;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: $radius-pill;
+}
+
+.Error {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: $color-danger;
+  background-color: rgba($color-danger, 0.08);
+  padding: $space-sm $space-md;
+  border-radius: $radius-sm;
+}
+
+.SavedList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.SavedItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-sm;
+  background-color: $color-surface-muted;
+  border-radius: $radius-md;
+  padding: $space-md;
+}
+
+.SavedInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.SavedName {
+  font-size: 15px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.SavedSub {
+  font-size: 12.5px;
+  color: $color-text-sub;
+}
