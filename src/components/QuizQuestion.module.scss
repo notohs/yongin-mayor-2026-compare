@@ -1,0 +1,202 @@
+@use '../styles/variables' as *;
+
+.QuizQuestion {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.ProgressBar {
+  height: 6px;
+  border-radius: $radius-pill;
+  background-color: $color-border;
+  overflow: hidden;
+}
+
+.ProgressFill {
+  display: block;
+  height: 100%;
+  border-radius: $radius-pill;
+  background-color: $color-party-dp;
+  transition: width 0.3s ease;
+}
+
+.StepCount {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-faint;
+  text-align: center;
+}
+
+.Head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.CategoryChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-sub;
+  background-color: $color-surface;
+  box-shadow: $shadow-sm;
+  padding: 6px 14px;
+  border-radius: $radius-pill;
+}
+
+.CategoryIcon {
+  font-size: 15px;
+}
+
+.Question {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: $color-text;
+  line-height: 1.4;
+}
+
+.Guide {
+  font-size: 13px;
+  color: $color-text-sub;
+}
+
+.Options {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  margin-top: $space-xs;
+}
+
+.OptionCard {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  width: 100%;
+  text-align: left;
+  background-color: $color-surface;
+  border: 2px solid transparent;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $space-md;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: $color-party-dp;
+    box-shadow: $shadow-md;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.selected {
+    border-color: $color-party-dp;
+    background-color: rgba($color-party-dp, 0.05);
+    box-shadow: $shadow-md;
+  }
+}
+
+.Marker {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-pill;
+  background-color: $color-surface-muted;
+  color: $color-text-sub;
+  font-size: 14px;
+  font-weight: 800;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.markerOn {
+  background-color: $color-party-dp;
+  color: #fff;
+}
+
+.OptionText {
+  font-size: 15px;
+  color: $color-text;
+  line-height: 1.6;
+}
+
+.Footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  margin-top: $space-xs;
+}
+
+.BackButton {
+  border: none;
+  background-color: transparent;
+  color: $color-text-sub;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: $radius-pill;
+
+  &:hover {
+    background-color: $color-surface;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.SelectCount {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
+.NextButton {
+  border: none;
+  background-color: $color-text;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: $radius-md;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.Anonymous {
+  text-align: center;
+  font-size: 13px;
+  color: $color-text-faint;
+}
+
+@media (max-width: $bp-mobile) {
+  .Question {
+    font-size: 19px;
+  }
+}

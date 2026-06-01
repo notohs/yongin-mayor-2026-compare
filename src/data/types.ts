@@ -1,0 +1,161 @@
+// 모든 후보가 공유하는 단일 데이터 포맷 정의.
+// 출처: 중앙선거관리위원회 후보자정보공개자료 및 5대 공약 자료(2026 용인특례시장 선거)
+
+/** 공약 분야 카테고리 키 */
+export type PledgeCategory =
+  | 'transport' // 교통
+  | 'semiconductor' // 반도체·미래산업
+  | 'economy' // 경제·일자리
+  | 'welfare' // 복지·생활
+  | 'urban' // 도시·개발
+  | 'education' // 교육
+  | 'culture' // 문화·관광
+  | 'housing'; // 주거·환경
+
+/** 5대 공약 1건 */
+export interface Pledge {
+  /** 공약 순위(1~5) */
+  rank: number;
+  /** 공약 제목 */
+  title: string;
+  /** 공약 분야 */
+  category: PledgeCategory;
+  /** 목표 */
+  goals: string[];
+  /** 이행방법 */
+  methods: string[];
+  /** 이행기간 */
+  period: string[];
+  /** 재원조달방안 */
+  funding: string[];
+}
+
+/** 전과 기록 */
+export interface CriminalRecord {
+  /** 전과 보유 여부 */
+  hasRecord: boolean;
+  /** 전과 항목(없으면 빈 배열) */
+  items: string[];
+}
+
+/**
+ * 세금 납부·체납 실적 (단위: 천원)
+ * 최근 5년간 소득세·재산세·종합부동산세 기준
+ */
+export interface TaxRecord {
+  /** 본인+가족 합계 납세액 */
+  totalPaid: number;
+  /** 후보자 본인 납세액 */
+  candidatePaid: number;
+  /** 현 체납액 */
+  currentArrears: number;
+  /** 체납 관련 비고(완납 이력 등) */
+  note?: string;
+  /** 과거·현재 체납 이력 보유 여부 (검증 문항 생성 기준) */
+  hasArrearsRecord: boolean;
+  /** 체납 검증 문항용 설명(체납 이력이 있을 때) */
+  arrearsDescription?: string;
+}
+
+/** 병역 사항 */
+export interface MilitaryRecord {
+  /** 후보자 본인 병역 */
+  candidate: string;
+  /** 직계비속 등 추가 병역 비고 */
+  note?: string;
+  /** 후보자 본인 병역 정상 이행 여부 */
+  completed: boolean;
+  /** 18세 이상 직계비속 병역 이행 여부 (해당 없으면 null) */
+  dependentCompleted: boolean | null;
+  /** 병역 미이행 시 검증 문항용 설명 */
+  issueDescription?: string;
+}
+
+/**
+ * 재산 상황 (단위: 천원)
+ * 음수는 채무 초과를 의미
+ */
+export interface AssetRecord {
+  /** 신고 재산 총계 */
+  total: number;
+  /** 후보자 본인 */
+  candidate: number;
+  /** 배우자(고지거부 시 null) */
+  spouse: number | null;
+  /** 직계존비속 등 구성 설명 */
+  breakdown: string;
+}
+
+/** 선거공보 분야별 공약 묶음 (5대 공약 외 세부 공약) */
+export interface PolicyGroup {
+  /** 분야명 */
+  field: string;
+  /** 비교·집계용 표준 분야 카테고리 */
+  category: PledgeCategory;
+  /** 공보 헤드라인(선택) */
+  headline?: string;
+  /** 분야 아이콘(이모지) */
+  icon: string;
+  /** 세부 공약 목록 */
+  items: string[];
+}
+
+/** 후보자별 선거공보 세부 공약 데이터 */
+export interface BulletinData {
+  /** 자료 성격/범위 설명 */
+  note: string;
+  /** 분야별 공약 묶음 */
+  groups: PolicyGroup[];
+}
+
+/** 후보자 단일 레코드 */
+export interface Candidate {
+  /** 기호 */
+  id: number;
+  /** 성명 */
+  name: string;
+  /** 소속 정당 */
+  party: string;
+  /** 정당 대표 색상(HEX) */
+  partyColor: string;
+  /** 주요 슬로건 */
+  slogan: string;
+  /** 보조 슬로건 */
+  subSlogan?: string;
+  /** 한 줄 비전 요약 */
+  vision: string;
+  /** 생년월일(YYYY.MM.DD) */
+  birth: string;
+  /** 만 나이 */
+  age: number;
+  /** 성별 */
+  gender: string;
+  /** 직업 */
+  job: string;
+  /** 학력 */
+  education: string;
+  /** 주요 경력 */
+  careers: string[];
+  /** 선거공보 표지 이미지 경로 */
+  poster: string;
+  /** 5대 공약 */
+  pledges: Pledge[];
+  /** 전과 */
+  criminal: CriminalRecord;
+  /** 납세 */
+  tax: TaxRecord;
+  /** 병역 */
+  military: MilitaryRecord;
+  /** 재산 */
+  assets: AssetRecord;
+}
+
+/** 선거 메타 정보 */
+export interface ElectionMeta {
+  /** 지역/선거 짧은 이름 (선택기 표시용, 예: "용인특례시장") */
+  region: string;
+  title: string;
+  subtitle: string;
+  note: string;
+  source: string;
+}

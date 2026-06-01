@@ -1,0 +1,67 @@
+@use 'variables' as *;
+
+// 인라인 style에서 참조하는 색상 토큰
+:root {
+  --danger: #{$color-danger};
+  --warning: #{$color-warning};
+  --positive: #{$color-positive};
+  --muted: #{$color-text-sub};
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', 'Segoe UI', Roboto, sans-serif;
+  background-color: $color-bg;
+  color: $color-text;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-break: keep-all;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid $color-party-dp;
+  outline-offset: 2px;
+}

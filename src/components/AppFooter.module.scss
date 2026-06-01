@@ -1,0 +1,26 @@
+@use '../styles/variables' as *;
+
+.AppFooter {
+  margin-top: $space-2xl;
+  padding: $space-xl 0 $space-2xl;
+  background-color: $color-surface;
+}
+
+.Inner {
+  max-width: $content-max;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+}
+
+.Source {
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-text-sub;
+}
+
+.Disclaimer {
+  margin-top: $space-xs;
+  font-size: 13px;
+  color: $color-text-faint;
+  line-height: 1.7;
+}

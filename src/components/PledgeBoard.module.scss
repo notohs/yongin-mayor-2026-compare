@@ -1,0 +1,68 @@
+@use '../styles/variables' as *;
+
+.PledgeBoard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.Columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-md;
+  align-items: start;
+}
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.ColumnHead {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  background-color: $color-surface;
+  border-top: 4px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $space-sm $space-md;
+  position: sticky;
+  top: 64px;
+  z-index: 5;
+}
+
+.ColumnHeadText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.ColumnName {
+  font-size: 16px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.ColumnParty {
+  font-size: 12px;
+  color: $color-text-sub;
+}
+
+.PledgeList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+@media (max-width: $bp-tablet) {
+  .Columns {
+    grid-template-columns: 1fr;
+    gap: $space-lg;
+  }
+
+  .ColumnHead {
+    position: static;
+  }
+}

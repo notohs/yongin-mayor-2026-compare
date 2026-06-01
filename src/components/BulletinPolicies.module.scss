@@ -1,0 +1,111 @@
+@use '../styles/variables' as *;
+
+.BulletinPolicies {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.Note {
+  font-size: 13px;
+  color: $color-text-sub;
+  line-height: 1.6;
+  padding: 10px 12px;
+  background-color: $color-surface-muted;
+  border-radius: $radius-sm;
+}
+
+.Groups {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.GroupCard {
+  background-color: $color-surface;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+}
+
+.GroupHeader {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  padding: 12px $space-md;
+  text-align: left;
+
+  &:hover {
+    background-color: $color-surface-muted;
+  }
+}
+
+.GroupIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.GroupTitleBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.GroupField {
+  font-size: 15px;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.GroupHeadline {
+  font-size: 12.5px;
+  color: $color-text-sub;
+}
+
+.GroupCount {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.Chevron {
+  flex-shrink: 0;
+  font-size: 16px;
+  color: $color-text-faint;
+  transition: transform 0.2s ease;
+}
+
+.openChevron {
+  transform: rotate(180deg);
+}
+
+.ItemList {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0 $space-md $space-md 46px;
+
+  li {
+    position: relative;
+    padding-left: 13px;
+    font-size: 13.5px;
+    color: $color-text;
+    line-height: 1.55;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-text-faint;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+@use '../styles/variables' as *;
+
+.PledgesTab {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.Toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 4px;
+  background-color: $color-surface;
+  border-radius: $radius-pill;
+  box-shadow: $shadow-sm;
+}
+
+.ToggleButton {
+  border: none;
+  background-color: transparent;
+  color: $color-text-sub;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: $radius-pill;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.active {
+  background-color: $color-text;
+  color: #fff;
+}

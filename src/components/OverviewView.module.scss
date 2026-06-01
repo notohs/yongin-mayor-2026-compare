@@ -1,0 +1,29 @@
+@use '../styles/variables' as *;
+
+.OverviewView {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.CardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-md;
+}
+
+.MutedText {
+  color: $color-text-sub;
+}
+
+@media (max-width: $bp-tablet) {
+  .CardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .CardGrid {
+    grid-template-columns: 1fr;
+  }
+}

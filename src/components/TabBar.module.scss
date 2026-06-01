@@ -1,0 +1,54 @@
+@use '../styles/variables' as *;
+
+.TabBar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: rgba($color-bg, 0.92);
+  backdrop-filter: blur(8px);
+  padding: $space-sm 0;
+}
+
+.TabList {
+  display: flex;
+  gap: $space-sm;
+  max-width: $content-max;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.TabItem {
+  flex-shrink: 0;
+}
+
+.TabButton {
+  border: none;
+  background-color: $color-surface;
+  color: $color-text-sub;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: $radius-pill;
+  box-shadow: $shadow-sm;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: $color-text;
+  }
+
+  &.active {
+    background-color: $color-text;
+    color: #fff;
+    box-shadow: $shadow-md;
+  }
+}

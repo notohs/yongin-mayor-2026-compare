@@ -1,0 +1,193 @@
+@use 'sass:color';
+@use '../styles/variables' as *;
+
+.QuizVerifyQuestion {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.ProgressBar {
+  height: 6px;
+  border-radius: $radius-pill;
+  background-color: $color-border;
+  overflow: hidden;
+}
+
+.ProgressFill {
+  display: block;
+  height: 100%;
+  border-radius: $radius-pill;
+  background-color: $color-warning;
+  transition: width 0.3s ease;
+}
+
+.StepCount {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-faint;
+  text-align: center;
+}
+
+.Head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.KindChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: color.adjust($color-warning, $lightness: -8%);
+  background-color: rgba($color-warning, 0.12);
+  padding: 6px 14px;
+  border-radius: $radius-pill;
+}
+
+.Question {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: $color-text;
+  line-height: 1.45;
+}
+
+.Record {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: $color-surface;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: $space-md;
+}
+
+.RecordLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
+.RecordText {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: 1.55;
+}
+
+.Choices {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.ChoiceButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  width: 100%;
+  text-align: left;
+  border: 2px solid transparent;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: 15px $space-md;
+  background-color: $color-surface;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.ChoiceLabel {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.ChoiceNote {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
+.ok {
+  color: color.adjust($color-positive, $lightness: -8%);
+  &:hover,
+  &.selected {
+    border-color: $color-positive;
+    background-color: rgba($color-positive, 0.06);
+  }
+}
+
+.reluctant {
+  color: color.adjust($color-warning, $lightness: -8%);
+  &:hover,
+  &.selected {
+    border-color: $color-warning;
+    background-color: rgba($color-warning, 0.07);
+  }
+}
+
+.never {
+  color: color.adjust($color-danger, $lightness: -4%);
+  &:hover,
+  &.selected {
+    border-color: $color-danger;
+    background-color: rgba($color-danger, 0.06);
+  }
+}
+
+.Footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm;
+}
+
+.BackButton {
+  border: none;
+  background-color: transparent;
+  color: $color-text-sub;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: $radius-pill;
+
+  &:hover {
+    background-color: $color-surface;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.Hint {
+  font-size: 12.5px;
+  color: $color-text-faint;
+  text-align: right;
+}
+
+@media (max-width: $bp-mobile) {
+  .Question {
+    font-size: 18px;
+  }
+
+  .ChoiceButton {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

@@ -1,0 +1,50 @@
+@use '../styles/variables' as *;
+
+.VerificationView {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.Stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.Amount {
+  font-size: 16px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.SubLine {
+  font-size: 13px;
+  color: $color-text-sub;
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  li {
+    position: relative;
+    padding-left: 12px;
+    font-size: 13.5px;
+    color: $color-text;
+    line-height: 1.5;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-text-faint;
+    }
+  }
+}

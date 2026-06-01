@@ -1,0 +1,74 @@
+@use '../styles/variables' as *;
+
+.AppHeader {
+  background: linear-gradient(180deg, #ffffff 0%, $color-bg 100%);
+  padding: $space-xl 0 $space-lg;
+}
+
+.Inner {
+  max-width: $content-max;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+}
+
+.TopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm;
+}
+
+.Subtitle {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: $color-party-dp;
+  background-color: rgba($color-party-dp, 0.08);
+  padding: 5px 12px;
+  border-radius: $radius-pill;
+}
+
+.Selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.SelectorLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-text-sub;
+}
+
+.Select {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-text;
+  padding: 8px 12px;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  background-color: $color-surface;
+  cursor: pointer;
+}
+
+.Title {
+  margin-top: $space-sm;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $color-text;
+}
+
+.Note {
+  margin-top: $space-sm;
+  max-width: 640px;
+  font-size: 14px;
+  color: $color-text-sub;
+}
+
+@media (max-width: $bp-mobile) {
+  .Title {
+    font-size: 26px;
+  }
+}

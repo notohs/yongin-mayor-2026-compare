@@ -1,0 +1,112 @@
+@use '../styles/variables' as *;
+
+.PledgeCard {
+  background-color: $color-surface;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+}
+
+.Header {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  padding: $space-md;
+  text-align: left;
+
+  &:hover {
+    background-color: $color-surface-muted;
+  }
+}
+
+.Rank {
+  flex-shrink: 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: $radius-sm;
+}
+
+.TitleBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+.CategoryTag {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: $color-text-sub;
+  background-color: $color-surface-muted;
+  padding: 2px 8px;
+  border-radius: $radius-pill;
+}
+
+.Title {
+  font-size: 15px;
+  font-weight: 700;
+  color: $color-text;
+  line-height: 1.45;
+}
+
+.Chevron {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: $color-text-faint;
+  transition: transform 0.2s ease;
+}
+
+.openChevron {
+  transform: rotate(180deg);
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  padding: 0 $space-md $space-md;
+}
+
+.Section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.SectionLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-faint;
+  letter-spacing: 0.02em;
+}
+
+.SectionList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    position: relative;
+    padding-left: 14px;
+    font-size: 14px;
+    color: $color-text;
+    line-height: 1.6;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 10px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-text-faint;
+    }
+  }
+}

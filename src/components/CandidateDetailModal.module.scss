@@ -1,0 +1,216 @@
+@use '../styles/variables' as *;
+
+.Backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(15, 18, 28, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: $space-lg;
+
+  @media (min-width: $bp-mobile) {
+    align-items: center;
+  }
+}
+
+.Modal {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  max-height: 92vh;
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: rise 0.22s ease;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.CloseButton {
+  position: absolute;
+  top: $space-sm;
+  right: $space-sm;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: $radius-pill;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: $color-text;
+  font-size: 15px;
+  line-height: 1;
+  box-shadow: $shadow-sm;
+}
+
+.Hero {
+  display: flex;
+  gap: $space-md;
+  padding: $space-lg;
+  color: #fff;
+}
+
+.HeroPoster {
+  width: 96px;
+  height: 128px;
+  border-radius: $radius-md;
+  object-fit: cover;
+  object-position: top center;
+  box-shadow: $shadow-md;
+  flex-shrink: 0;
+}
+
+.HeroText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
+}
+
+.HeroName {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.HeroParty {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.HeroSlogan {
+  margin-top: $space-xs;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.HeroSubSlogan {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.ScrollArea {
+  overflow-y: auto;
+  padding: $space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+}
+
+.Vision {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: 1.6;
+  padding: $space-md;
+  background-color: $color-surface-muted;
+  border-radius: $radius-md;
+}
+
+.Block {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.BlockTitle {
+  font-size: 17px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.InfoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-md;
+}
+
+.InfoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.InfoLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
+.InfoValue {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  color: $color-text;
+  line-height: 1.5;
+}
+
+.FaintLine {
+  font-size: 13px;
+  color: $color-text-sub;
+}
+
+.CareerList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  li {
+    position: relative;
+    padding-left: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $color-text-faint;
+    }
+  }
+}
+
+.PledgeList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+@media (max-width: $bp-mobile) {
+  .InfoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .InfoItem:last-child {
+    grid-column: auto;
+  }
+}

@@ -1,0 +1,186 @@
+@use '../styles/variables' as *;
+
+.QuizIntro {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.Hero {
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $space-xl;
+  text-align: center;
+}
+
+.Badge {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-party-dp;
+  background-color: rgba($color-party-dp, 0.08);
+  padding: 5px 12px;
+  border-radius: $radius-pill;
+}
+
+.Title {
+  margin-top: $space-sm;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $color-text;
+}
+
+.Desc {
+  margin: $space-sm auto 0;
+  max-width: 540px;
+  font-size: 15px;
+  color: $color-text-sub;
+  line-height: 1.65;
+}
+
+.Form {
+  margin-top: $space-lg;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.FieldLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-sub;
+  margin-bottom: 6px;
+}
+
+.FieldRow {
+  display: flex;
+  gap: $space-sm;
+}
+
+.Input {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  padding: 12px 14px;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  background-color: $color-surface-muted;
+  color: $color-text;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-party-dp;
+    background-color: $color-surface;
+  }
+}
+
+.StartButton {
+  flex-shrink: 0;
+  border: none;
+  background-color: $color-text;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: $radius-md;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.Hint {
+  margin-top: $space-sm;
+  font-size: 12.5px;
+  color: $color-text-faint;
+  line-height: 1.6;
+}
+
+.Recent {
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $space-lg;
+}
+
+.RecentHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm;
+}
+
+.RecentTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.LinkButton {
+  border: none;
+  background-color: transparent;
+  color: $color-party-dp;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px;
+}
+
+.RecentList {
+  margin-top: $space-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.RecentItem {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 10px 12px;
+  background-color: $color-surface-muted;
+  border-radius: $radius-md;
+  font-size: 14px;
+}
+
+.RecentNick {
+  font-weight: 700;
+  color: $color-text;
+}
+
+.RecentRec {
+  flex: 1;
+  color: $color-text-sub;
+}
+
+.RecentDate {
+  font-size: 12.5px;
+  color: $color-text-faint;
+}
+
+@media (max-width: $bp-mobile) {
+  .Hero {
+    padding: $space-lg;
+  }
+
+  .RecentItem {
+    flex-wrap: wrap;
+  }
+
+  .RecentRec {
+    flex-basis: 100%;
+    order: 3;
+  }
+}
