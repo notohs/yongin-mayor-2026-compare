@@ -29,12 +29,15 @@ function QuizQuestion({
   const meta = CATEGORY_META[step.category];
   const progress = Math.round(((stepIndex + 1) / total) * 100);
   const isLast = stepIndex + 1 >= total;
-  const atMax = selectedIds.length >= MAX_SELECT;
+  // 선택지가 2개뿐인 문항은 1개만, 3개 이상이면 최대 2개까지 선택
+  const maxSelect = step.options.length <= 2 ? 1 : MAX_SELECT;
+  const atMax = selectedIds.length >= maxSelect;
 
   const toggle = (candidateId: number) => {
     setSelectedIds((prev) => {
       if (prev.includes(candidateId)) return prev.filter((id) => id !== candidateId);
-      if (prev.length >= MAX_SELECT) return prev;
+      if (maxSelect === 1) return [candidateId]; // 단일 선택: 다른 항목으로 교체
+      if (prev.length >= maxSelect) return prev;
       return [...prev, candidateId];
     });
   };
@@ -61,13 +64,18 @@ function QuizQuestion({
           {meta.label}
         </span>
         <h2 className={styles.Question}>{step.question}</h2>
-        <p className={styles.Guide}>마음에 드는 공약을 최대 2개까지 고를 수 있어요.</p>
+        <p className={styles.Guide}>
+          {maxSelect === 1
+            ? '마음에 드는 공약을 하나 골라주세요.'
+            : '마음에 드는 공약을 최대 2개까지 고를 수 있어요.'}
+        </p>
       </div>
 
       <ul className={styles.Options}>
         {step.options.map((option, index) => {
           const selected = selectedIds.includes(option.candidateId);
-          const disabled = !selected && atMax;
+          // 단일 선택 문항은 비활성화하지 않고 클릭 시 교체되게 함
+          const disabled = !selected && atMax && maxSelect > 1;
           return (
             <li key={`${step.id}-${option.candidateId}`}>
               <button
@@ -96,7 +104,7 @@ function QuizQuestion({
           <span />
         )}
         <span className={styles.SelectCount}>
-          {selectedIds.length} / {MAX_SELECT} 선택
+          {selectedIds.length} / {maxSelect} 선택
         </span>
         <button
           type="button"

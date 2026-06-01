@@ -45,9 +45,9 @@ function QuizIntro({
         <span className={styles.Badge}>공약 블라인드 퀴즈</span>
         <h2 className={styles.Title}>누구 공약인지 모른 채 골라보세요</h2>
         <p className={styles.Desc}>
-          후보 이름을 가린 정책 {policy}문항(각 문항 <strong>최대 2개</strong> 선택)과, 후보의
-          병역·체납·전과를 점검하는 검증 {verify}문항이 제시됩니다. 선택을 마치면 종합 점수로
-          어느 후보가 가장 잘 맞는지 알려드립니다.
+          후보 이름을 가린 정책 {policy}문항(선택지 3개 문항은 <strong>최대 2개</strong>, 선택지
+          2개 문항은 1개 선택)과, 후보의 병역·체납·전과를 점검하는 검증 {verify}문항이 제시됩니다.
+          선택을 마치면 종합 점수로 어느 후보가 가장 잘 맞는지 알려드립니다.
         </p>
 
         <form className={styles.Form} onSubmit={handleSubmit}>
