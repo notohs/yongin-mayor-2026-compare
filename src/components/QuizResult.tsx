@@ -76,11 +76,7 @@ function QuizResult({ result, candidates, origin, onRestart, onViewHistory }: Qu
       {hasRecommendation ? (
         <div className={styles.RecCards}>
           {recommended.map((candidate) => (
-            <article
-              key={candidate.id}
-              className={styles.RecCard}
-              style={{ borderTopColor: candidate.partyColor }}
-            >
+            <article key={candidate.id} className={styles.RecCard}>
               <img
                 className={styles.RecPoster}
                 src={candidate.poster}

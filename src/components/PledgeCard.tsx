@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Pledge, PledgeReviewItem, ReviewVerdict } from '../data/types';
+import { splitCriterion } from '../data/types';
 import { CATEGORY_META } from '../data/categories';
 import styles from './PledgeCard.module.scss';
 
@@ -17,6 +18,18 @@ const VERDICT_LABEL: Record<ReviewVerdict, string> = {
   caution: '주의',
   unsound: '부적정',
 };
+
+function levelTone(level: string): 'good' | 'mid' | 'bad' {
+  if (['상', '없음', '구체적'].includes(level)) return 'good';
+  if (['하', '의심', '모호'].includes(level)) return 'bad';
+  return 'mid';
+}
+
+const REVIEW_CRITERIA: { key: 'feasibility' | 'duplication' | 'specificity'; label: string }[] = [
+  { key: 'feasibility', label: '실현 가능성' },
+  { key: 'duplication', label: '완료·중복' },
+  { key: 'specificity', label: '구체성' },
+];
 
 interface PledgeSectionProps {
   label: string;
@@ -61,6 +74,15 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
           <span className={styles.Title}>{pledge.title}</span>
         </span>
         {review ? (
+          <span
+            className={`${styles.Nature} ${
+              review.nature === 'commitment' ? styles.commitment : styles.aspiration
+            }`}
+          >
+            {review.nature === 'commitment' ? '공약' : '목표'}
+          </span>
+        ) : null}
+        {review ? (
           <span className={`${styles.Verdict} ${styles[review.verdict]}`}>
             {VERDICT_LABEL[review.verdict]}
           </span>
@@ -73,25 +95,33 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
       {open ? (
         <div className={styles.Content} id={contentId}>
           {review ? (
-            <div className={`${styles.Review} ${styles[review.verdict]}`}>
-              <span className={styles.ReviewHead}>
-                공약 적정성 교차검증 — <strong>{VERDICT_LABEL[review.verdict]}</strong>
-              </span>
-              <ul className={styles.ReviewList}>
-                <li>
-                  <em>실현 가능성</em> {review.feasibility}
-                </li>
-                <li>
-                  <em>완료·중복</em> {review.duplication}
-                </li>
-                <li>
-                  <em>구체성</em> {review.specificity}
-                </li>
-              </ul>
-              {review.comment ? <p className={styles.ReviewComment}>{review.comment}</p> : null}
+            <div className={styles.Review}>
+              <div className={styles.ReviewHead}>
+                <span className={styles.ReviewTitle}>공약 적정성 교차검증</span>
+                <span className={`${styles.Verdict} ${styles[review.verdict]}`}>
+                  {VERDICT_LABEL[review.verdict]}
+                </span>
+              </div>
+              <div className={styles.Criteria}>
+                {REVIEW_CRITERIA.map(({ key, label }) => {
+                  const { level, note } = splitCriterion(review[key]);
+                  return (
+                    <div key={key} className={styles.CritRow}>
+                      <span className={styles.CritLabel}>{label}</span>
+                      <span className={`${styles.Level} ${styles[levelTone(level)]}`}>{level}</span>
+                      <span className={styles.CritNote}>{note}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              {review.comment ? (
+                <p className={styles.ReviewComment}>
+                  <span className={styles.ReviewTag}>종합</span> {review.comment}
+                </p>
+              ) : null}
               {review.rebuttal ? (
                 <p className={styles.ReviewRebuttal}>
-                  <em>반론·재심</em> {review.rebuttal}
+                  <span className={styles.ReviewTag}>반론·재심</span> {review.rebuttal}
                 </p>
               ) : null}
             </div>

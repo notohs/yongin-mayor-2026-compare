@@ -1,5 +1,5 @@
 import type { Candidate, CandidateReview, ReviewVerdict } from '../data/types';
-import { tallyVerdicts } from '../data/types';
+import { splitCriterion, tallyVerdicts } from '../data/types';
 import CandidateBadge from './CandidateBadge';
 import SectionTitle from './SectionTitle';
 import styles from './PledgeReviewPanel.module.scss';
@@ -15,6 +15,19 @@ const VERDICT_LABEL: Record<ReviewVerdict, string> = {
   unsound: '부적정',
 };
 
+/** 평가 등급(상/중/하·없음/의심·구체적/보통/모호)을 색 톤으로 분류 */
+function levelTone(level: string): 'good' | 'mid' | 'bad' {
+  if (['상', '없음', '구체적'].includes(level)) return 'good';
+  if (['하', '의심', '모호'].includes(level)) return 'bad';
+  return 'mid';
+}
+
+const CRITERIA: { key: 'feasibility' | 'duplication' | 'specificity'; label: string }[] = [
+  { key: 'feasibility', label: '실현 가능성' },
+  { key: 'duplication', label: '완료·중복' },
+  { key: 'specificity', label: '구체성' },
+];
+
 /** 공약 적정성 교차검증 결과 패널 (인물·검증 화면 하단) */
 function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps) {
   if (!pledgeReviews) return null;
@@ -25,7 +38,7 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
     <section className={styles.PledgeReviewPanel}>
       <SectionTitle
         title="공약 적정성 교차검증"
-        description="각 후보의 5대 공약을 다른 정당 검증단이 ①실현 가능성 ②이미 완료·베끼기 여부 ③구체성 3가지 기준으로 교차 평가한 결과입니다. 참고용 의견이며, 최종 판단은 유권자의 몫입니다."
+        description="각 후보의 5대 공약을 다른 정당 검증단이 ①실현 가능성 ②이미 완료·베끼기 여부 ③구체성으로 평가하고, 해당 정당의 반론을 다시 다른 정당이 재심한 결과입니다. ‘공약’(임기 내 이행 약속)과 ‘목표’(장기 지향·초석)는 다른 기준으로 봅니다. 참고용 의견이며 최종 판단은 유권자의 몫입니다."
       />
       <div className={styles.Grid}>
         {reviewed.map((candidate) => {
@@ -38,41 +51,54 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
                 <div className={styles.HeadName}>
                   <strong>{candidate.name}</strong>
                   <span className={styles.Reviewer}>
-                    검증: {review.reviewer} · 출처: {review.source}
+                    검증 {review.reviewer} · 출처 {review.source}
                   </span>
                 </div>
                 <div className={styles.Tally}>
-                  <span className={`${styles.TallyChip} ${styles.sound}`}>적정 {tally.sound}</span>
-                  <span className={`${styles.TallyChip} ${styles.caution}`}>주의 {tally.caution}</span>
-                  <span className={`${styles.TallyChip} ${styles.unsound}`}>부적정 {tally.unsound}</span>
+                  <span className={`${styles.TallyChip} ${styles.good}`}>적정 {tally.sound}</span>
+                  <span className={`${styles.TallyChip} ${styles.mid}`}>주의 {tally.caution}</span>
+                  <span className={`${styles.TallyChip} ${styles.bad}`}>부적정 {tally.unsound}</span>
                 </div>
               </header>
 
               <ul className={styles.Items}>
                 {review.items.map((item) => (
-                  <li key={item.rank} className={`${styles.Item} ${styles[item.verdict]}`}>
+                  <li key={item.rank} className={styles.Item}>
                     <div className={styles.ItemTop}>
                       <span className={styles.Rank}>공약 {item.rank}</span>
+                      <span
+                        className={`${styles.Nature} ${
+                          item.nature === 'commitment' ? styles.commitment : styles.aspiration
+                        }`}
+                      >
+                        {item.nature === 'commitment' ? '공약' : '목표'}
+                      </span>
                       <span className={styles.ItemTitle}>{item.title}</span>
                       <span className={`${styles.Verdict} ${styles[item.verdict]}`}>
                         {VERDICT_LABEL[item.verdict]}
                       </span>
                     </div>
-                    <dl className={styles.Criteria}>
-                      <div>
-                        <dt>실현 가능성</dt>
-                        <dd>{item.feasibility}</dd>
-                      </div>
-                      <div>
-                        <dt>완료·중복</dt>
-                        <dd>{item.duplication}</dd>
-                      </div>
-                      <div>
-                        <dt>구체성</dt>
-                        <dd>{item.specificity}</dd>
-                      </div>
-                    </dl>
-                    {item.comment ? <p className={styles.Comment}>{item.comment}</p> : null}
+
+                    <div className={styles.Criteria}>
+                      {CRITERIA.map(({ key, label }) => {
+                        const { level, note } = splitCriterion(item[key]);
+                        return (
+                          <div key={key} className={styles.CritRow}>
+                            <span className={styles.CritLabel}>{label}</span>
+                            <span className={`${styles.Level} ${styles[levelTone(level)]}`}>
+                              {level}
+                            </span>
+                            <span className={styles.CritNote}>{note}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {item.comment ? (
+                      <p className={styles.Comment}>
+                        <span className={styles.CommentTag}>종합</span> {item.comment}
+                      </p>
+                    ) : null}
                     {item.rebuttal ? (
                       <p className={styles.Rebuttal}>
                         <span className={styles.RebuttalTag}>반론·재심</span> {item.rebuttal}

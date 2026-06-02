@@ -1,7 +1,7 @@
 import type { CandidateReview } from '../../types';
 
 // 공약 적정성 교차검증(타 정당, ①실현가능성 ②완료·중복 ③구체성) → 적정/주의/부적정.
-// 이후 해당 정당 반론(항변) + 타 정당 3명 재심(2명 이상 인용 시 한 단계 격상). verdict=최종 등급.
+// 항목은 공약(임기 내 이행) / 목표(장기 지향·초석)로 구분. 반론(항변)+타 정당 3명 재심 반영.
 export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 1. 현근택 — 검증: 개혁신당 ──
   1: {
@@ -11,6 +11,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 1,
         title: '용인 반도체 국가산단 삼성전자 1기 팹 조기 가동',
+        nature: 'commitment',
         feasibility: '중 — 삼성 투자결정·보상·전력/용수 등 외부 변수에 종속',
         duplication: '의심 — 2023년 지정된 국가산단 사업으로 현 시정에서 진행 중',
         specificity: '보통 — 상황실·협의체는 명시, 예산·협상 일정 미제시',
@@ -21,25 +22,28 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 2,
         title: '강남권 30분대, 출퇴근 교통혁명',
+        nature: 'aspiration',
         feasibility: '하 — 다수 광역철도는 10년 이상 국가사업, 임기 내 체감 곤란',
         duplication: '의심 — 이미 국가·경기도 철도계획에 반영된 사업의 재포장',
         specificity: '모호 — 노선별 사업비·일정·재원 분담 등 핵심 수치 부재',
         verdict: 'unsound',
-        comment: '대부분 계획된 국가사업 재포장이거나 권한 밖, ‘30분대’ 근거 미제시',
+        comment: '장기 철도망 목표를 ‘임기 내 30분대’처럼 제시 — 시 자체수단만으론 달성 불가한 과장',
         rebuttal: '반론 기각(재심 0/3) — 똑버스·광역버스 등 시 자체수단 항변에도 ‘30분대’가 국가·광역철도 신설에 의존, 핵심 수치 부재 미해소 → 부적정 유지',
       },
       {
         rank: 3,
         title: '‘용인형 에너지기본소득’ 도입',
+        nature: 'aspiration',
         feasibility: '중 — 분산에너지특화지역 지정은 산업부 소관, 단독 결정 불가',
         duplication: '없음 — 용인 고유 신규 구상',
         specificity: '모호 — ‘햇빛연금’ 지급액·대상·발전 규모 등 핵심 수치 미확정',
         verdict: 'caution',
-        comment: '발전→판매→지급 구조는 제시됐으나 지급 규모·재원 경로가 분산특구 지정에 종속',
+        comment: '발전→판매→지급 구조의 장기 구상은 참신하나 지급 규모·재원 경로가 분산특구 지정에 종속',
       },
       {
         rank: 4,
         title: '반도체 배후도시 연계 경제자유구역 지정',
+        nature: 'commitment',
         feasibility: '중 — 경제자유구역 지정은 산업부 심사 사항, 시장이 보증 불가',
         duplication: '의심 — 기존 시정에서도 추진된 계속 사업 성격',
         specificity: '보통 — 절차적 수단은 명시, 구역 범위·일정 등 계량목표 부재',
@@ -49,6 +53,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 5,
         title: '5,000억 원 규모 벤처 투자펀드 조성',
+        nature: 'commitment',
         feasibility: '중 — 구조는 가능하나 정부 모태펀드·민간 VC 유치는 의지만으로 곤란',
         duplication: '없음 — 직접 중복 미확인',
         specificity: '보통 — 출자주체·투자대상은 명시, 시 출자 규모는 의회 심의로 확정 예정',
@@ -66,6 +71,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 1,
         title: '글로벌 반도체 중심 도시 도약',
+        nature: 'commitment',
         feasibility: '중 — 인허가·전담조직은 권한 내, ‘글로벌 중심’은 민간 투자에 좌우',
         duplication: '의심 — 반도체고·아카데미 등 민선8기 사업이 원문에 명시',
         specificity: '보통 — 일부 신규 수치(대학원·1조 펀드) 있으나 핵심은 진행사업 연장',
@@ -76,6 +82,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 2,
         title: '교통 인프라 획기적 개선',
+        nature: 'commitment',
         feasibility: '중 — 광역·도시철도는 국비·국가계획 의존하나 일부는 자체 추진',
         duplication: '의심 — 일부는 민선8기 진행 사업',
         specificity: '구체적 — 노선별 연장(km)·차로·BC 등 수치 명기',
@@ -86,6 +93,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 3,
         title: '맞춤형 복지 등 생활밀착형 정책',
+        nature: 'commitment',
         feasibility: '중 — 통합돌봄·국공립 어린이집 등 권한 내 추진 가능',
         duplication: '일부 — 기존 사업 연속이나 신규 급여 항목 병행',
         specificity: '구체적 — 임신지원금 30→100만원 등 대상·급여 특정',
@@ -96,6 +104,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 4,
         title: '지역경제 활성화',
+        nature: 'commitment',
         feasibility: '중 — 소상공인·전통시장·지역화폐는 권한 내 추진 가능',
         duplication: '의심 — ‘민선9기에도 계속 확대’ 등 기존 사업 연속임을 원문이 명시',
         specificity: '보통 — 일부 신규 수치(보증 상향)는 있으나 확대 목표치 부재',
@@ -106,6 +115,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 5,
         title: '안전하고 미래를 준비하는 교육도시',
+        nature: 'commitment',
         feasibility: '중 — 통학로·돌봄은 권한 내, AI 예술융합고는 교육청 소관',
         duplication: '의심 — AI 예술융합고·반도체고 등 민선8기에 이미 착수',
         specificity: '보통 — 반도체고 국비 50억은 명기, AI예술고 재원·시기 미기재',
@@ -124,6 +134,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 1,
         title: '시간과 번거로움을 줄이는 대중교통',
+        nature: 'commitment',
         feasibility: '중 — 노선 재편은 권한 내, 철도 신설은 국가·경기도 결정',
         duplication: '의심 — 타 후보(이상일·현근택)와 유사 공약으로 차별성 낮음',
         specificity: '보통 — 방향은 제시, 노선명·투자 규모·시점 미명시',
@@ -134,6 +145,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 2,
         title: '복합문화거점 “머무는 용인”',
+        nature: 'commitment',
         feasibility: '중 — 기본계획은 가능하나 K팝 공연장은 국비·민간투자에 좌우',
         duplication: '없음 — 문화·관광 특화 거점을 독립 공약으로 내건 유일 후보',
         specificity: '보통 — 콘셉트는 제시, 입지·규모·운영주체 미확정',
@@ -144,6 +156,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 3,
         title: '반도체는 세계로, 일자리는 시민에게',
+        nature: 'commitment',
         feasibility: '중 — 인재양성센터는 가능, 대기업 참여·국가 공모는 의지만으로 곤란',
         duplication: '의심 — 현직·타 후보 공약과 취지 공유',
         specificity: '보통 — 설립·인턴십은 구체, 양성 인원·협약 여부 미제시',
@@ -154,16 +167,18 @@ export const pledgeReviews: Record<number, CandidateReview> = {
       {
         rank: 4,
         title: '용인 “특례”시, 권한을 키우겠습니다',
+        nature: 'aspiration',
         feasibility: '중 — 권한 확대 자체는 국회 입법 사안이나 즉시 가능한 행정 수단 병행',
         duplication: '없음 — 차별성은 인정',
         specificity: '보통 — 특례시협의회 공동대응·전담조직·구 권한확대(조례) 등 즉시수단 명시',
         verdict: 'caution',
-        comment: '핵심 권한 이양은 입법 사안이나 시장 권한 내 추진 수단이 일부 존재',
+        comment: '핵심 권한 이양은 장기 입법 과제이나 시장 권한 내 추진 수단(협의회·조례)이 일부 존재',
         rebuttal: '반론 인용(재심 2/3) — 특례시협의회 공동대응·전담조직 확대·구 권한확대(조례) 등 입법 외 즉시수단 제시 확인 → 부적정→주의 격상(핵심 권한확대는 입법 사안 잔존)',
       },
       {
         rank: 5,
         title: '살기 좋은 주거의 기준, 용인',
+        nature: 'commitment',
         feasibility: '중 — 건축 조례로 일부 가능, 법정 기준 초과 강제는 상위법 충돌 가능',
         duplication: '없음 — 주거 품질 기준 강화를 독립 공약으로 제시한 유일 후보',
         specificity: '구체적 — 층간소음·열교환효율·필터 기준·인증제 등 방법론 구체',

@@ -111,13 +111,23 @@ export interface BulletinData {
 /** 공약 적정성 종합 판정 */
 export type ReviewVerdict = 'sound' | 'caution' | 'unsound'; // 적정 / 주의 / 부적정
 
+/**
+ * 공약의 성격 — 평가 기준이 다르다.
+ * commitment(공약): "임기 내에 ~하겠다"는 실행 약속 → 임기 내 이행 가능성으로 평가.
+ * aspiration(목표): "언젠가 ~되도록 초석을 다지겠다"는 장기 지향 → 임기 내 미달성으로 깎지 않되,
+ *   장기 비전을 '임기 내 성과'처럼 과장했는지 / 초석 단계가 구체적인지로 평가.
+ */
+export type PledgeNature = 'commitment' | 'aspiration';
+
 /** 5대 공약 1건에 대한 타 정당 교차 적정성 평가 */
 export interface PledgeReviewItem {
   /** 대응하는 5대 공약 rank */
   rank: number;
   /** 공약 제목(참조) */
   title: string;
-  /** 실현 가능성 평가 (한 줄, 근거 포함) */
+  /** 공약 성격 — 공약(임기 내 이행) / 목표(장기 지향·초석). 평가 기준이 다름 */
+  nature: PledgeNature;
+  /** 실현 가능성 평가 — "등급 — 근거" 형식(등급=상/중/하) */
   feasibility: string;
   /** 이미 완료/중복(베끼기) 여부 평가 (한 줄, 근거 포함) */
   duplication: string;
@@ -139,6 +149,13 @@ export interface CandidateReview {
   source: string;
   /** 5대 공약별 평가 */
   items: PledgeReviewItem[];
+}
+
+/** "등급 — 근거" 문자열을 등급(badge)과 근거(text)로 분리 */
+export function splitCriterion(value: string): { level: string; note: string } {
+  const idx = value.indexOf('—');
+  if (idx < 0) return { level: '', note: value.trim() };
+  return { level: value.slice(0, idx).trim(), note: value.slice(idx + 1).trim() };
 }
 
 /** items에서 적정/주의/부적정 개수를 집계 (수동 동기화 footgun 제거) */

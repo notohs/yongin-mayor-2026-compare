@@ -21,10 +21,7 @@ function PledgeBoard({ candidates, pledgeReviews }: PledgeBoardProps) {
       <div className={styles.Columns}>
         {candidates.map((candidate) => (
           <section key={candidate.id} className={styles.Column}>
-            <header
-              className={styles.ColumnHead}
-              style={{ borderTopColor: candidate.partyColor }}
-            >
+            <header className={styles.ColumnHead}>
               <CandidateBadge id={candidate.id} color={candidate.partyColor} size="sm" />
               <div className={styles.ColumnHeadText}>
                 <span className={styles.ColumnName}>{candidate.name}</span>
