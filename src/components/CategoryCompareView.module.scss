@@ -6,121 +6,24 @@
   gap: $space-lg;
 }
 
-.Chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-xs;
-}
-
-.Chip {
-  border: none;
-  background-color: $color-surface;
-  color: $color-text-sub;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 9px 14px;
-  border-radius: $radius-pill;
-  box-shadow: $shadow-sm;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
-
-  &:hover {
-    color: $color-text;
-  }
-}
-
-.chipActive {
-  background-color: $color-text;
-  color: #fff;
-  box-shadow: $shadow-md;
-}
-
-.Columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-md;
-  align-items: start;
-}
-
-.Column {
-  background-color: $color-surface;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  overflow: hidden;
-}
-
-.ColumnHead {
-  display: flex;
-  align-items: center;
-  gap: $space-sm;
-  border-top: 4px solid $color-border;
-  padding: $space-sm $space-md;
-  background-color: $color-surface-muted;
-}
-
-.ColumnHeadText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.ColumnName {
-  font-size: 16px;
-  font-weight: 800;
-  color: $color-text;
-}
-
-.ColumnParty {
-  font-size: 12px;
-  color: $color-text-sub;
-}
-
-.Body {
-  display: flex;
-  flex-direction: column;
-  gap: $space-md;
-  padding: $space-md;
-}
-
 .Empty {
-  padding: $space-lg $space-md;
-  font-size: 14px;
   color: $color-text-faint;
-  text-align: center;
 }
 
-.Block {
+.Cell {
   display: flex;
   flex-direction: column;
-  gap: $space-xs;
+  gap: 10px;
 }
 
-.BlockLabel {
-  font-size: 12px;
-  font-weight: 700;
-  color: $color-text-faint;
-  letter-spacing: 0.01em;
-}
-
-.CoreList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.CoreItem {
+.Pledge {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 14.5px;
-  font-weight: 600;
-  color: $color-text;
-  line-height: 1.5;
+  align-items: flex-start;
 }
 
-.CoreBadge {
-  align-self: flex-start;
+.Badge {
   color: #fff;
   font-size: 11px;
   font-weight: 700;
@@ -128,34 +31,46 @@
   border-radius: $radius-sm;
 }
 
+.PledgeTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: 1.45;
+}
+
+.Group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.GroupLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
 .ItemList {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 
   li {
     position: relative;
-    padding-left: 13px;
-    font-size: 13.5px;
+    padding-left: 12px;
+    font-size: 13px;
     color: $color-text;
-    line-height: 1.55;
+    line-height: 1.5;
 
     &::before {
       content: '';
       position: absolute;
       left: 0;
       top: 8px;
-      width: 4px;
-      height: 4px;
+      width: 3px;
+      height: 3px;
       border-radius: 50%;
       background-color: $color-text-faint;
     }
-  }
-}
-
-@media (max-width: $bp-tablet) {
-  .Columns {
-    grid-template-columns: 1fr;
-    gap: $space-md;
   }
 }

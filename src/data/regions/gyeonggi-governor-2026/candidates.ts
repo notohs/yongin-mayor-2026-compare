@@ -8,7 +8,7 @@ export const candidates: Candidate[] = [
     name: '추미애',
     party: '더불어민주당',
     partyColor: '#152484',
-    slogan: '해본 사람, 해낸 사람',
+    slogan: '당당한 경기! 든든한 추미애',
     vision:
       '입법·사법·행정을 두루 경험한 후보. 수도권 30분 출근과 K-반도체로 “대한민국 경제 1번지” 경기를 내세움.',
     birth: '1958.10.23',
@@ -17,7 +17,7 @@ export const candidates: Candidate[] = [
     job: '정당인',
     education: '한양대학교 법학과 졸업',
     careers: ['前 더불어민주당 당대표', '前 국회 법제사법위원회 위원장'],
-    poster: '',
+    poster: 'posters/gyeonggi-1.jpg',
     pledges: [
       {
         rank: 1,
@@ -115,7 +115,7 @@ export const candidates: Candidate[] = [
     job: '정당인',
     education: '서울과학종합대학원대학교 졸업(경영학박사)',
     careers: ['現 국민의힘 최고위원', '現 국민의힘 반도체·AI 첨단산업특별위원장'],
-    poster: '',
+    poster: 'posters/gyeonggi-2.jpg',
     pledges: [
       {
         rank: 1,
@@ -212,7 +212,7 @@ export const candidates: Candidate[] = [
     job: '정당인',
     education: '서울대학교 법과대학 공법학과 졸업(법학사)',
     careers: ['前 제20·21대 국회의원(남양주갑)', '前 청와대 공직기강비서관', '前 검사'],
-    poster: '',
+    poster: 'posters/gyeonggi-4.jpg',
     pledges: [
       {
         rank: 1,
@@ -305,7 +305,7 @@ export const candidates: Candidate[] = [
     job: '정당인',
     education: '서울대학교 대학원 정치학과 졸업',
     careers: ['前 진보당 수석대변인', '現 화성노동인권센터 소장'],
-    poster: '',
+    poster: 'posters/gyeonggi-5.jpg',
     pledges: [
       {
         rank: 1,
@@ -399,7 +399,7 @@ export const candidates: Candidate[] = [
     job: '(주)서현건설 대표이사',
     education: '경기대학교 정치전문대학원 정치법학과 졸업(정치학박사)',
     careers: ['現 국민연합 당대표', '前 제6대 경기도의회 의원', '前 단국대학교 초빙교수'],
-    poster: '',
+    poster: 'posters/gyeonggi-6.jpg',
     pledges: [
       {
         rank: 1,

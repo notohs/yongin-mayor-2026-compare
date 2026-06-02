@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import type { BulletinData, Candidate, PledgeCategory } from '../data/types';
 import { CATEGORY_META } from '../data/categories';
-import CandidateBadge from './CandidateBadge';
+import CompareGrid, { type CompareRow } from './CompareGrid';
 import SectionTitle from './SectionTitle';
 import styles from './CategoryCompareView.module.scss';
 
@@ -21,7 +20,7 @@ const CATEGORY_ORDER: PledgeCategory[] = [
   'housing',
 ];
 
-/** 분야별로 5대 공약 + 선거공보 공약을 후보 3인 나란히 비교 */
+/** 분야(행) × 후보(열) 통합 비교 표. 분야별 5대 공약 + 선거공보 세부 공약을 한 화면에 나란히. */
 function CategoryCompareView({ candidates, bulletinPolicies }: CategoryCompareViewProps) {
   const corePledges = (candidate: Candidate, category: PledgeCategory) =>
     candidate.pledges.filter((pledge) => pledge.category === category);
@@ -32,98 +31,55 @@ function CategoryCompareView({ candidates, bulletinPolicies }: CategoryCompareVi
   const hasContent = (candidate: Candidate, category: PledgeCategory) =>
     corePledges(candidate, category).length > 0 || bulletinGroups(candidate, category).length > 0;
 
-  const availableCategories = CATEGORY_ORDER.filter((category) =>
+  const rows: CompareRow[] = CATEGORY_ORDER.filter((category) =>
     candidates.some((candidate) => hasContent(candidate, category)),
-  );
-
-  const [active, setActive] = useState<PledgeCategory>(availableCategories[0]);
-  const activeCategory = availableCategories.includes(active) ? active : availableCategories[0];
+  ).map((category) => {
+    const meta = CATEGORY_META[category];
+    return {
+      key: category,
+      label: `${meta.icon} ${meta.label}`,
+      render: (candidate) => {
+        const core = corePledges(candidate, category);
+        const groups = bulletinGroups(candidate, category);
+        if (core.length === 0 && groups.length === 0) {
+          return <span className={styles.Empty}>—</span>;
+        }
+        return (
+          <div className={styles.Cell}>
+            {core.map((pledge) => (
+              <div key={pledge.rank} className={styles.Pledge}>
+                <span
+                  className={styles.Badge}
+                  style={{ backgroundColor: candidate.partyColor }}
+                >
+                  공약 {pledge.rank}
+                </span>
+                <span className={styles.PledgeTitle}>{pledge.title}</span>
+              </div>
+            ))}
+            {groups.map((group) => (
+              <div key={group.field} className={styles.Group}>
+                <span className={styles.GroupLabel}>선거공보 · {group.field}</span>
+                <ul className={styles.ItemList}>
+                  {group.items.slice(0, 6).map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        );
+      },
+    };
+  });
 
   return (
     <div className={styles.CategoryCompareView}>
       <SectionTitle
         title="분야별 정면 비교"
-        description="분야를 고르면 후보별 5대 공약과 선거공보 세부 공약을 나란히 볼 수 있습니다."
+        description="분야별로 후보의 5대 공약과 선거공보 세부 공약을 한 표에서 나란히 비교합니다. (가로로 스크롤하면 모든 후보를 볼 수 있어요.)"
       />
-
-      <div className={styles.Chips} role="tablist">
-        {availableCategories.map((category) => {
-          const meta = CATEGORY_META[category];
-          const isActive = category === activeCategory;
-          return (
-            <button
-              key={category}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              className={`${styles.Chip} ${isActive ? styles.chipActive : ''}`}
-              onClick={() => setActive(category)}
-            >
-              <span aria-hidden>{meta.icon}</span> {meta.label}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className={styles.Columns}>
-        {candidates.map((candidate) => {
-          const core = corePledges(candidate, activeCategory);
-          const groups = bulletinGroups(candidate, activeCategory);
-          const empty = core.length === 0 && groups.length === 0;
-          return (
-            <section key={candidate.id} className={styles.Column}>
-              <header
-                className={styles.ColumnHead}
-                style={{ borderTopColor: candidate.partyColor }}
-              >
-                <CandidateBadge id={candidate.id} color={candidate.partyColor} size="sm" />
-                <div className={styles.ColumnHeadText}>
-                  <span className={styles.ColumnName}>{candidate.name}</span>
-                  <span className={styles.ColumnParty}>{candidate.party}</span>
-                </div>
-              </header>
-
-              {empty ? (
-                <p className={styles.Empty}>이 분야 관련 공약 없음</p>
-              ) : (
-                <div className={styles.Body}>
-                  {core.length > 0 ? (
-                    <div className={styles.Block}>
-                      <span className={styles.BlockLabel}>5대 공약</span>
-                      <ul className={styles.CoreList}>
-                        {core.map((pledge) => (
-                          <li key={pledge.rank} className={styles.CoreItem}>
-                            <span
-                              className={styles.CoreBadge}
-                              style={{ backgroundColor: candidate.partyColor }}
-                            >
-                              공약 {pledge.rank}
-                            </span>
-                            {pledge.title}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-
-                  {groups.map((group) => (
-                    <div key={group.field} className={styles.Block}>
-                      <span className={styles.BlockLabel}>
-                        선거공보 · {group.field}
-                      </span>
-                      <ul className={styles.ItemList}>
-                        {group.items.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-          );
-        })}
-      </div>
+      <CompareGrid candidates={candidates} rows={rows} />
     </div>
   );
 }
