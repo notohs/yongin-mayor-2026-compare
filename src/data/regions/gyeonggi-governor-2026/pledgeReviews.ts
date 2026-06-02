@@ -1,15 +1,14 @@
 import type { CandidateReview } from '../../types';
 
-// 공약 적정성 교차검증: 각 후보의 5대 공약을 '타 정당' 당직자 관점에서
-// ①실현 가능성 ②완료·중복(베끼기) 여부 ③구체성 3기준으로 평가하고 종합 판정한 결과.
-// (정파적 비방이 아닌 근거 기반 평가를 지향. 의심 정황은 '의심'으로 표기.)
+// 공약 적정성 교차검증: 각 후보의 5대 공약을 '타 정당' 당직자가
+// ①실현 가능성 ②완료·중복(베끼기) ③구체성 3기준으로 평가 → 적정/주의/부적정.
+// 이후 해당 정당의 반론(항변)을 받아 '타 정당 3명' 재심(2명 이상 인용 시 한 단계 격상).
+// verdict는 반론·재심까지 반영된 '최종 등급'. comment=분류 근거, rebuttal=항변·재심 결과, source=출처.
 export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 1. 추미애 — 검증: 국민의힘 ──
   1: {
     reviewer: '국민의힘',
-    sound: 2,
-    caution: 3,
-    unsound: 0,
+    source: '선거공보 「당당한 경기! 든든한 추미애」 · 5대공약서',
     items: [
       {
         rank: 1,
@@ -19,6 +18,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — ‘30분’ 목표의 수치 근거(단축 시간 등) 미제시',
         verdict: 'caution',
         comment: '방향은 타당하나 도지사 권한을 벗어난 사항이 다수이고 진행 중 사업을 재포장한 측면',
+        rebuttal: '반론 기각(재심 0/3) — GTX 노선별 역할 구분 항변에도 ‘30분’ 수치 근거 부족·국가권한 의존 미해소 → 주의 유지',
       },
       {
         rank: 2,
@@ -26,8 +26,9 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         feasibility: '중 — 1기 신도시 재건축은 국토부 특별법 사안, 도는 행정 지원에 국한',
         duplication: '의심 — 3기 신도시·재건축은 현 정부·전임 도정 정책과 중복',
         specificity: '보통 — 공급 물량·세대수 등 정량 목표 미제시',
-        verdict: 'caution',
-        comment: '권한 범위와 기존 사업 대비 차별성이 불분명',
+        verdict: 'sound',
+        comment: '권한 범위와 기존 사업 대비 차별성이 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 3/3) — 도 역할을 인허가지원·코디네이터로 한정, GH 공사채·리츠 독자재원, 공보 「공공주택 55만호」 정량목표 확인 → 주의→적정 격상',
       },
       {
         rank: 3,
@@ -37,6 +38,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 투자 규모·고용 목표 등 수치 부재',
         verdict: 'caution',
         comment: '국가 주도 사업을 재포장한 측면, 독자 권한 범위가 제한적',
+        rebuttal: '반론 기각(재심 0/3) — 상설협의체·연계보완 항변에도 핵심이 국가권한 의존·투자/고용 수치 부재 미해소 → 주의 유지',
       },
       {
         rank: 4,
@@ -62,18 +64,17 @@ export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 2. 양향자 — 검증: 더불어민주당 ──
   2: {
     reviewer: '더불어민주당',
-    sound: 0,
-    caution: 4,
-    unsound: 1,
+    source: '선거공약서 「양향자의 돈 버는 경기도」 · 5대공약서',
     items: [
       {
         rank: 1,
         title: 'AI·반도체 중심 대전환으로 도민 1인당 GRDP 1억원 시대',
-        feasibility: '하 — 4,700만원→1억원(2배+)의 성장 경로·재원 근거 부재, 핵심 권한은 국가',
+        feasibility: '하 — 4,700만원→1억원(2배+)의 성장 경로·계량모델 근거 부재, 핵심 권한은 국가',
         duplication: '의심 — 용인 국가산단 등 기존 국정과제와 중복',
-        specificity: '모호 — GRDP 1억·일자리 10만개의 산출 근거·고용 경로 미설명',
+        specificity: '모호 — GRDP 1억·일자리 10만개의 산출 근거(고용승수 등) 미설명',
         verdict: 'unsound',
-        comment: '목표 수치는 대담하나 이행 경로·재원·담당 주체의 구체성이 부족',
+        comment: '목표 수치는 대담하나 이행 경로·재원·달성 근거의 구체성이 부족',
+        rebuttal: '반론 기각(재심 0/3) — +750조 영역별 분해는 있으나 GRDP 1억 달성 계량모델 근거 부재 미해소 → 부적정 유지',
       },
       {
         rank: 2,
@@ -82,25 +83,28 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         duplication: '의심 — 국가 반도체 인재양성 사업과 중복 가능',
         specificity: '보통 — 대학 실명·아카데미 운영방식 제시, 시기·예산·인원 미제시',
         verdict: 'caution',
-        comment: '방향은 적절하나 해외대학 유치의 현실성에 의문',
+        comment: '도 권한 내 항목(반도체 아카데미·바우처)은 타당하나 해외대학 유치의 현실성에 의문',
+        rebuttal: '반론 기각(재심 1/3) — 해외대학 유치 권한 밖 미해소(후보도 주의 유지 수용) → 주의 유지',
       },
       {
         rank: 3,
         title: '빠르고 편리한 Door-to-Door 교통체계 구축',
         feasibility: '중 — 실리콘 하이웨이 신설은 대규모 국비·국토부 협의 전제',
-        duplication: '의심 — 기존 도정·국정과제와 목표·수단이 거의 동일',
-        specificity: '보통 — 노선명은 구체, 비용·기간·우선순위 근거 미흡',
-        verdict: 'caution',
-        comment: '기존 정책 계승 항목이 다수이고 신규성이 제한적',
+        duplication: '의심 — 기존 도정·국정과제와 목표·수단이 일부 중복',
+        specificity: '보통 — 노선명 구체, 비용·기간 근거는 보완 필요',
+        verdict: 'sound',
+        comment: '재원·노선의 구체성이 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 3/3) — 재원 유형별 분리(국가사업 국비/생활교통 도비·민자)·실리콘하이웨이 노선 구체·DRT·스테이션+ 신규수단 확인 → 주의→적정 격상',
       },
       {
         rank: 4,
         title: '‘살고 싶은 집’ 수요 맞춤형 주거 공급·서민 주거안정',
-        feasibility: '중 — 공급 주체(LH·국토부)가 도지사 통제 밖, 일부 행·재정 지원만 가능',
-        duplication: '의심 — 전세사기 예방·재건축 지원·공공임대 확대는 현 정부 정책과 중복',
-        specificity: '보통 — 브랜드 명칭은 있으나 공급 호수·예산·지역 미제시',
-        verdict: 'caution',
-        comment: '차별화가 불분명하고 핵심 공급 주체가 도지사 권한 밖',
+        feasibility: '중 — 일부 공급 주체는 LH·국토부, 그러나 도 고유 제도는 자체 추진 가능',
+        duplication: '의심 — 일부 항목은 현 정부 정책과 중복',
+        specificity: '보통 — 브랜드 명칭+제도 제시',
+        verdict: 'sound',
+        comment: '공급 주체·차별화가 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 2/3) — 협력개발 방식 명시, ‘신뢰 빌라 인증제’·‘전세사기 사전진단’ 등 도 고유 신규제도 확인 → 주의→적정 격상',
       },
       {
         rank: 5,
@@ -110,6 +114,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 플랫폼 명칭은 구체, 대상·예산·재원 총액 미제시',
         verdict: 'caution',
         comment: '보편 디지털바우처의 재정 부담·지속가능성 검증, 중복 정비 필요',
+        rebuttal: '반론 기각(재심 1/3) — 공보 「모든 도민 AI·OTT 무료」 슬로건과 ‘선별지원’ 항변이 상충, 재원 총액 미제시 미해소 → 주의 유지',
       },
     ],
   },
@@ -117,9 +122,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 4. 조응천 — 검증: 진보당 ──
   4: {
     reviewer: '진보당',
-    sound: 2,
-    caution: 2,
-    unsound: 1,
+    source: '5대공약서(분야별 세부 이행방안)',
     items: [
       {
         rank: 1,
@@ -129,6 +132,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '구체적 — 3개월·1년·임기 중 단계별 일정과 협의체 명시',
         verdict: 'caution',
         comment: '단기 조치는 현실적이나 신도시 재정비는 단독 추진 한계',
+        rebuttal: '반론 기각(재심 1/3) — 신도시 재정비의 중앙·조합 협력 의존 미해소 → 주의 유지',
       },
       {
         rank: 2,
@@ -136,17 +140,19 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         feasibility: '중 — 강변북로 지하화·반도체 익스프레스는 국가계획 반영 요청 단계',
         duplication: '없음 — 캐치버스·반도체 익스프레스 등 독자 방안 포함',
         specificity: '구체적 — 노선 구간·연계 지역·재원 방식 명기',
-        verdict: 'caution',
-        comment: '단기 조치와 장기 국가계획 사업이 혼재',
+        verdict: 'sound',
+        comment: '단기·장기 사업 혼재가 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 2/3) — 단기(3개월 GTX대응본부)·1년(국가계획 반영요청) 목표 구분, 재원 사업별 명시 확인 → 주의→적정 격상',
       },
       {
         rank: 3,
         title: '첨단경제 중심 산업·규제 정책(경기남부국제공항 등)',
-        feasibility: '하 — 국제공항은 국토부 주관 국가사업, 임기 목표는 ‘예타 착수’에 불과',
+        feasibility: '하 — 국제공항은 국토부 주관 국가사업, 임기 목표는 ‘예타 착수’',
         duplication: '없음 — 독자 제안',
-        specificity: '보통 — 위치·규모·노선 등 공항 핵심 사양 미제시',
-        verdict: 'unsound',
-        comment: '‘공항 신설’을 전면에 내세웠으나 실제 목표는 예타 착수로 명칭-내용 괴리가 큼',
+        specificity: '보통 — 위치·규모 등 공항 핵심 사양 미제시',
+        verdict: 'caution',
+        comment: '‘공항 신설’ 표제와 실제 목표(예타 착수) 간 표현 격차가 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 3/3) — 원문 이행기간이 「예타 착수: 임기 중」으로 명시(신설완료 주장 아님)·입지방향(반도체벨트 연결) 제시 확인 → 부적정→주의 격상',
       },
       {
         rank: 4,
@@ -162,7 +168,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         title: '시민 맞춤 정책(AI 민원행정·1인 가구 안전망)',
         feasibility: '상 — AI 민원센터·느린창구·1인가구 센터 모두 도지사 행정권한 내',
         duplication: '없음 — 직접 중복 없음',
-        specificity: '보통 — 시범→확대 일정 명시, 일부 본문은 원칙적 서술',
+        specificity: '보통 — 시범→확대 일정 명시',
         verdict: 'sound',
         comment: '도지사 고유 행정권한 내 저비용 실현 가능',
       },
@@ -172,18 +178,17 @@ export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 5. 홍성규 — 검증: 국민연합 ──
   5: {
     reviewer: '국민연합',
-    sound: 1,
-    caution: 3,
-    unsound: 1,
+    source: '5대공약서(세부 이행방안) · 선거공보',
     items: [
       {
         rank: 1,
         title: '‘노동부지사’ 임명, 노·정교섭 정례화',
-        feasibility: '중 — 부지사 임명은 가능하나 5인 미만 근로기준법 적용은 국회 입법 사안',
+        feasibility: '중 — 노동부지사 임명은 가능하나 5인 미만 근로기준법 적용은 국회 입법 사안',
         duplication: '없음 — 기존 도 정책과 직접 중복 미확인',
         specificity: '보통 — 인프라 개선은 구체, 재원은 ‘법 개정·기금 재편’으로 모호',
         verdict: 'caution',
         comment: '도 권한 내 항목과 입법 필요 항목이 혼재, 재원 구체성 부족',
+        rebuttal: '반론 기각(재심 0/3) — 노란봉투법·근로기준법 개정 등 핵심이 국회 입법 의존 미해소 → 주의 유지',
       },
       {
         rank: 2,
@@ -202,15 +207,17 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 아이돌봄센터는 구체, 다수 항목은 추상적 표현 병존',
         verdict: 'caution',
         comment: '핵심이 입법 전제인데 ‘당선 직후 시행’으로 일정이 과장됨',
+        rebuttal: '반론 기각(재심 1/3) — 돌봄3법 제정을 이행방법에 직접 기재, 입법 의존 구조 미해소 → 주의 유지',
       },
       {
         rank: 4,
         title: '‘경기공공은행’ 설립으로 지역경제 선순환',
-        feasibility: '하 — 은행 인가는 금융위 소관, 지자체 단독 은행 설립은 현행법상 불가',
+        feasibility: '중 — 단독 은행 인가는 금융위 소관이나, 출자·출연기관·지역금융기관 연계로 우회 가능',
         duplication: '없음 — 단 지역화폐는 이미 운영 중',
-        specificity: '모호 — 자본 규모·설립 재원·인가 방식 등 핵심 미제시',
-        verdict: 'unsound',
-        comment: '현행법상 도지사 단독 추진이 불가능한 사업, 실행 구조·재원 불명확',
+        specificity: '모호 — 자본 규모·설립 재원 등 핵심 미제시(약점 잔존)',
+        verdict: 'caution',
+        comment: '단독 은행 설립은 현행법상 제약이 크나 우회 경로가 일부 제시됨',
+        rebuttal: '반론 인용(재심 2/3) — 지자체 출자·출연기관 및 지역금융기관 연계(원문 「지역금융기관과 협력」)·지역재투자법 병행 제시 → 부적정→주의 격상(단 자본규모 미제시 약점 잔존)',
       },
       {
         rank: 5,
@@ -219,7 +226,8 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         duplication: '없음 — 경기도 차별금지조례 미제정 상태',
         specificity: '보통 — 일부 항목 구체, 조례·입법의 현실 경로 설명 부족',
         verdict: 'caution',
-        comment: '단독 추진 가능 영역과 의결·입법 필요 영역이 혼재, 시행 일정 과장',
+        comment: '단독 추진 가능 영역과 의결·국회 입법 필요 영역이 혼재, 시행 일정 과장',
+        rebuttal: '반론 기각(재심 1/3) — ‘차별금지법 제정’ 등 중앙입법이 핵심에 혼재 미해소 → 주의 유지',
       },
     ],
   },
@@ -227,9 +235,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 6. 김현욱 — 검증: 개혁신당 ──
   6: {
     reviewer: '개혁신당',
-    sound: 0,
-    caution: 0,
-    unsound: 5,
+    source: '5대공약서',
     items: [
       {
         rank: 1,
@@ -239,6 +245,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '모호 — 이행수단이 ‘국민주권 실현’ 구호에 그침',
         verdict: 'unsound',
         comment: '도지사 권한을 현저히 초과하는 국가 입법 사안, 이행수단 부재',
+        rebuttal: '반론 기각(재심 0/3) — 국회법 개정이 핵심·‘도 조례 시범’은 원문에 없는 사후 축소해석 → 부적정 유지',
       },
       {
         rank: 2,
@@ -248,6 +255,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '모호 — 임기 내 단계별 로드맵·전환 비용 고려 전무',
         verdict: 'unsound',
         comment: '도지사 권한 밖의 전국 단위 개혁, 이행 경로가 사실상 없음',
+        rebuttal: '반론 기각(재심 0/3) — 「전국 70여개 지정시 통합」은 권한 밖, 후보도 임기내 실현성 낮음 자인 → 부적정 유지',
       },
       {
         rank: 3,
@@ -257,6 +265,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '모호 — 임기 내 단계·재원 계획 전무',
         verdict: 'unsound',
         comment: '국가 법률 개정 없이 기초단체장 지휘 편입할 법적 근거 없음',
+        rebuttal: '반론 기각(재심 0/3) — 경찰의 기초단체장 지휘는 경찰법 개정 필요(후보 자인) → 부적정 유지',
       },
       {
         rank: 4,
@@ -266,6 +275,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '모호 — 재원이 미실현 공약(통폐합 절감액)에 순환 의존',
         verdict: 'unsound',
         comment: '재원 근거가 다른 미실현 공약에 의존, 재정 계획 부재',
+        rebuttal: '반론 기각(재심 1/3) — ‘사각지대 한정’ 항변에도 재원이 미실현 공약(통폐합)에 순환의존 미해소 → 부적정 유지',
       },
       {
         rank: 5,
@@ -275,6 +285,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '모호 — 공급 물량·재원·방식 수치 전무',
         verdict: 'unsound',
         comment: '‘무상’ 명칭에 걸맞은 재정 계획이 없어 실현 가능한 공약으로 보기 어려움',
+        rebuttal: '반론 기각(재심 0/3) — 「분양주택 폐지」는 국가 입법·무상 재원계획 부재, ‘장기 공공임대’는 원문과 다른 사후 재해석 → 부적정 유지',
       },
     ],
   },

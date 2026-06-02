@@ -117,28 +117,41 @@ export interface PledgeReviewItem {
   rank: number;
   /** 공약 제목(참조) */
   title: string;
-  /** 실현 가능성 평가 (한 줄) */
+  /** 실현 가능성 평가 (한 줄, 근거 포함) */
   feasibility: string;
-  /** 이미 완료/중복(베끼기) 여부 평가 (한 줄) */
+  /** 이미 완료/중복(베끼기) 여부 평가 (한 줄, 근거 포함) */
   duplication: string;
-  /** 구체성 평가 (한 줄) */
+  /** 구체성 평가 (한 줄, 근거 포함) */
   specificity: string;
-  /** 종합 판정 */
+  /** 종합 판정 (반론·재심 반영된 최종 등급) */
   verdict: ReviewVerdict;
-  /** 종합 사유 (한 줄) */
+  /** 종합 사유 (한 줄) — 주의·부적정 분류의 핵심 근거 */
   comment: string;
+  /** 반론권(항변)·재심 결과 (있으면 표시). 격상/유지 사유 */
+  rebuttal?: string;
 }
 
-/** 후보자 공약 적정성 교차검증 묶음 */
+/** 후보자 공약 적정성 교차검증 묶음 (집계는 items에서 자동 계산) */
 export interface CandidateReview {
   /** 검증을 수행한 (타) 정당 */
   reviewer: string;
-  /** 종합 집계 */
+  /** 평가 출처(후보가 제출한 공식 자료) — 근거 명시용 */
+  source: string;
+  /** 5대 공약별 평가 */
+  items: PledgeReviewItem[];
+}
+
+/** items에서 적정/주의/부적정 개수를 집계 (수동 동기화 footgun 제거) */
+export function tallyVerdicts(items: PledgeReviewItem[]): {
   sound: number;
   caution: number;
   unsound: number;
-  /** 5대 공약별 평가 */
-  items: PledgeReviewItem[];
+} {
+  return {
+    sound: items.filter((it) => it.verdict === 'sound').length,
+    caution: items.filter((it) => it.verdict === 'caution').length,
+    unsound: items.filter((it) => it.verdict === 'unsound').length,
+  };
 }
 
 /**

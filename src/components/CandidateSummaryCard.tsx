@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Candidate, CandidateReview } from '../data/types';
+import { tallyVerdicts } from '../data/types';
 import { formatMoney } from '../utils/format';
 import CandidateBadge from './CandidateBadge';
 import StatusChip from './StatusChip';
@@ -73,13 +74,15 @@ function CandidateSummaryCard({ candidate, review, onOpenDetail, index = 0 }: Ca
                 : '자료 3종 제출'
             }
           />
-          {review && review.unsound > 0 ? (
-            <StatusChip tone="danger" label={`공약 검증 부적정 ${review.unsound}`} />
-          ) : review && review.caution > 0 ? (
-            <StatusChip tone="warning" label={`공약 검증 주의 ${review.caution}`} />
-          ) : review ? (
-            <StatusChip tone="positive" label="공약 검증 적정" />
-          ) : null}
+          {(() => {
+            if (!review) return null;
+            const t = tallyVerdicts(review.items);
+            if (t.unsound > 0)
+              return <StatusChip tone="danger" label={`공약 검증 부적정 ${t.unsound}`} />;
+            if (t.caution > 0)
+              return <StatusChip tone="warning" label={`공약 검증 주의 ${t.caution}`} />;
+            return <StatusChip tone="positive" label="공약 검증 적정" />;
+          })()}
         </div>
 
         <button

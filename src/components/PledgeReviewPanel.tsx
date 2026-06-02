@@ -1,4 +1,5 @@
 import type { Candidate, CandidateReview, ReviewVerdict } from '../data/types';
+import { tallyVerdicts } from '../data/types';
 import CandidateBadge from './CandidateBadge';
 import SectionTitle from './SectionTitle';
 import styles from './PledgeReviewPanel.module.scss';
@@ -29,18 +30,21 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
       <div className={styles.Grid}>
         {reviewed.map((candidate) => {
           const review = pledgeReviews[candidate.id];
+          const tally = tallyVerdicts(review.items);
           return (
             <article key={candidate.id} className={styles.Card}>
               <header className={styles.Head}>
                 <CandidateBadge id={candidate.id} color={candidate.partyColor} size="sm" />
                 <div className={styles.HeadName}>
                   <strong>{candidate.name}</strong>
-                  <span className={styles.Reviewer}>검증: {review.reviewer}</span>
+                  <span className={styles.Reviewer}>
+                    검증: {review.reviewer} · 출처: {review.source}
+                  </span>
                 </div>
                 <div className={styles.Tally}>
-                  <span className={`${styles.TallyChip} ${styles.sound}`}>적정 {review.sound}</span>
-                  <span className={`${styles.TallyChip} ${styles.caution}`}>주의 {review.caution}</span>
-                  <span className={`${styles.TallyChip} ${styles.unsound}`}>부적정 {review.unsound}</span>
+                  <span className={`${styles.TallyChip} ${styles.sound}`}>적정 {tally.sound}</span>
+                  <span className={`${styles.TallyChip} ${styles.caution}`}>주의 {tally.caution}</span>
+                  <span className={`${styles.TallyChip} ${styles.unsound}`}>부적정 {tally.unsound}</span>
                 </div>
               </header>
 
@@ -69,6 +73,11 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
                       </div>
                     </dl>
                     {item.comment ? <p className={styles.Comment}>{item.comment}</p> : null}
+                    {item.rebuttal ? (
+                      <p className={styles.Rebuttal}>
+                        <span className={styles.RebuttalTag}>반론·재심</span> {item.rebuttal}
+                      </p>
+                    ) : null}
                   </li>
                 ))}
               </ul>

@@ -1,13 +1,12 @@
 import type { CandidateReview } from '../../types';
 
-// 공약 적정성 교차검증(타 정당 관점, ①실현가능성 ②완료·중복 ③구체성).
+// 공약 적정성 교차검증(타 정당, ①실현가능성 ②완료·중복 ③구체성) → 적정/주의/부적정.
+// 이후 해당 정당 반론(항변) + 타 정당 3명 재심(2명 이상 인용 시 한 단계 격상). verdict=최종 등급.
 export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 1. 현근택 — 검증: 개혁신당 ──
   1: {
     reviewer: '개혁신당',
-    sound: 0,
-    caution: 4,
-    unsound: 1,
+    source: '선거공약서(5대 공약)',
     items: [
       {
         rank: 1,
@@ -17,6 +16,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 상황실·협의체는 명시, 예산·협상 일정 미제시',
         verdict: 'caution',
         comment: '진행 중 국책사업을 자신의 공약으로 내세운 측면, ‘임기 내 가동’ 근거 부족',
+        rebuttal: '반론 기각(재심 0/3) — 팹 가동이 삼성·국가(전력·용수·보상) 결정에 종속 미해소 → 주의 유지',
       },
       {
         rank: 2,
@@ -26,15 +26,16 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '모호 — 노선별 사업비·일정·재원 분담 등 핵심 수치 부재',
         verdict: 'unsound',
         comment: '대부분 계획된 국가사업 재포장이거나 권한 밖, ‘30분대’ 근거 미제시',
+        rebuttal: '반론 기각(재심 0/3) — 똑버스·광역버스 등 시 자체수단 항변에도 ‘30분대’가 국가·광역철도 신설에 의존, 핵심 수치 부재 미해소 → 부적정 유지',
       },
       {
         rank: 3,
         title: '‘용인형 에너지기본소득’ 도입',
         feasibility: '중 — 분산에너지특화지역 지정은 산업부 소관, 단독 결정 불가',
         duplication: '없음 — 용인 고유 신규 구상',
-        specificity: '모호 — ‘햇빛연금’ 지급액·대상·발전 규모 등 수치 전무',
+        specificity: '모호 — ‘햇빛연금’ 지급액·대상·발전 규모 등 핵심 수치 미확정',
         verdict: 'caution',
-        comment: '방향은 참신하나 지급 규모·재원 경로가 구체화되지 않음',
+        comment: '발전→판매→지급 구조는 제시됐으나 지급 규모·재원 경로가 분산특구 지정에 종속',
       },
       {
         rank: 4,
@@ -43,16 +44,16 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         duplication: '의심 — 기존 시정에서도 추진된 계속 사업 성격',
         specificity: '보통 — 절차적 수단은 명시, 구역 범위·일정 등 계량목표 부재',
         verdict: 'caution',
-        comment: '이미 논의 중인 사안을 공약화, 중앙정부 결정이라는 한계 미고지',
+        comment: '신청·전담조직 신설은 시 권한 내 선행단계이나 최종 지정은 중앙정부 결정',
       },
       {
         rank: 5,
         title: '5,000억 원 규모 벤처 투자펀드 조성',
         feasibility: '중 — 구조는 가능하나 정부 모태펀드·민간 VC 유치는 의지만으로 곤란',
         duplication: '없음 — 직접 중복 미확인',
-        specificity: '보통 — 총액·투자 업종은 명시, 시 출자 규모·운용 방식 미제시',
+        specificity: '보통 — 출자주체·투자대상은 명시, 시 출자 규모는 의회 심의로 확정 예정',
         verdict: 'caution',
-        comment: '시 재정 분담분·민간 출자 유치 근거가 없어 실현성 편차가 큼',
+        comment: '재원 구성 주체·투자 대상은 제시됐으나 시 출자 규모·민간 유치 확정성 부족',
       },
     ],
   },
@@ -60,54 +61,57 @@ export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 2. 이상일 — 검증: 진보당 (현직 시장, 재탕 여부 유의) ──
   2: {
     reviewer: '진보당',
-    sound: 0,
-    caution: 5,
-    unsound: 0,
+    source: '5대공약서 · 선거공약서(분야별 정책공약집)',
     items: [
       {
         rank: 1,
         title: '글로벌 반도체 중심 도시 도약',
         feasibility: '중 — 인허가·전담조직은 권한 내, ‘글로벌 중심’은 민간 투자에 좌우',
         duplication: '의심 — 반도체고·아카데미 등 민선8기 사업이 원문에 명시',
-        specificity: '보통 — 유치 기업 수·예산 등 정량 목표 생략',
+        specificity: '보통 — 일부 신규 수치(대학원·1조 펀드) 있으나 핵심은 진행사업 연장',
         verdict: 'caution',
         comment: '현직으로서 추진 중 사업을 차기 핵심 공약으로 재포장, 신규성 불분명',
+        rebuttal: '반론 기각(재심 1/3) — 대학원·1조 펀드 등 신규 수치에도 핵심이 민선8기 진행사업 연장, 재탕 미해소 → 주의 유지',
       },
       {
         rank: 2,
         title: '교통 인프라 획기적 개선',
-        feasibility: '중 — 광역·도시철도는 국비·국가계획 없이는 확정 불가',
-        duplication: '의심 — 반도체고속도로 등 ‘민선8기 진행 중’ 사업 다수',
-        specificity: '보통 — 노선명은 열거, 노선별 사업비·완공 시점 생략',
-        verdict: 'caution',
-        comment: '대다수가 이미 착수·추진 중이거나 국가계획 의존, 신규 공약 보기 어려움',
+        feasibility: '중 — 광역·도시철도는 국비·국가계획 의존하나 일부는 자체 추진',
+        duplication: '의심 — 일부는 민선8기 진행 사업',
+        specificity: '구체적 — 노선별 연장(km)·차로·BC 등 수치 명기',
+        verdict: 'sound',
+        comment: '신규성·정량목표가 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 2/3) — 노선별 연장·규모·BC 수치, 반도체고속도로 민자적격성 통과, ‘반도체 세수’ 기반 철도기금 자체재원 확인 → 주의→적정 격상',
       },
       {
         rank: 3,
         title: '맞춤형 복지 등 생활밀착형 정책',
-        feasibility: '중 — 통합돌봄·국공립 어린이집 등 권한 내, 시비 부담 가중 우려',
-        duplication: '의심 — ‘우리동네 바로개선’ 등 기존 운영 사업의 연속',
-        specificity: '모호 — ‘맞춤형·촘촘한’ 수식어 중심, 정량 목표 없음',
-        verdict: 'caution',
-        comment: '지속 사업 재나열 성격, 이행 검증 기준 세우기 어려움',
+        feasibility: '중 — 통합돌봄·국공립 어린이집 등 권한 내 추진 가능',
+        duplication: '일부 — 기존 사업 연속이나 신규 급여 항목 병행',
+        specificity: '구체적 — 임신지원금 30→100만원 등 대상·급여 특정',
+        verdict: 'sound',
+        comment: '정량 수치 부재가 쟁점이었던 항목',
+        rebuttal: '반론 인용(재심 3/3) — 임신축하금 30→100만원·65세 대중교통비 확대·독감 무료접종 등 대상·급여 특정 수치 확인 → 주의→적정 격상',
       },
       {
         rank: 4,
         title: '지역경제 활성화',
         feasibility: '중 — 소상공인·전통시장·지역화폐는 권한 내 추진 가능',
         duplication: '의심 — ‘민선9기에도 계속 확대’ 등 기존 사업 연속임을 원문이 명시',
-        specificity: '보통 — 지원 항목 열거, 예산·수혜 규모 등 정량 목표 부재',
+        specificity: '보통 — 일부 신규 수치(보증 상향)는 있으나 확대 목표치 부재',
         verdict: 'caution',
-        comment: '현직 프리미엄을 활용한 재탕 공약 성격이 분명',
+        comment: '현직 프리미엄을 활용한 재탕 공약 성격',
+        rebuttal: '반론 기각(재심 1/3) — 골목상점가 0→28→확대는 현직 실적 연장, 확대 목표치 부재 → 주의 유지',
       },
       {
         rank: 5,
         title: '안전하고 미래를 준비하는 교육도시',
         feasibility: '중 — 통학로·돌봄은 권한 내, AI 예술융합고는 교육청 소관',
-        duplication: '의심 — AI 예술융합고 등 민선8기에 이미 착수된 사업',
-        specificity: '보통 — 방향은 있으나 점검 구간 수 등 정량 목표 부재',
+        duplication: '의심 — AI 예술융합고·반도체고 등 민선8기에 이미 착수',
+        specificity: '보통 — 반도체고 국비 50억은 명기, AI예술고 재원·시기 미기재',
         verdict: 'caution',
         comment: '핵심 사업이 이미 현 임기 공약, 교육청 권한 사항도 혼재',
+        rebuttal: '반론 기각(재심 0/3) — 반도체고는 민선8기 후속, AI예술고 재원·개교시기 미기재 → 주의 유지',
       },
     ],
   },
@@ -115,9 +119,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
   // ── 4. 송창훈 — 검증: 더불어민주당 ──
   4: {
     reviewer: '더불어민주당',
-    sound: 0,
-    caution: 4,
-    unsound: 1,
+    source: '선거공약서(5대 공약) · 선거공보',
     items: [
       {
         rank: 1,
@@ -127,6 +129,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 방향은 제시, 노선명·투자 규모·시점 미명시',
         verdict: 'caution',
         comment: '핵심 수단이 시장 권한 밖이고 타 후보 공약과 중복이 뚜렷',
+        rebuttal: '반론 기각(재심 0/3) — 버스 운영개선은 가능하나 철도 신설 부분의 국가·광역 의존 미해소 → 주의 유지',
       },
       {
         rank: 2,
@@ -136,6 +139,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 콘셉트는 제시, 입지·규모·운영주체 미확정',
         verdict: 'caution',
         comment: '차별성은 인정되나 민간투자 불확실·입지 미정으로 이행 담보 약함',
+        rebuttal: '반론 기각(재심 0/3) — 공연장 등 핵심시설이 민간투자 의존·입지/사업비 부재 미해소 → 주의 유지',
       },
       {
         rank: 3,
@@ -145,15 +149,17 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '보통 — 설립·인턴십은 구체, 양성 인원·협약 여부 미제시',
         verdict: 'caution',
         comment: '핵심 이행 주체(대기업·중앙부처) 의존도가 높고 정량 목표 부재',
+        rebuttal: '반론 기각(재심 1/3) — 산학협력·경기도 예산 연계는 외부 주체 동의 의존 미해소 → 주의 유지',
       },
       {
         rank: 4,
         title: '용인 “특례”시, 권한을 키우겠습니다',
-        feasibility: '하 — 광역시급 권한 확대는 지방자치법 개정 등 국회 입법 전제',
+        feasibility: '중 — 권한 확대 자체는 국회 입법 사안이나 즉시 가능한 행정 수단 병행',
         duplication: '없음 — 차별성은 인정',
-        specificity: '모호 — 어떤 법령을 어떻게·언제까지 개정할지 경로·일정 없음',
-        verdict: 'unsound',
-        comment: '실질 권한 이양은 입법 없이 불가, 시장의 수단이 ‘건의’에 머묾',
+        specificity: '보통 — 특례시협의회 공동대응·전담조직·구 권한확대(조례) 등 즉시수단 명시',
+        verdict: 'caution',
+        comment: '핵심 권한 이양은 입법 사안이나 시장 권한 내 추진 수단이 일부 존재',
+        rebuttal: '반론 인용(재심 2/3) — 특례시협의회 공동대응·전담조직 확대·구 권한확대(조례) 등 입법 외 즉시수단 제시 확인 → 부적정→주의 격상(핵심 권한확대는 입법 사안 잔존)',
       },
       {
         rank: 5,
@@ -163,6 +169,7 @@ export const pledgeReviews: Record<number, CandidateReview> = {
         specificity: '구체적 — 층간소음·열교환효율·필터 기준·인증제 등 방법론 구체',
         verdict: 'caution',
         comment: '방향·구체성은 긍정적이나 상위 법령 적합성 검토 필요',
+        rebuttal: '반론 기각(재심 1/3) — 인센티브·인증제 방식이나 ‘법정 기준 초과 강화’는 조례·법제처 검토 필요 미해소 → 주의 유지',
       },
     ],
   },

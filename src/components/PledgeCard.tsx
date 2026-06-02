@@ -89,6 +89,11 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
                 </li>
               </ul>
               {review.comment ? <p className={styles.ReviewComment}>{review.comment}</p> : null}
+              {review.rebuttal ? (
+                <p className={styles.ReviewRebuttal}>
+                  <em>반론·재심</em> {review.rebuttal}
+                </p>
+              ) : null}
             </div>
           ) : null}
           <PledgeSection label="목표" items={pledge.goals} />
