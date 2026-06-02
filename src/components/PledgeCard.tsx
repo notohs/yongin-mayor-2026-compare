@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Pledge, PledgeReviewItem, ReviewVerdict } from '../data/types';
-import { splitCriterion } from '../data/types';
 import { CATEGORY_META } from '../data/categories';
+import PledgeReviewDetail, { RecycleMiniBadges } from './PledgeReviewDetail';
 import styles from './PledgeCard.module.scss';
 
 interface PledgeCardProps {
@@ -18,18 +18,6 @@ const VERDICT_LABEL: Record<ReviewVerdict, string> = {
   caution: '주의',
   unsound: '부적정',
 };
-
-function levelTone(level: string): 'good' | 'mid' | 'bad' {
-  if (['상', '없음', '구체적'].includes(level)) return 'good';
-  if (['하', '의심', '모호'].includes(level)) return 'bad';
-  return 'mid';
-}
-
-const REVIEW_CRITERIA: { key: 'feasibility' | 'duplication' | 'specificity'; label: string }[] = [
-  { key: 'feasibility', label: '실현 가능성' },
-  { key: 'duplication', label: '완료·중복' },
-  { key: 'specificity', label: '구체성' },
-];
 
 interface PledgeSectionProps {
   label: string;
@@ -82,11 +70,7 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
             {review.nature === 'commitment' ? '공약' : '목표'}
           </span>
         ) : null}
-        {review && splitCriterion(review.duplication).level === '의심' ? (
-          <span className={styles.Recycle} title="타·과거 후보 공약 재활용 또는 기추진 사업 의심">
-            ♻ 재탕
-          </span>
-        ) : null}
+        {review ? <RecycleMiniBadges review={review} /> : null}
         {review ? (
           <span className={`${styles.Verdict} ${styles[review.verdict]}`}>
             {VERDICT_LABEL[review.verdict]}
@@ -100,35 +84,9 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
       {open ? (
         <div className={styles.Content} id={contentId}>
           {review ? (
-            <div className={styles.Review}>
-              <div className={styles.ReviewHead}>
-                <span className={styles.ReviewTitle}>공약 적정성 교차검증</span>
-                <span className={`${styles.Verdict} ${styles[review.verdict]}`}>
-                  {VERDICT_LABEL[review.verdict]}
-                </span>
-              </div>
-              <div className={styles.Criteria}>
-                {REVIEW_CRITERIA.map(({ key, label }) => {
-                  const { level, note } = splitCriterion(review[key]);
-                  return (
-                    <div key={key} className={styles.CritRow}>
-                      <span className={styles.CritLabel}>{label}</span>
-                      <span className={`${styles.Level} ${styles[levelTone(level)]}`}>{level}</span>
-                      <span className={styles.CritNote}>{note}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              {review.comment ? (
-                <p className={styles.ReviewComment}>
-                  <span className={styles.ReviewTag}>종합</span> {review.comment}
-                </p>
-              ) : null}
-              {review.panel ? (
-                <p className={styles.ReviewRebuttal}>
-                  <span className={styles.ReviewTag}>균형패널</span> {review.panel}
-                </p>
-              ) : null}
+            <div className={styles.ReviewWrap}>
+              <span className={styles.ReviewTitle}>공약 적정성 교차검증</span>
+              <PledgeReviewDetail review={review} />
             </div>
           ) : null}
           <PledgeSection label="목표" items={pledge.goals} />

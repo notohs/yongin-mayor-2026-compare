@@ -267,6 +267,13 @@
   line-height: 1.35;
 }
 
+.TipStatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 .TipReview {
   display: flex;
   flex-direction: column;

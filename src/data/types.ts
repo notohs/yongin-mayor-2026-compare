@@ -129,10 +129,12 @@ export interface PledgeReviewItem {
   nature: PledgeNature;
   /** 실현 가능성 평가 — "등급 — 근거" 형식(등급=상/중/하) */
   feasibility: string;
-  /** 이미 완료/중복(베끼기) 여부 평가 (한 줄, 근거 포함) */
-  duplication: string;
-  /** 구체성 평가 (한 줄, 근거 포함) */
+  /** 구체성 평가 — "등급 — 근거" 형식(등급=구체적/보통/모호) */
   specificity: string;
+  /** 이미 추진 중·완료된 사업을 신규로 제시한 정황 + 구체 근거. 없으면 생략 */
+  inProgress?: string;
+  /** 타·과거 후보 공약을 재활용(베끼기)했거나 동일한 정황 + 구체 근거. 없으면 생략 */
+  recycled?: string;
   /** 종합 판정 (반론·재심 반영된 최종 등급) */
   verdict: ReviewVerdict;
   /** 종합 사유 (한 줄) — 주의·부적정 분류의 핵심 근거 */

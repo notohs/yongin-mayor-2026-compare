@@ -1,0 +1,165 @@
+@use '../styles/variables' as *;
+
+.Detail {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+// ── 재활용·기추진 점검 (강조 블록) ──
+.RecycleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: $space-sm $space-md;
+  border-radius: $radius-md;
+  background-color: rgba($color-warning, 0.08);
+  border: 1px solid rgba($color-warning, 0.35);
+}
+
+.RecycleHead {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, $color-warning 80%, #000);
+}
+
+.RecycleItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: $radius-sm;
+  background-color: $color-surface;
+  border-left: 3px solid $color-border;
+
+  &.inprogress {
+    border-left-color: $color-warning;
+  }
+  &.copy {
+    border-left-color: $color-danger;
+  }
+}
+
+.RecycleTag {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: $radius-pill;
+
+  .inprogress & {
+    color: color-mix(in srgb, $color-warning 82%, #000);
+    background-color: rgba($color-warning, 0.18);
+  }
+  .copy & {
+    color: color-mix(in srgb, $color-danger 82%, #000);
+    background-color: rgba($color-danger, 0.14);
+  }
+}
+
+.RecycleNote {
+  font-size: 12.5px;
+  color: $color-text;
+  line-height: 1.5;
+}
+
+// ── 평가 기준 ──
+.Criteria {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.CritRow {
+  display: grid;
+  grid-template-columns: 78px 52px 1fr;
+  align-items: start;
+  gap: 10px;
+}
+
+.CritLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-faint;
+  padding-top: 2px;
+}
+
+.Level {
+  justify-self: stretch;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 0;
+  border-radius: $radius-sm;
+
+  &.good {
+    color: color-mix(in srgb, $color-positive 80%, #000);
+    background-color: rgba($color-positive, 0.14);
+  }
+  &.mid {
+    color: color-mix(in srgb, $color-warning 82%, #000);
+    background-color: rgba($color-warning, 0.18);
+  }
+  &.bad {
+    color: color-mix(in srgb, $color-danger 82%, #000);
+    background-color: rgba($color-danger, 0.13);
+  }
+}
+
+.CritNote {
+  font-size: 13px;
+  color: $color-text;
+  line-height: 1.55;
+}
+
+// ── 종합 / 패널 ──
+.Comment,
+.Panel {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.Comment {
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.Panel {
+  font-size: 12px;
+  color: $color-text-sub;
+}
+
+.Tag {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 1px 8px;
+  border-radius: $radius-pill;
+  color: $color-accent;
+  background-color: rgba($color-accent, 0.08);
+}
+
+// ── 미니 배지 (헤더·칩) ──
+.Mini {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: $radius-pill;
+  white-space: nowrap;
+}
+
+.miniInprogress {
+  color: color-mix(in srgb, $color-warning 82%, #000);
+  background-color: rgba($color-warning, 0.18);
+}
+
+.miniCopy {
+  color: color-mix(in srgb, $color-danger 82%, #000);
+  background-color: rgba($color-danger, 0.14);
+}

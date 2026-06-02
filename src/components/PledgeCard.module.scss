@@ -111,6 +111,15 @@
   transition: transform 0.2s ease;
 }
 
+.ReviewWrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  padding: $space-md;
+  border-radius: $radius-md;
+  background-color: $color-surface-muted;
+}
+
 .Review {
   display: flex;
   flex-direction: column;

@@ -16,10 +16,10 @@ import type {
   Pledge,
   ReviewVerdict,
 } from '../data/types';
-import { splitCriterion } from '../data/types';
 import { CATEGORY_META } from '../data/categories';
 import CandidateBadge from './CandidateBadge';
 import SectionTitle from './SectionTitle';
+import PledgeReviewDetail, { RecycleMiniBadges } from './PledgeReviewDetail';
 import styles from './IntegratedPledgeTable.module.scss';
 
 interface IntegratedPledgeTableProps {
@@ -44,12 +44,6 @@ const VERDICT_LABEL: Record<ReviewVerdict, string> = {
   caution: '주의',
   unsound: '부적정',
 };
-
-function levelTone(level: string): 'good' | 'mid' | 'bad' {
-  if (['상', '없음', '구체적'].includes(level)) return 'good';
-  if (['하', '의심', '모호'].includes(level)) return 'bad';
-  return 'mid';
-}
 
 interface TipState {
   key: string;
@@ -78,33 +72,18 @@ function pledgeTooltip(pledge: Pledge, review?: PledgeReviewItem): ReactNode {
         <strong className={styles.TipTitle}>{pledge.title}</strong>
       </div>
       {review ? (
-        <div className={`${styles.TipReview} ${styles[review.verdict]}`}>
-          <div className={styles.TipReviewTop}>
+        <>
+          <div className={styles.TipStatus}>
             <span className={`${styles.TipNature} ${styles[review.nature]}`}>
               {review.nature === 'commitment' ? '공약' : '목표'}
             </span>
             <span className={`${styles.TipVerdict} ${styles[review.verdict]}`}>
               적정성 {VERDICT_LABEL[review.verdict]}
             </span>
-            {splitCriterion(review.duplication).level === '의심' ? (
-              <span className={styles.TipRecycle}>♻ 재탕·기추진 의심</span>
-            ) : null}
+            <RecycleMiniBadges review={review} />
           </div>
-          {([['실현 가능성', review.feasibility], ['완료·중복', review.duplication], ['구체성', review.specificity]] as const).map(
-            ([lab, val]) => {
-              const { level, note } = splitCriterion(val);
-              return (
-                <div key={lab} className={styles.TipCrit}>
-                  <span className={styles.TipCritLabel}>{lab}</span>
-                  <span className={`${styles.TipLevel} ${styles[levelTone(level)]}`}>{level}</span>
-                  <span className={styles.TipCritNote}>{note}</span>
-                </div>
-              );
-            },
-          )}
-          {review.comment ? <p className={styles.TipComment}>{review.comment}</p> : null}
-          {review.panel ? <p className={styles.TipPanel}>균형패널 {review.panel}</p> : null}
-        </div>
+          <PledgeReviewDetail review={review} />
+        </>
       ) : null}
       {section('목표', pledge.goals)}
       {section('이행방법', pledge.methods)}
@@ -220,8 +199,6 @@ function IntegratedPledgeTable({
                       {core.map((pledge) => {
                         const review = reviewFor(c, pledge.rank);
                         const key = `p-${c.id}-${pledge.rank}`;
-                        const recycled =
-                          review && splitCriterion(review.duplication).level === '의심';
                         return (
                           <button
                             key={key}
@@ -242,7 +219,7 @@ function IntegratedPledgeTable({
                                   {review.nature === 'commitment' ? '공약' : '목표'}
                                 </span>
                               ) : null}
-                              {recycled ? <span className={styles.ChipRecycle}>♻</span> : null}
+                              {review ? <RecycleMiniBadges review={review} /> : null}
                               {review ? (
                                 <span
                                   className={`${styles.ChipDot} ${styles[review.verdict]}`}
