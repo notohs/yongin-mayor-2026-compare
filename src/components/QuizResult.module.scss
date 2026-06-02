@@ -166,32 +166,65 @@
   line-height: 1.5;
 }
 
-/* 내 선택 공개 */
+/* 내 선택 공개 — 좌측 분야 레일 + 우측 선택 항목 스택 */
 .Picks {
   display: flex;
   flex-direction: column;
 }
 
-.PickItem,
-.PickEntry {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 0;
+.PickItem {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: start;
+  padding: 14px 0;
   border-top: 1px solid var(--line);
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
 }
 
 .PickCategory {
-  font-size: 13px;
-  color: var(--text-3);
-  flex: 1;
-  line-height: 1.45;
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-2);
+  font-weight: 700;
+  line-height: 1.4;
+
+  @media (max-width: 600px) {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+.PickEntry {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+
+  & + & {
+    margin-top: 12px;
+  }
+
+  @media (max-width: 600px) {
+    grid-column: 1;
+  }
 }
 
 .PickBlurb {
   font-size: 12.5px;
-  color: var(--text-faint);
-  line-height: 1.45;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin: 0;
 }
 
 .PickWho {
@@ -200,16 +233,19 @@
   font-weight: 700;
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 7px;
-  flex-shrink: 0;
 }
 
 .WeightTag {
+  display: inline-block;
   font-size: 10.5px;
   font-family: var(--mono);
+  font-weight: 700;
   color: var(--text-3);
   border: 1px solid var(--line-2);
-  padding: 1px 5px;
+  padding: 1px 6px;
+  white-space: nowrap;
 }
 
 /* 검증 응답 */
