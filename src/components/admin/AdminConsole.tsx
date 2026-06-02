@@ -137,7 +137,7 @@ function AdminConsole({ customElections, onChange, onExit }: AdminConsoleProps) 
   return (
     <div className={styles.AdminConsole}>
       <header className={styles.Bar}>
-        <h1 className={styles.BarTitle}>🛠 관리자 콘솔</h1>
+        <h1 className={styles.BarTitle}>관리자 콘솔</h1>
         <button type="button" className={styles.ExitButton} onClick={onExit}>
           ← 비교 화면으로
         </button>
@@ -214,9 +214,6 @@ function AdminConsole({ customElections, onChange, onExit }: AdminConsoleProps) 
                 e.target.value = '';
               }}
             />
-            <span className={styles.DropIcon} aria-hidden>
-              📄
-            </span>
             <span className={styles.DropMain}>
               {busy ? '읽는 중…' : '여기로 PDF를 끌어다 놓거나 클릭해서 선택'}
             </span>

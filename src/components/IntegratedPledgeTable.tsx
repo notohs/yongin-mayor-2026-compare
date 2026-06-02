@@ -181,9 +181,7 @@ function IntegratedPledgeTable({
             const meta = CATEGORY_META[cat];
             return (
               <Fragment key={cat}>
-                <div className={`${styles.Cell} ${styles.labelCell}`}>
-                  <span aria-hidden>{meta.icon}</span> {meta.label}
-                </div>
+                <div className={`${styles.Cell} ${styles.labelCell}`}>{meta.label}</div>
                 {candidates.map((c) => {
                   const core = corePledges(c, cat);
                   const groups = bulletinGroups(c, cat);
@@ -238,7 +236,7 @@ function IntegratedPledgeTable({
                             <div className={styles.TipHead}>
                               <span className={styles.TipRank}>선거공보</span>
                               <strong className={styles.TipTitle}>
-                                {g.icon} {g.field}
+                                {g.field}
                                 {g.headline ? ` · ${g.headline}` : ''}
                               </strong>
                             </div>
@@ -281,7 +279,7 @@ function IntegratedPledgeTable({
           style={tipStyle()}
           role="tooltip"
         >
-          {pin ? <span className={styles.PinHint}>📌 고정됨 · 다시 클릭하면 닫힘</span> : null}
+          {pin ? <span className={styles.PinHint}>고정됨 · 다시 클릭하면 닫힘</span> : null}
           {active.node}
         </div>
       ) : null}

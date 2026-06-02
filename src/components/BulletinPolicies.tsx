@@ -24,9 +24,6 @@ function PolicyGroupCard({ group, accentColor }: PolicyGroupCardProps) {
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
       >
-        <span className={styles.GroupIcon} aria-hidden>
-          {group.icon}
-        </span>
         <span className={styles.GroupTitleBox}>
           <span className={styles.GroupField}>{group.field}</span>
           {group.headline ? (

@@ -26,7 +26,7 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
     <section className={styles.PledgeReviewPanel}>
       <SectionTitle
         title="공약 적정성 교차검증"
-        description="편향을 막기 위해 각 후보의 5대 공약을 ‘후보 소속을 제외한 4개 정당 균형패널’이 실현 가능성·구체성으로 평가하고 다수결로 판정했습니다. ‘공약’(임기 내 이행 약속)과 ‘목표’(장기 지향·초석)는 다른 기준으로 봅니다. 🛠 기추진(이미 추진·완료)과 📋 재탕(타·과거 후보 베끼기)은 구분해 표시합니다. 참고용이며 최종 판단은 유권자의 몫입니다."
+        description="편향을 막기 위해 각 후보의 5대 공약을 ‘후보 소속을 제외한 4개 정당 균형패널’이 실현 가능성·구체성으로 평가하고 다수결로 판정했습니다. ‘공약’(임기 내 이행 약속)과 ‘목표’(장기 지향·초석)는 다른 기준으로 봅니다. ‘연속’(현직 본인이 시작한 사업의 지속·완성 — 신뢰 지표), ‘기추진’(외부·국가·전임 사업에 편승), ‘재탕’(타·과거 후보 베끼기)을 구분해 표시합니다. 참고용이며 최종 판단은 유권자의 몫입니다."
       />
       <div className={styles.Grid}>
         {reviewed.map((candidate) => {

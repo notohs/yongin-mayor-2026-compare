@@ -8,15 +8,18 @@ function levelTone(level: string): 'good' | 'mid' | 'bad' {
   return 'mid';
 }
 
-/** 헤더·칩에 붙이는 기추진/재탕 강조 미니 배지 (분리 표시) */
+/** 헤더·칩에 붙이는 연속(긍정)/기추진·재탕(주의) 강조 미니 배지 (분리 표시) */
 export function RecycleMiniBadges({ review }: { review: PledgeReviewItem }) {
-  if (!review.inProgress && !review.recycled) return null;
+  if (!review.continuity && !review.inProgress && !review.recycled) return null;
   return (
     <>
-      {review.inProgress ? (
-        <span className={`${styles.Mini} ${styles.miniInprogress}`}>🛠 기추진</span>
+      {review.continuity ? (
+        <span className={`${styles.Mini} ${styles.miniContinuity}`}>연속</span>
       ) : null}
-      {review.recycled ? <span className={`${styles.Mini} ${styles.miniCopy}`}>📋 재탕</span> : null}
+      {review.inProgress ? (
+        <span className={`${styles.Mini} ${styles.miniInprogress}`}>기추진</span>
+      ) : null}
+      {review.recycled ? <span className={`${styles.Mini} ${styles.miniCopy}`}>재탕</span> : null}
     </>
   );
 }
@@ -28,21 +31,27 @@ const CRITERIA: { key: 'feasibility' | 'specificity'; label: string }[] = [
 
 /** 공약 적정성 상세 본문 — 재활용·기추진 점검(분리·강조) + 평가기준 + 종합 + 패널 */
 function PledgeReviewDetail({ review }: { review: PledgeReviewItem }) {
-  const hasRecycle = Boolean(review.inProgress || review.recycled);
+  const hasFlags = Boolean(review.continuity || review.inProgress || review.recycled);
   return (
     <div className={styles.Detail}>
-      {hasRecycle ? (
+      {hasFlags ? (
         <div className={styles.RecycleBox}>
-          <span className={styles.RecycleHead}>재활용·기추진 점검</span>
+          <span className={styles.RecycleHead}>공약 연속성·재활용 점검</span>
+          {review.continuity ? (
+            <div className={`${styles.RecycleItem} ${styles.continuity}`}>
+              <span className={styles.RecycleTag}>연속·완수</span>
+              <span className={styles.RecycleNote}>{review.continuity}</span>
+            </div>
+          ) : null}
           {review.inProgress ? (
             <div className={`${styles.RecycleItem} ${styles.inprogress}`}>
-              <span className={styles.RecycleTag}>🛠 이미 추진·완료</span>
+              <span className={styles.RecycleTag}>이미 추진 중(편승)</span>
               <span className={styles.RecycleNote}>{review.inProgress}</span>
             </div>
           ) : null}
           {review.recycled ? (
             <div className={`${styles.RecycleItem} ${styles.copy}`}>
-              <span className={styles.RecycleTag}>📋 재탕·베끼기</span>
+              <span className={styles.RecycleTag}>재탕·베끼기</span>
               <span className={styles.RecycleNote}>{review.recycled}</span>
             </div>
           ) : null}

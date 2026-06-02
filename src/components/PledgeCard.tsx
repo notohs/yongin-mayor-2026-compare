@@ -56,9 +56,7 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
           공약 {pledge.rank}
         </span>
         <span className={styles.TitleBox}>
-          <span className={styles.CategoryTag}>
-            {category.icon} {category.label}
-          </span>
+          <span className={styles.CategoryTag}>{category.label}</span>
           <span className={styles.Title}>{pledge.title}</span>
         </span>
         {review ? (

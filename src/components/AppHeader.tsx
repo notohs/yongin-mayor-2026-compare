@@ -39,7 +39,7 @@ function AppHeader({ meta, elections, selectedId, onSelect, onOpenAdmin }: AppHe
               </label>
             ) : null}
             <button type="button" className={styles.AdminButton} onClick={onOpenAdmin}>
-              🛠 관리자 콘솔
+              관리자 콘솔
             </button>
           </div>
         </div>

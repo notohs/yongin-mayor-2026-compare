@@ -37,7 +37,7 @@ function CategoryCompareView({ candidates, bulletinPolicies }: CategoryCompareVi
     const meta = CATEGORY_META[category];
     return {
       key: category,
-      label: `${meta.icon} ${meta.label}`,
+      label: meta.label,
       render: (candidate) => {
         const core = corePledges(candidate, category);
         const groups = bulletinGroups(candidate, category);

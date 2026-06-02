@@ -6,22 +6,22 @@
   gap: $space-md;
 }
 
-// ── 재활용·기추진 점검 (강조 블록) ──
+// ── 연속성·재활용 점검 (강조 블록) — 박스는 중립, 항목 틴트·태그로 긍정/주의 구분 ──
 .RecycleBox {
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: $space-sm $space-md;
   border-radius: $radius-md;
-  background-color: rgba($color-warning, 0.08);
-  border: 1px solid rgba($color-warning, 0.35);
+  background-color: $color-surface-muted;
+  border: 1px solid $color-border;
 }
 
 .RecycleHead {
   font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.02em;
-  color: color-mix(in srgb, $color-warning 80%, #000);
+  color: $color-text-sub;
 }
 
 .RecycleItem {
@@ -33,6 +33,9 @@
   background-color: $color-surface;
 
   // 구분은 한쪽 색깔 보더 없이 은은한 배경 틴트 + 태그 색으로만
+  &.continuity {
+    background-color: rgba($color-positive, 0.07);
+  }
   &.inprogress {
     background-color: rgba($color-warning, 0.07);
   }
@@ -48,6 +51,10 @@
   padding: 2px 9px;
   border-radius: $radius-pill;
 
+  .continuity & {
+    color: color-mix(in srgb, $color-positive 80%, #000);
+    background-color: rgba($color-positive, 0.16);
+  }
   .inprogress & {
     color: color-mix(in srgb, $color-warning 82%, #000);
     background-color: rgba($color-warning, 0.18);
@@ -152,6 +159,11 @@
   padding: 2px 8px;
   border-radius: $radius-pill;
   white-space: nowrap;
+}
+
+.miniContinuity {
+  color: color-mix(in srgb, $color-positive 80%, #000);
+  background-color: rgba($color-positive, 0.16);
 }
 
 .miniInprogress {
