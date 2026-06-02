@@ -29,11 +29,12 @@ function OverviewView({ candidates, onOpenDetail }: OverviewViewProps) {
   return (
     <div className={styles.OverviewView}>
       <div className={styles.CardGrid}>
-        {candidates.map((candidate) => (
+        {candidates.map((candidate, i) => (
           <CandidateSummaryCard
             key={candidate.id}
             candidate={candidate}
             onOpenDetail={onOpenDetail}
+            index={i}
           />
         ))}
       </div>

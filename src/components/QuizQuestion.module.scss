@@ -19,7 +19,7 @@
   display: block;
   height: 100%;
   border-radius: $radius-pill;
-  background-color: $color-party-dp;
+  background-color: $color-accent;
   transition: width 0.3s ease;
 }
 
@@ -94,7 +94,7 @@
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    border-color: $color-party-dp;
+    border-color: $color-accent;
     box-shadow: $shadow-md;
   }
 
@@ -104,8 +104,8 @@
   }
 
   &.selected {
-    border-color: $color-party-dp;
-    background-color: rgba($color-party-dp, 0.05);
+    border-color: $color-accent;
+    background-color: rgba($color-accent, 0.05);
     box-shadow: $shadow-md;
   }
 }
@@ -128,7 +128,7 @@
 }
 
 .markerOn {
-  background-color: $color-party-dp;
+  background-color: $color-accent;
   color: #fff;
 }
 
@@ -177,10 +177,14 @@
   border-radius: $radius-md;
   transition:
     opacity 0.15s ease,
-    transform 0.15s ease;
+    transform 0.2s $ease-spring;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
   }
 
   &:disabled {

@@ -18,8 +18,8 @@
   display: inline-block;
   font-size: 13px;
   font-weight: 700;
-  color: $color-party-dp;
-  background-color: rgba($color-party-dp, 0.08);
+  color: $color-accent;
+  background-color: rgba($color-accent, 0.08);
   padding: 5px 12px;
   border-radius: $radius-pill;
 }
@@ -74,7 +74,7 @@
 
   &:focus {
     outline: none;
-    border-color: $color-party-dp;
+    border-color: $color-accent;
     background-color: $color-surface;
   }
 }
@@ -132,7 +132,7 @@
 .LinkButton {
   border: none;
   background-color: transparent;
-  color: $color-party-dp;
+  color: $color-accent;
   font-size: 14px;
   font-weight: 600;
   padding: 4px;

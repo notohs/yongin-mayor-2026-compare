@@ -110,7 +110,7 @@
 .LinkLabel {
   font-size: 15px;
   font-weight: 700;
-  color: $color-party-dp;
+  color: $color-accent;
 }
 
 .LinkDesc {
@@ -141,7 +141,7 @@
 
   &:focus {
     outline: none;
-    border-color: $color-party-dp;
+    border-color: $color-accent;
     background-color: $color-surface;
   }
 }
@@ -162,13 +162,13 @@
     background-color 0.15s ease;
 
   &:hover {
-    border-color: $color-party-dp;
+    border-color: $color-accent;
   }
 }
 
 .dropActive {
-  border-color: $color-party-dp;
-  background-color: rgba($color-party-dp, 0.06);
+  border-color: $color-accent;
+  background-color: rgba($color-accent, 0.06);
 }
 
 .DropIcon {
@@ -260,7 +260,7 @@
 
   &:focus {
     outline: none;
-    border-color: $color-party-dp;
+    border-color: $color-accent;
   }
 }
 

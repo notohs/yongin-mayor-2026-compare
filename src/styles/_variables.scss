@@ -1,26 +1,34 @@
-// 디자인 토큰 — 디자인 가이드(여백 시스템·radius 배수·가독성)에 맞춘 공용 변수
+// 디자인 토큰 — 중립 잉크 베이스 + 정당색(식별용)만 채도. 디퓨전 섀도·일관 radius.
 
 // ── 색상 ─────────────────────────────────────────────
-$color-bg: #f4f5f7;
+$color-bg: #f4f5f7; // 소프트 뉴트럴 배경
 $color-surface: #ffffff;
-$color-surface-muted: #f8f9fb;
-$color-border: #e7e9ee;
+$color-surface-muted: #f1f3f6;
+$color-border: #e6e9ef;
 
-$color-text: #1a1d24;
-$color-text-sub: #565d6b;
-$color-text-faint: #8b919e;
+$color-text: #15171c; // 오프블랙(순흑 금지)
+$color-text-sub: #59616e;
+$color-text-faint: #9aa1ad;
 
-// 정당 색상
+// 단일 액센트 = 잉크 차콜 (AI 블루/퍼플 금지). 정당색은 정당 식별에만 사용.
+$color-accent: #15171c;
+
+// 정당 색상 (정당 식별 전용)
 $color-party-dp: #152484; // 더불어민주당
 $color-party-ppp: #e61e2b; // 국민의힘
 $color-party-reform: #ff7210; // 개혁신당
 
-// 상태/강조
+// 상태/강조 (살짝 디새추레이트)
 $color-positive: #1f9d57; // 양호(전과없음/체납없음)
-$color-warning: #d98a00; // 주의
-$color-danger: #d23b3b; // 전과 등
+$color-warning: #c7860a; // 주의
+$color-danger: #d2403b; // 전과 등
 
-// ── 간격 (디자인 가이드: 12 / 16 / 24 / 32) ───────────
+// ── 타이포 ───────────────────────────────────────────
+$font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+  'Apple SD Gothic Neo', 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'SF Mono', 'JetBrains Mono', 'Menlo', ui-monospace, monospace;
+
+// ── 간격 (12 / 16 / 24 / 32) ─────────────────────────
 $space-xs: 8px;
 $space-sm: 12px;
 $space-md: 16px;
@@ -28,16 +36,19 @@ $space-lg: 24px;
 $space-xl: 32px;
 $space-2xl: 48px;
 
-// ── radius (일관된 배수) ─────────────────────────────
-$radius-sm: 8px;
-$radius-md: 12px;
-$radius-lg: 16px;
+// ── radius (일관 배수) ───────────────────────────────
+$radius-sm: 10px;
+$radius-md: 14px;
+$radius-lg: 20px;
 $radius-pill: 999px;
 
-// ── 그림자 (테두리 대신 분리감) ──────────────────────
-$shadow-sm: 0 1px 2px rgba(20, 24, 36, 0.06), 0 1px 3px rgba(20, 24, 36, 0.04);
-$shadow-md: 0 4px 16px rgba(20, 24, 36, 0.08);
-$shadow-lg: 0 12px 32px rgba(20, 24, 36, 0.12);
+// ── 그림자 (잉크 틴트 디퓨전 — 넓고 옅게) ────────────
+$shadow-sm: 0 1px 2px rgba(21, 23, 28, 0.04), 0 2px 6px rgba(21, 23, 28, 0.05);
+$shadow-md: 0 14px 34px -16px rgba(21, 23, 28, 0.16);
+$shadow-lg: 0 28px 56px -22px rgba(21, 23, 28, 0.22);
+
+// ── 모션 ─────────────────────────────────────────────
+$ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 
 // ── 레이아웃 ─────────────────────────────────────────
 $content-max: 1320px;

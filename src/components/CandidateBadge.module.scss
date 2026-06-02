@@ -6,7 +6,9 @@
   justify-content: center;
   border-radius: $radius-pill;
   color: #fff;
-  font-weight: 800;
+  font-family: $font-mono;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
   flex-shrink: 0;
 }

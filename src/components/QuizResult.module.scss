@@ -18,7 +18,7 @@
 .Eyebrow {
   font-size: 14px;
   font-weight: 700;
-  color: $color-party-dp;
+  color: $color-accent;
 }
 
 .HeaderTitle {
@@ -84,7 +84,7 @@
   margin-top: 4px;
   font-size: 13px;
   font-weight: 700;
-  color: $color-party-dp;
+  color: $color-accent;
 }
 
 .NoRec {
@@ -163,6 +163,8 @@
 }
 
 .BarValue {
+  font-family: $font-mono;
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   font-weight: 700;
   color: $color-text-sub;

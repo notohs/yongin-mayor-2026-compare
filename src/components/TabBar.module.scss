@@ -34,20 +34,28 @@
   font-size: 15px;
   font-weight: 600;
   padding: 10px 18px;
+  border: 1px solid $color-border;
   border-radius: $radius-pill;
   box-shadow: $shadow-sm;
   transition:
-    background-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.15s ease;
+    background-color 0.25s $ease-spring,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s $ease-spring;
   white-space: nowrap;
 
-  &:hover {
+  &:hover:not(.active) {
     color: $color-text;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.96);
   }
 
   &.active {
-    background-color: $color-text;
+    background-color: $color-accent;
+    border-color: $color-accent;
     color: #fff;
     box-shadow: $shadow-md;
   }

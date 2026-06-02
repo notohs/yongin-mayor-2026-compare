@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Candidate } from '../data/types';
 import { formatMoney } from '../utils/format';
 import CandidateBadge from './CandidateBadge';
@@ -7,10 +8,12 @@ import styles from './CandidateSummaryCard.module.scss';
 interface CandidateSummaryCardProps {
   candidate: Candidate;
   onOpenDetail: (id: number) => void;
+  /** 그리드 내 순번 — 등장 애니메이션 stagger 용 */
+  index?: number;
 }
 
 /** 종합 비교 화면 상단의 후보 요약 카드 */
-function CandidateSummaryCard({ candidate, onOpenDetail }: CandidateSummaryCardProps) {
+function CandidateSummaryCard({ candidate, onOpenDetail, index = 0 }: CandidateSummaryCardProps) {
   const { criminal, assets, materials } = candidate;
   const missingMaterials = [
     materials.bulletin ? null : '선거공보',
@@ -19,7 +22,10 @@ function CandidateSummaryCard({ candidate, onOpenDetail }: CandidateSummaryCardP
   ].filter((v): v is string => v !== null);
 
   return (
-    <article className={styles.CandidateSummaryCard}>
+    <article
+      className={styles.CandidateSummaryCard}
+      style={{ '--reveal-index': index } as CSSProperties}
+    >
       <div className={styles.PosterWrap}>
         <img
           className={styles.Poster}
