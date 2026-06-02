@@ -186,9 +186,10 @@ export function buildQuizSteps(
 ): QuizStep[] {
   const policy = buildPolicySteps(candidates, themes); // 셔플됨
   const verify = buildVerifySteps(candidates); // 셔플됨
-  const verifyCapped = verify.slice(0, MAX_QUIZ_QUESTIONS);
-  const policyRoom = Math.max(0, MAX_QUIZ_QUESTIONS - verifyCapped.length);
-  const policyCapped = policy.slice(0, policyRoom);
+  // 정책 문항을 우선 보존하고, 남는 자리에 검증 문항을 채워 총 20개 이하로 맞춘다
+  const policyCapped = policy.slice(0, MAX_QUIZ_QUESTIONS);
+  const verifyRoom = Math.max(0, MAX_QUIZ_QUESTIONS - policyCapped.length);
+  const verifyCapped = verify.slice(0, verifyRoom);
   return [...policyCapped, ...verifyCapped];
 }
 
@@ -197,8 +198,8 @@ export function countSteps(
   candidates: Candidate[],
   themes: QuizThemeDef[],
 ): { policy: number; verify: number; total: number } {
-  const verify = Math.min(buildVerifySteps(candidates).length, MAX_QUIZ_QUESTIONS);
-  const policy = Math.min(themes.length, MAX_QUIZ_QUESTIONS - verify);
+  const policy = Math.min(themes.length, MAX_QUIZ_QUESTIONS);
+  const verify = Math.min(buildVerifySteps(candidates).length, MAX_QUIZ_QUESTIONS - policy);
   return { policy, verify, total: policy + verify };
 }
 
