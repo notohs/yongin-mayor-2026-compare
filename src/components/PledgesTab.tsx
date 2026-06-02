@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { BulletinData, Candidate } from '../data/types';
+import type { BulletinData, Candidate, CandidateReview } from '../data/types';
 import CategoryCompareView from './CategoryCompareView';
 import PledgeBoard from './PledgeBoard';
 import styles from './PledgesTab.module.scss';
@@ -7,6 +7,7 @@ import styles from './PledgesTab.module.scss';
 interface PledgesTabProps {
   candidates: Candidate[];
   bulletinPolicies: Record<number, BulletinData>;
+  pledgeReviews?: Record<number, CandidateReview>;
 }
 
 type Mode = 'category' | 'candidate';
@@ -17,7 +18,7 @@ const MODES: { key: Mode; label: string }[] = [
 ];
 
 /** 공약 비교 탭: 분야별 정면 비교 ↔ 후보별 5대 공약 전환 */
-function PledgesTab({ candidates, bulletinPolicies }: PledgesTabProps) {
+function PledgesTab({ candidates, bulletinPolicies, pledgeReviews }: PledgesTabProps) {
   const [mode, setMode] = useState<Mode>('category');
 
   return (
@@ -40,7 +41,7 @@ function PledgesTab({ candidates, bulletinPolicies }: PledgesTabProps) {
       {mode === 'category' ? (
         <CategoryCompareView candidates={candidates} bulletinPolicies={bulletinPolicies} />
       ) : (
-        <PledgeBoard candidates={candidates} />
+        <PledgeBoard candidates={candidates} pledgeReviews={pledgeReviews} />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import type { Candidate } from '../data/types';
+import type { Candidate, CandidateReview } from '../data/types';
 import type { QuizThemeDef } from '../data/types';
 import type { QuizResult } from '../utils/quizStorage';
 import { countSteps } from '../utils/quizEngine';
@@ -13,6 +13,7 @@ interface QuizIntroProps {
   onViewHistory: () => void;
   candidates: Candidate[];
   quizThemes: QuizThemeDef[];
+  pledgeReviews?: Record<number, CandidateReview>;
 }
 
 const MAX_NICKNAME = 16;
@@ -26,9 +27,10 @@ function QuizIntro({
   onViewHistory,
   candidates,
   quizThemes,
+  pledgeReviews,
 }: QuizIntroProps) {
   const trimmed = nickname.trim();
-  const { policy, verify } = countSteps(candidates, quizThemes);
+  const { policy, verify } = countSteps(candidates, quizThemes, pledgeReviews);
   const hasQuestions = policy + verify > 0;
   const canStart = trimmed.length > 0 && hasQuestions;
 
@@ -47,7 +49,7 @@ function QuizIntro({
         <h2 className={styles.Title}>누구 공약인지 모른 채 골라보세요</h2>
         <p className={styles.Desc}>
           후보 이름을 가린 정책 {policy}문항(선택지 3개 문항은 <strong>최대 2개</strong>, 선택지
-          2개 문항은 1개 선택)과, 후보의 병역·체납·전과를 점검하는 검증 {verify}문항이 제시됩니다.
+          2개 문항은 1개 선택)과, 후보의 병역·체납·전과와 부실공약을 점검하는 검증 {verify}문항이 제시됩니다.
           선택을 마치면 종합 점수로 어느 후보가 가장 잘 맞는지 알려드립니다.
         </p>
 

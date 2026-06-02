@@ -15,6 +15,7 @@ const KIND_META: Record<VerifyKind, { label: string; icon: string }> = {
   military: { label: '병역 검증', icon: '🪖' },
   arrears: { label: '체납 검증', icon: '💸' },
   criminal: { label: '전과 검증', icon: '⚖️' },
+  pledge: { label: '부실공약 검증', icon: '📋' },
 };
 
 const CHOICES: { verdict: VerifyVerdict; label: string; note: string; tone: string }[] = [

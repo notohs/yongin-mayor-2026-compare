@@ -2,6 +2,7 @@ import type { Election } from '../../types';
 import { meta } from './meta';
 import { candidates } from './candidates';
 import { bulletinPolicies } from './bulletinPolicies';
+import { pledgeReviews } from './pledgeReviews';
 import { quizThemes } from './quizThemes';
 
 export const election: Election = {
@@ -10,5 +11,6 @@ export const election: Election = {
   meta,
   candidates,
   bulletinPolicies,
+  pledgeReviews,
   quizThemes,
 };

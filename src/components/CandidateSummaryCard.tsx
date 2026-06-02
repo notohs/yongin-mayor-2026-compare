@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import type { Candidate } from '../data/types';
+import type { Candidate, CandidateReview } from '../data/types';
 import { formatMoney } from '../utils/format';
 import CandidateBadge from './CandidateBadge';
 import StatusChip from './StatusChip';
@@ -7,13 +7,15 @@ import styles from './CandidateSummaryCard.module.scss';
 
 interface CandidateSummaryCardProps {
   candidate: Candidate;
+  /** 공약 적정성 교차검증 결과(있으면 요약 칩 표시) */
+  review?: CandidateReview;
   onOpenDetail: (id: number) => void;
   /** 그리드 내 순번 — 등장 애니메이션 stagger 용 */
   index?: number;
 }
 
 /** 종합 비교 화면 상단의 후보 요약 카드 */
-function CandidateSummaryCard({ candidate, onOpenDetail, index = 0 }: CandidateSummaryCardProps) {
+function CandidateSummaryCard({ candidate, review, onOpenDetail, index = 0 }: CandidateSummaryCardProps) {
   const { criminal, assets, materials } = candidate;
   const missingMaterials = [
     materials.bulletin ? null : '선거공보',
@@ -71,6 +73,13 @@ function CandidateSummaryCard({ candidate, onOpenDetail, index = 0 }: CandidateS
                 : '자료 3종 제출'
             }
           />
+          {review && review.unsound > 0 ? (
+            <StatusChip tone="danger" label={`공약 검증 부적정 ${review.unsound}`} />
+          ) : review && review.caution > 0 ? (
+            <StatusChip tone="warning" label={`공약 검증 주의 ${review.caution}`} />
+          ) : review ? (
+            <StatusChip tone="positive" label="공약 검증 적정" />
+          ) : null}
         </div>
 
         <button

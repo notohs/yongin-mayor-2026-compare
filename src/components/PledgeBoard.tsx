@@ -1,4 +1,4 @@
-import type { Candidate } from '../data/types';
+import type { Candidate, CandidateReview } from '../data/types';
 import CandidateBadge from './CandidateBadge';
 import PledgeCard from './PledgeCard';
 import SectionTitle from './SectionTitle';
@@ -6,15 +6,16 @@ import styles from './PledgeBoard.module.scss';
 
 interface PledgeBoardProps {
   candidates: Candidate[];
+  pledgeReviews?: Record<number, CandidateReview>;
 }
 
 /** 공약 비교 화면: 후보별 5대 공약을 열로 나란히 배치 */
-function PledgeBoard({ candidates }: PledgeBoardProps) {
+function PledgeBoard({ candidates, pledgeReviews }: PledgeBoardProps) {
   return (
     <div className={styles.PledgeBoard}>
       <SectionTitle
         title="5대 공약 비교"
-        description="공약 제목을 누르면 목표·이행방법·이행기간·재원조달을 펼쳐볼 수 있습니다."
+        description="공약 제목을 누르면 목표·이행방법·이행기간·재원조달을 펼쳐볼 수 있습니다. 공약 옆 ‘적정/주의/부적정’은 다른 정당 검증단의 교차 평가입니다."
       />
 
       <div className={styles.Columns}>
@@ -37,6 +38,9 @@ function PledgeBoard({ candidates }: PledgeBoardProps) {
                   key={pledge.rank}
                   pledge={pledge}
                   accentColor={candidate.partyColor}
+                  review={pledgeReviews?.[candidate.id]?.items.find(
+                    (it) => it.rank === pledge.rank,
+                  )}
                   defaultOpen={index === 0}
                 />
               ))}

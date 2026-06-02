@@ -1,13 +1,15 @@
-import type { Candidate } from '../data/types';
+import type { Candidate, CandidateReview } from '../data/types';
 import { formatMoney, formatThousandWon } from '../utils/format';
 import CompareGrid, { type CompareRow } from './CompareGrid';
 import SectionTitle from './SectionTitle';
 import StatusChip from './StatusChip';
 import MaterialStatus from './MaterialStatus';
+import PledgeReviewPanel from './PledgeReviewPanel';
 import styles from './VerificationView.module.scss';
 
 interface VerificationViewProps {
   candidates: Candidate[];
+  pledgeReviews?: Record<number, CandidateReview>;
 }
 
 const verificationRows: CompareRow[] = [
@@ -105,7 +107,7 @@ const verificationRows: CompareRow[] = [
 ];
 
 /** 검증 비교 화면: 학력·경력·재산·납세·병역·전과를 항목별로 나란히 비교 */
-function VerificationView({ candidates }: VerificationViewProps) {
+function VerificationView({ candidates, pledgeReviews }: VerificationViewProps) {
   return (
     <div className={styles.VerificationView}>
       <SectionTitle
@@ -113,6 +115,7 @@ function VerificationView({ candidates }: VerificationViewProps) {
         description="중앙선거관리위원회 후보자정보공개자료 기준입니다. ‘선관위 자료 제출’의 미등록은 자료를 성실히 제출했는지에 대한 참고 지표입니다. 재산·납세는 천원 단위로 신고된 금액입니다."
       />
       <CompareGrid candidates={candidates} rows={verificationRows} />
+      <PledgeReviewPanel candidates={candidates} pledgeReviews={pledgeReviews} />
     </div>
   );
 }

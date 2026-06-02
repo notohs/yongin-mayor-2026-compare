@@ -1,4 +1,4 @@
-import type { Candidate, Pledge, PledgeCategory } from '../data/types';
+import type { Candidate, CandidateReview, Pledge, PledgeCategory } from '../data/types';
 import type { QuizThemeDef } from '../data/types';
 
 /** 단일 선택 가중치 */
@@ -33,8 +33,8 @@ export interface PolicyStep {
   options: QuizStepOption[];
 }
 
-// ── 검증(병역·체납·전과) 문항 ─────────────────────────
-export type VerifyKind = 'military' | 'arrears' | 'criminal';
+// ── 검증(병역·체납·전과·부실공약) 문항 ─────────────────
+export type VerifyKind = 'military' | 'arrears' | 'criminal' | 'pledge';
 
 /** 검증 응답: 수용 / 내키지 않음(감점) / 절대 불가(배제) */
 export type VerifyVerdict = 'ok' | 'reluctant' | 'never';
@@ -118,8 +118,14 @@ export function buildPolicySteps(
   return shuffle(steps);
 }
 
-/** 검증(병역·체납·전과) 문항 생성: 후보의 부정적 기록에서 데이터 기반으로 생성 */
-export function buildVerifySteps(candidates: Candidate[]): VerifyStep[] {
+/**
+ * 검증(병역·체납·전과·부실공약) 문항 생성: 후보의 부정적 기록 + 타 정당 교차검증에서
+ * ‘부적정’으로 판정된 공약을 데이터 기반으로 문항화한다.
+ */
+export function buildVerifySteps(
+  candidates: Candidate[],
+  pledgeReviews?: Record<number, CandidateReview>,
+): VerifyStep[] {
   const steps: VerifyStep[] = [];
 
   candidates.forEach((candidate) => {
@@ -170,6 +176,24 @@ export function buildVerifySteps(candidates: Candidate[]): VerifyStep[] {
         });
       });
     }
+
+    // 타 정당 교차검증에서 ‘부적정’ 판정된 공약 → 부실공약 검증 문항
+    const review = pledgeReviews?.[candidate.id];
+    if (review) {
+      review.items
+        .filter((item) => item.verdict === 'unsound')
+        .forEach((item) => {
+          steps.push({
+            type: 'verify',
+            id: `verify-pledge-${candidate.id}-${item.rank}`,
+            kind: 'pledge',
+            candidateId: candidate.id,
+            recordText: `‘${item.title}’ — ${item.comment}`,
+            prompt:
+              '타 정당 검증단이 이 공약을 ‘부적정’(실현 가능성·구체성 문제)으로 평가했습니다. 그래도 괜찮으신가요?',
+          });
+        });
+    }
   });
 
   return shuffle(steps);
@@ -183,9 +207,10 @@ export function buildVerifySteps(candidates: Candidate[]): VerifyStep[] {
 export function buildQuizSteps(
   candidates: Candidate[],
   themes: QuizThemeDef[],
+  pledgeReviews?: Record<number, CandidateReview>,
 ): QuizStep[] {
   const policy = buildPolicySteps(candidates, themes); // 셔플됨
-  const verify = buildVerifySteps(candidates); // 셔플됨
+  const verify = buildVerifySteps(candidates, pledgeReviews); // 셔플됨
   // 정책 문항을 우선 보존하고, 남는 자리에 검증 문항을 채워 총 20개 이하로 맞춘다
   const policyCapped = policy.slice(0, MAX_QUIZ_QUESTIONS);
   const verifyRoom = Math.max(0, MAX_QUIZ_QUESTIONS - policyCapped.length);
@@ -197,9 +222,13 @@ export function buildQuizSteps(
 export function countSteps(
   candidates: Candidate[],
   themes: QuizThemeDef[],
+  pledgeReviews?: Record<number, CandidateReview>,
 ): { policy: number; verify: number; total: number } {
   const policy = Math.min(themes.length, MAX_QUIZ_QUESTIONS);
-  const verify = Math.min(buildVerifySteps(candidates).length, MAX_QUIZ_QUESTIONS - policy);
+  const verify = Math.min(
+    buildVerifySteps(candidates, pledgeReviews).length,
+    MAX_QUIZ_QUESTIONS - policy,
+  );
   return { policy, verify, total: policy + verify };
 }
 

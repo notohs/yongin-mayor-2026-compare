@@ -94,16 +94,24 @@ function App() {
 
       <main className={styles.Main}>
         {activeTab === 'overview' ? (
-          <OverviewView candidates={election.candidates} onOpenDetail={setDetailId} />
+          <OverviewView
+            candidates={election.candidates}
+            pledgeReviews={election.pledgeReviews}
+            onOpenDetail={setDetailId}
+          />
         ) : null}
         {activeTab === 'pledges' ? (
           <PledgesTab
             candidates={election.candidates}
             bulletinPolicies={election.bulletinPolicies}
+            pledgeReviews={election.pledgeReviews}
           />
         ) : null}
         {activeTab === 'verification' ? (
-          <VerificationView candidates={election.candidates} />
+          <VerificationView
+            candidates={election.candidates}
+            pledgeReviews={election.pledgeReviews}
+          />
         ) : null}
         {activeTab === 'quiz' ? (
           <QuizView
@@ -111,6 +119,7 @@ function App() {
             electionId={election.id}
             candidates={election.candidates}
             quizThemes={election.quizThemes}
+            pledgeReviews={election.pledgeReviews}
           />
         ) : null}
       </main>

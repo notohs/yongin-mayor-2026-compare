@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Candidate } from '../data/types';
+import type { Candidate, CandidateReview } from '../data/types';
 import type { QuizThemeDef } from '../data/types';
 import {
   buildQuizSteps,
@@ -33,12 +33,13 @@ interface QuizViewProps {
   electionId: string;
   candidates: Candidate[];
   quizThemes: QuizThemeDef[];
+  pledgeReviews?: Record<number, CandidateReview>;
 }
 
 type QuizPhase = 'intro' | 'playing' | 'result' | 'history';
 
 /** 공약 블라인드 퀴즈 컨테이너 (정책 + 검증 단계, 이전 이동, 배제 처리) */
-function QuizView({ electionId, candidates, quizThemes }: QuizViewProps) {
+function QuizView({ electionId, candidates, quizThemes, pledgeReviews }: QuizViewProps) {
   const [phase, setPhase] = useState<QuizPhase>('intro');
   const [nickname, setNickname] = useState('');
   const [steps, setSteps] = useState<QuizStep[]>([]);
@@ -53,7 +54,7 @@ function QuizView({ electionId, candidates, quizThemes }: QuizViewProps) {
   const electionResults = savedResults.filter((result) => result.electionId === electionId);
 
   const handleStart = () => {
-    setSteps(buildQuizSteps(candidates, quizThemes));
+    setSteps(buildQuizSteps(candidates, quizThemes, pledgeReviews));
     setPicks([]);
     setVerifyAnswers([]);
     setCurrentIndex(0);
@@ -144,6 +145,7 @@ function QuizView({ electionId, candidates, quizThemes }: QuizViewProps) {
           onViewHistory={() => setPhase('history')}
           candidates={candidates}
           quizThemes={quizThemes}
+          pledgeReviews={pledgeReviews}
         />
       ) : null}
 

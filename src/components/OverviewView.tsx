@@ -1,4 +1,4 @@
-import type { Candidate } from '../data/types';
+import type { Candidate, CandidateReview } from '../data/types';
 import CandidateSummaryCard from './CandidateSummaryCard';
 import CompareGrid, { type CompareRow } from './CompareGrid';
 import SectionTitle from './SectionTitle';
@@ -6,6 +6,7 @@ import styles from './OverviewView.module.scss';
 
 interface OverviewViewProps {
   candidates: Candidate[];
+  pledgeReviews?: Record<number, CandidateReview>;
   onOpenDetail: (id: number) => void;
 }
 
@@ -25,7 +26,7 @@ const quickRows: CompareRow[] = [
 ];
 
 /** 종합 비교 화면: 후보 요약 카드 + 핵심 정보 비교표 */
-function OverviewView({ candidates, onOpenDetail }: OverviewViewProps) {
+function OverviewView({ candidates, pledgeReviews, onOpenDetail }: OverviewViewProps) {
   return (
     <div className={styles.OverviewView}>
       <div className={styles.CardGrid}>
@@ -33,6 +34,7 @@ function OverviewView({ candidates, onOpenDetail }: OverviewViewProps) {
           <CandidateSummaryCard
             key={candidate.id}
             candidate={candidate}
+            review={pledgeReviews?.[candidate.id]}
             onOpenDetail={onOpenDetail}
             index={i}
           />

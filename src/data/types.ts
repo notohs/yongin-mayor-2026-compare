@@ -108,6 +108,39 @@ export interface BulletinData {
   groups: PolicyGroup[];
 }
 
+/** 공약 적정성 종합 판정 */
+export type ReviewVerdict = 'sound' | 'caution' | 'unsound'; // 적정 / 주의 / 부적정
+
+/** 5대 공약 1건에 대한 타 정당 교차 적정성 평가 */
+export interface PledgeReviewItem {
+  /** 대응하는 5대 공약 rank */
+  rank: number;
+  /** 공약 제목(참조) */
+  title: string;
+  /** 실현 가능성 평가 (한 줄) */
+  feasibility: string;
+  /** 이미 완료/중복(베끼기) 여부 평가 (한 줄) */
+  duplication: string;
+  /** 구체성 평가 (한 줄) */
+  specificity: string;
+  /** 종합 판정 */
+  verdict: ReviewVerdict;
+  /** 종합 사유 (한 줄) */
+  comment: string;
+}
+
+/** 후보자 공약 적정성 교차검증 묶음 */
+export interface CandidateReview {
+  /** 검증을 수행한 (타) 정당 */
+  reviewer: string;
+  /** 종합 집계 */
+  sound: number;
+  caution: number;
+  unsound: number;
+  /** 5대 공약별 평가 */
+  items: PledgeReviewItem[];
+}
+
 /**
  * 선관위 제출 자료 등록 현황 (성실 제출 참고 지표)
  * 선거공보 / 선거공약서 / 5대공약 — 후보가 등록했는지 여부
@@ -213,6 +246,8 @@ export interface Election {
   candidates: Candidate[];
   /** 후보별 선거공보 세부 공약(기호 → BulletinData) */
   bulletinPolicies: Record<number, BulletinData>;
+  /** 후보별 공약 적정성 교차검증(기호 → CandidateReview). 선택 — 없으면 표시·퀴즈 생략 */
+  pledgeReviews?: Record<number, CandidateReview>;
   /** 공약 퀴즈 정책 문항(검증 문항은 후보 데이터에서 자동 생성) */
   quizThemes: QuizThemeDef[];
 }

@@ -20,6 +20,7 @@ const VERIFY_KIND_META: Record<VerifyKind, { label: string; icon: string }> = {
   military: { label: '병역', icon: '🪖' },
   arrears: { label: '체납', icon: '💸' },
   criminal: { label: '전과', icon: '⚖️' },
+  pledge: { label: '부실공약', icon: '📋' },
 };
 
 const VERDICT_META: Record<VerifyVerdict, { label: string; tone: StatusTone }> = {
