@@ -1,0 +1,426 @@
+@use 'sass:color';
+@use '../styles/variables' as *;
+
+.IntegratedPledgeTable {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.Scroll {
+  overflow-x: auto;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background-color: $color-surface;
+  -webkit-overflow-scrolling: touch;
+}
+
+.Grid {
+  display: grid;
+  min-width: 640px;
+}
+
+.Cell {
+  padding: $space-sm $space-md;
+  border-bottom: 1px solid $color-border;
+}
+
+.cornerCell {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background-color: $color-surface;
+}
+
+.headCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+  background-color: $color-surface;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.HeadName {
+  font-size: 15px;
+  font-weight: 800;
+  color: $color-text;
+}
+
+.HeadParty {
+  font-size: 11.5px;
+  color: $color-text-sub;
+}
+
+.labelCell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: $color-surface-muted;
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text-sub;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dataCell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  vertical-align: top;
+}
+
+.Empty {
+  color: $color-text-faint;
+}
+
+// ── 공약 칩 ──
+.PledgeChip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background-color: $color-surface;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s $ease-spring;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-accent;
+    transform: translateY(-1px);
+  }
+  &.pinned {
+    border-color: $color-accent;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.ChipTop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ChipRank {
+  font-family: $font-mono;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
+.ChipNature {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: $radius-pill;
+
+  &.commitment {
+    color: #fff;
+    background-color: $color-accent;
+  }
+  &.aspiration {
+    color: $color-text-sub;
+    border: 1px solid $color-border;
+  }
+}
+
+.ChipRecycle {
+  font-size: 11px;
+  color: color.adjust($color-warning, $lightness: -8%);
+}
+
+.ChipDot {
+  margin-left: auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.sound {
+    background-color: $color-positive;
+  }
+  &.caution {
+    background-color: $color-warning;
+  }
+  &.unsound {
+    background-color: $color-danger;
+  }
+}
+
+.ChipTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: 1.4;
+}
+
+// ── 선거공보 칩 ──
+.BulletinChip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border: 1px dashed $color-border;
+  border-radius: $radius-md;
+  background-color: $color-surface-muted;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-accent;
+  }
+  &.pinned {
+    border-style: solid;
+    border-color: $color-accent;
+  }
+}
+
+.ChipDoc {
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-sub;
+}
+
+.ChipCount {
+  font-family: $font-mono;
+  font-size: 11px;
+  font-weight: 700;
+  color: $color-text-faint;
+  flex-shrink: 0;
+}
+
+// ── 툴팁 ──
+.Tooltip {
+  position: fixed;
+  z-index: 60;
+  width: 360px;
+  max-width: calc(100vw - 16px);
+  max-height: 70vh;
+  overflow-y: auto;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  padding: $space-md;
+  pointer-events: none;
+  animation: tipIn 0.14s $ease-spring;
+}
+
+.tooltipPinned {
+  pointer-events: auto;
+}
+
+@keyframes tipIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.PinHint {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: $color-accent;
+  margin-bottom: 6px;
+}
+
+.TipBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.TipHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.TipRank {
+  font-family: $font-mono;
+  font-size: 11px;
+  font-weight: 700;
+  color: $color-text-faint;
+}
+
+.TipTitle {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: $color-text;
+  line-height: 1.35;
+}
+
+.TipReview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-radius: $radius-md;
+  background-color: $color-surface-muted;
+}
+
+.TipReviewTop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.TipNature {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: $radius-pill;
+
+  &.commitment {
+    color: #fff;
+    background-color: $color-accent;
+  }
+  &.aspiration {
+    color: $color-text-sub;
+    border: 1px solid $color-border;
+  }
+}
+
+.TipVerdict {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: $radius-pill;
+  color: #fff;
+
+  &.sound {
+    background-color: $color-positive;
+  }
+  &.caution {
+    background-color: $color-warning;
+  }
+  &.unsound {
+    background-color: $color-danger;
+  }
+}
+
+.TipRecycle {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: $radius-pill;
+  color: color.adjust($color-warning, $lightness: -10%);
+  background-color: rgba($color-warning, 0.16);
+}
+
+.TipCrit {
+  display: grid;
+  grid-template-columns: 64px 48px 1fr;
+  align-items: start;
+  gap: 8px;
+}
+
+.TipCritLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: $color-text-faint;
+  padding-top: 1px;
+}
+
+.TipLevel {
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  padding: 1px 0;
+  border-radius: $radius-sm;
+
+  &.good {
+    color: color-mix(in srgb, $color-positive 80%, #000);
+    background-color: rgba($color-positive, 0.14);
+  }
+  &.mid {
+    color: color-mix(in srgb, $color-warning 82%, #000);
+    background-color: rgba($color-warning, 0.18);
+  }
+  &.bad {
+    color: color-mix(in srgb, $color-danger 82%, #000);
+    background-color: rgba($color-danger, 0.13);
+  }
+}
+
+.TipCritNote {
+  font-size: 12px;
+  color: $color-text-sub;
+  line-height: 1.45;
+}
+
+.TipComment {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: $color-text;
+  line-height: 1.45;
+}
+
+.TipPanel {
+  margin: 0;
+  font-size: 11.5px;
+  color: $color-text-sub;
+}
+
+.TipSection {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  li {
+    position: relative;
+    padding-left: 12px;
+    font-size: 12.5px;
+    color: $color-text;
+    line-height: 1.45;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 8px;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background-color: $color-text-faint;
+    }
+  }
+}
+
+.TipLabel {
+  font-size: 11px;
+  font-weight: 800;
+  color: $color-text-faint;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: $bp-mobile) {
+  .Tooltip {
+    width: calc(100vw - 16px);
+  }
+}

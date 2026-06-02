@@ -63,6 +63,33 @@ const verificationRows: CompareRow[] = [
     ),
   },
   {
+    key: 'taxRatio',
+    label: '재산 대비 실질 납세율',
+    render: (c) => {
+      // 실질 납세 = 납세액 − 현 체납액(아직 안 낸 세금은 차감). 재산은 신고 총액 기준.
+      const netTax = c.tax.totalPaid - c.tax.currentArrears;
+      if (c.assets.total <= 0) {
+        return (
+          <div className={styles.Stack}>
+            <strong className={styles.Amount}>산정 불가</strong>
+            <span className={styles.SubLine}>재산 신고총액 0 이하</span>
+          </div>
+        );
+      }
+      const ratio = (netTax / c.assets.total) * 100;
+      return (
+        <div className={styles.Stack}>
+          <strong className={`${styles.Amount} num`}>{ratio.toFixed(2)}%</strong>
+          <span className={styles.SubLine}>
+            (납세 {formatThousandWon(c.tax.totalPaid)}
+            {c.tax.currentArrears > 0 ? ` − 체납 ${formatThousandWon(c.tax.currentArrears)}` : ''}) ÷
+            재산 {formatMoney(c.assets.total)}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
     key: 'arrears',
     label: '체납',
     render: (c) => (
