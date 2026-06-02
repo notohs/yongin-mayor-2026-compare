@@ -38,7 +38,7 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
     <section className={styles.PledgeReviewPanel}>
       <SectionTitle
         title="공약 적정성 교차검증"
-        description="각 후보의 5대 공약을 다른 정당 검증단이 ①실현 가능성 ②이미 완료·베끼기 여부 ③구체성으로 평가하고, 해당 정당의 반론을 다시 다른 정당이 재심한 결과입니다. ‘공약’(임기 내 이행 약속)과 ‘목표’(장기 지향·초석)는 다른 기준으로 봅니다. 참고용 의견이며 최종 판단은 유권자의 몫입니다."
+        description="편향을 막기 위해 각 후보의 5대 공약을 ‘후보 소속을 제외한 4개 정당 균형패널’이 ①실현 가능성 ②완료·중복(재활용·기추진) ③구체성으로 평가하고 다수결로 판정했습니다. ‘공약’(임기 내 이행 약속)과 ‘목표’(장기 지향·초석)는 다른 기준으로 봅니다. ♻ 표시는 타·과거 후보 공약 재활용 또는 이미 추진 중인 사업 의심입니다. 참고용이며 최종 판단은 유권자의 몫입니다."
       />
       <div className={styles.Grid}>
         {reviewed.map((candidate) => {
@@ -74,6 +74,9 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
                         {item.nature === 'commitment' ? '공약' : '목표'}
                       </span>
                       <span className={styles.ItemTitle}>{item.title}</span>
+                      {splitCriterion(item.duplication).level === '의심' ? (
+                        <span className={styles.Recycle}>♻ 재탕·기추진 의심</span>
+                      ) : null}
                       <span className={`${styles.Verdict} ${styles[item.verdict]}`}>
                         {VERDICT_LABEL[item.verdict]}
                       </span>
@@ -99,9 +102,9 @@ function PledgeReviewPanel({ candidates, pledgeReviews }: PledgeReviewPanelProps
                         <span className={styles.CommentTag}>종합</span> {item.comment}
                       </p>
                     ) : null}
-                    {item.rebuttal ? (
+                    {item.panel ? (
                       <p className={styles.Rebuttal}>
-                        <span className={styles.RebuttalTag}>반론·재심</span> {item.rebuttal}
+                        <span className={styles.RebuttalTag}>균형패널</span> {item.panel}
                       </p>
                     ) : null}
                   </li>

@@ -137,8 +137,8 @@ export interface PledgeReviewItem {
   verdict: ReviewVerdict;
   /** 종합 사유 (한 줄) — 주의·부적정 분류의 핵심 근거 */
   comment: string;
-  /** 반론권(항변)·재심 결과 (있으면 표시). 격상/유지 사유 */
-  rebuttal?: string;
+  /** 균형패널 표결 결과 (후보 소속을 뺀 4개 정당 다수결) */
+  panel?: string;
 }
 
 /** 후보자 공약 적정성 교차검증 묶음 (집계는 items에서 자동 계산) */

@@ -82,6 +82,11 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
             {review.nature === 'commitment' ? '공약' : '목표'}
           </span>
         ) : null}
+        {review && splitCriterion(review.duplication).level === '의심' ? (
+          <span className={styles.Recycle} title="타·과거 후보 공약 재활용 또는 기추진 사업 의심">
+            ♻ 재탕
+          </span>
+        ) : null}
         {review ? (
           <span className={`${styles.Verdict} ${styles[review.verdict]}`}>
             {VERDICT_LABEL[review.verdict]}
@@ -119,9 +124,9 @@ function PledgeCard({ pledge, accentColor, review, defaultOpen = false }: Pledge
                   <span className={styles.ReviewTag}>종합</span> {review.comment}
                 </p>
               ) : null}
-              {review.rebuttal ? (
+              {review.panel ? (
                 <p className={styles.ReviewRebuttal}>
-                  <span className={styles.ReviewTag}>반론·재심</span> {review.rebuttal}
+                  <span className={styles.ReviewTag}>균형패널</span> {review.panel}
                 </p>
               ) : null}
             </div>
