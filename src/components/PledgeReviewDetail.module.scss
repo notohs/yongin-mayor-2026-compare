@@ -31,13 +31,13 @@
   padding: 8px 10px;
   border-radius: $radius-sm;
   background-color: $color-surface;
-  border-left: 3px solid $color-border;
 
+  // 구분은 한쪽 색깔 보더 없이 은은한 배경 틴트 + 태그 색으로만
   &.inprogress {
-    border-left-color: $color-warning;
+    background-color: rgba($color-warning, 0.07);
   }
   &.copy {
-    border-left-color: $color-danger;
+    background-color: rgba($color-danger, 0.06);
   }
 }
 
