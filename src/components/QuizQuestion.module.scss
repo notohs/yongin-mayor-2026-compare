@@ -1,190 +1,162 @@
-@use '../styles/variables' as *;
-
 .QuizQuestion {
-  max-width: 640px;
-  margin: 0 auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 28px;
+
+  @media (max-width: 760px) {
+    padding: 20px 16px;
+  }
+}
+
+.Head {
   display: flex;
-  flex-direction: column;
-  gap: $space-md;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.StepCount {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+  flex-shrink: 0;
 }
 
 .ProgressBar {
+  flex: 1;
   height: 6px;
-  border-radius: $radius-pill;
-  background-color: $color-border;
+  background: var(--surface-3);
   overflow: hidden;
 }
 
 .ProgressFill {
-  display: block;
   height: 100%;
-  border-radius: $radius-pill;
-  background-color: $color-accent;
-  transition: width 0.3s ease;
-}
-
-.StepCount {
-  font-size: 13px;
-  font-weight: 700;
-  color: $color-text-faint;
-  text-align: center;
-}
-
-.Head {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-sm;
+  background: var(--text);
+  transition: width 0.4s var(--ease);
 }
 
 .CategoryChip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-3);
   font-weight: 700;
-  color: $color-text-sub;
-  background-color: $color-surface;
-  box-shadow: $shadow-sm;
-  padding: 6px 14px;
-  border-radius: $radius-pill;
+  margin-bottom: 10px;
+  white-space: nowrap;
 }
 
 .CategoryIcon {
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1;
 }
 
 .Question {
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 800;
+  line-height: 1.35;
   letter-spacing: -0.01em;
-  color: $color-text;
-  line-height: 1.4;
+  margin: 0 0 8px;
+  text-wrap: pretty;
+
+  @media (max-width: 760px) {
+    font-size: 19px;
+  }
 }
 
+.Anonymous,
 .Guide {
-  font-size: 13px;
-  color: $color-text-sub;
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin: 0 0 14px;
 }
 
 .Options {
   display: flex;
   flex-direction: column;
-  gap: $space-sm;
-  margin-top: $space-xs;
 }
 
 .OptionCard {
   display: flex;
   align-items: flex-start;
-  gap: $space-sm;
   width: 100%;
   text-align: left;
-  background-color: $color-surface;
-  border: 2px solid transparent;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-  padding: $space-md;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  padding: 16px 18px;
+  margin-bottom: 11px;
+  cursor: pointer;
+  font-size: 14.5px;
+  line-height: 1.5;
   transition:
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease;
+    background 0.15s,
+    border-color 0.15s;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    border-color: $color-accent;
-    box-shadow: $shadow-md;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  &:hover {
+    background: var(--surface-hi);
+    border-color: var(--text-3);
   }
 
   &.selected {
-    border-color: $color-accent;
-    background-color: rgba($color-accent, 0.05);
-    box-shadow: $shadow-md;
+    border-color: var(--text);
+    background: var(--surface-hi);
+    box-shadow: inset 0 0 0 1px var(--text);
   }
 }
 
 .Marker {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--text-3);
+  border-radius: 50%;
+  margin-right: 10px;
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: $radius-pill;
-  background-color: $color-surface-muted;
-  color: $color-text-sub;
-  font-size: 14px;
-  font-weight: 800;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
-}
+  font-size: 12px;
+  color: var(--bg);
 
-.markerOn {
-  background-color: $color-accent;
-  color: #fff;
+  &.markerOn {
+    background: var(--text);
+    border-color: var(--text);
+  }
 }
 
 .OptionText {
-  font-size: 15px;
-  color: $color-text;
-  line-height: 1.6;
+  flex: 1;
+}
+
+.SelectCount {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 2px 0 14px;
 }
 
 .Footer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: $space-md;
-  margin-top: $space-xs;
+  gap: 12px;
+  margin-top: 22px;
 }
 
-.BackButton {
-  border: none;
-  background-color: transparent;
-  color: $color-text-sub;
+.BackButton,
+.NextButton {
+  appearance: none;
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: $radius-pill;
+  font-weight: 700;
+  padding: 12px 22px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 
   &:hover {
-    background-color: $color-surface;
-    box-shadow: $shadow-sm;
-  }
-}
-
-.SelectCount {
-  font-size: 13px;
-  font-weight: 700;
-  color: $color-text-faint;
-}
-
-.NextButton {
-  border: none;
-  background-color: $color-text;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 12px 28px;
-  border-radius: $radius-md;
-  transition:
-    opacity 0.15s ease,
-    transform 0.2s $ease-spring;
-
-  &:hover:not(:disabled) {
-    transform: translateY(-1px);
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.97);
+    background: var(--surface-hi);
   }
 
   &:disabled {
@@ -193,14 +165,12 @@
   }
 }
 
-.Anonymous {
-  text-align: center;
-  font-size: 13px;
-  color: $color-text-faint;
-}
+.NextButton {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 
-@media (max-width: $bp-mobile) {
-  .Question {
-    font-size: 19px;
+  &:hover {
+    filter: brightness(0.92);
   }
 }

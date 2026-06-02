@@ -5,6 +5,21 @@ import { loadCustomElections } from './utils/customElections';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import TabBar, { type TabItem } from './components/TabBar';
+
+type ThemeMode = 'dark' | 'light';
+const THEME_KEY = 'votewise_theme';
+
+function readInitialTheme(): ThemeMode {
+  let theme: ThemeMode = 'dark';
+  try {
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === 'light' || stored === 'dark') theme = stored;
+  } catch {
+    /* localStorage 차단 시 기본 다크 */
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+  return theme;
+}
 import OverviewView from './components/OverviewView';
 import PledgesTab from './components/PledgesTab';
 import VerificationView from './components/VerificationView';
@@ -30,6 +45,20 @@ function App() {
   const [electionId, setElectionId] = useState<string>(builtinElections[0].id);
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [detailId, setDetailId] = useState<number | null>(null);
+  const [theme, setTheme] = useState<ThemeMode>(readInitialTheme);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next: ThemeMode = prev === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch {
+        /* 저장 차단 시 무시 */
+      }
+      return next;
+    });
+  };
 
   // 빌트인(저장소 폴더) + 커스텀(콘솔 업로드) 선거구 병합
   const allElections = useMemo(() => {
@@ -85,11 +114,15 @@ function App() {
         selectedId={election.id}
         onSelect={handleElectionChange}
         onOpenAdmin={() => setMode('admin')}
-      />
-      <TabBar
-        tabs={TABS}
-        activeKey={activeTab}
-        onChange={(key) => setActiveTab(key as TabKey)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        tabSlot={
+          <TabBar
+            tabs={TABS}
+            activeKey={activeTab}
+            onChange={(key) => setActiveTab(key as TabKey)}
+          />
+        }
       />
 
       <main className={styles.Main}>
@@ -97,7 +130,7 @@ function App() {
           <OverviewView
             candidates={election.candidates}
             pledgeReviews={election.pledgeReviews}
-            onOpenDetail={setDetailId}
+            source={election.meta.source}
           />
         ) : null}
         {activeTab === 'pledges' ? (

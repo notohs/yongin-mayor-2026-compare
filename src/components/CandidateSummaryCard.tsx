@@ -1,34 +1,57 @@
-import type { CSSProperties } from 'react';
 import type { Candidate, CandidateReview } from '../data/types';
 import { tallyVerdicts } from '../data/types';
 import { formatMoney } from '../utils/format';
+import type { StatusTone } from './StatusChip';
 import CandidateBadge from './CandidateBadge';
-import StatusChip from './StatusChip';
 import styles from './CandidateSummaryCard.module.scss';
 
 interface CandidateSummaryCardProps {
   candidate: Candidate;
-  /** 공약 적정성 교차검증 결과(있으면 요약 칩 표시) */
+  /** 공약 적정성 교차검증 결과(있으면 검증 요약) */
   review?: CandidateReview;
-  onOpenDetail: (id: number) => void;
-  /** 그리드 내 순번 — 등장 애니메이션 stagger 용 */
-  index?: number;
 }
 
-/** 종합 비교 화면 상단의 후보 요약 카드 */
-function CandidateSummaryCard({ candidate, review, onOpenDetail, index = 0 }: CandidateSummaryCardProps) {
-  const { criminal, assets, materials } = candidate;
-  const missingMaterials = [
-    materials.bulletin ? null : '선거공보',
-    materials.pledgeBook ? null : '선거공약서',
-    materials.fivePledges ? null : '5대공약',
-  ].filter((v): v is string => v !== null);
+const GLYPH: Record<StatusTone, string> = {
+  positive: '✓',
+  danger: '✕',
+  warning: '!',
+  neutral: '',
+};
+
+function StatRow({ label, value, tone }: { label: string; value: string; tone?: StatusTone }) {
+  const glyph = tone ? GLYPH[tone] : '';
+  const color = tone ? `var(--${tone === 'positive' ? 'pos' : tone === 'danger' ? 'danger' : 'warn'}-fg)` : 'var(--text)';
+  return (
+    <div className={styles.StatRow}>
+      <span className={styles.StatLabel}>{label}</span>
+      <span className={`${styles.StatValue} num`} style={{ color }}>
+        {glyph ? <span aria-hidden="true">{glyph}</span> : null}
+        {value}
+      </span>
+    </div>
+  );
+}
+
+/** 종합 비교 보드의 후보 타일 — 포스터 전체 노출(contain) + 정당 series bar + 지표 행 */
+function CandidateSummaryCard({ candidate, review }: CandidateSummaryCardProps) {
+  const { criminal, assets, tax, materials } = candidate;
+  const haveMaterials = [materials.bulletin, materials.pledgeBook, materials.fivePledges].filter(
+    Boolean,
+  ).length;
+  const taxRate = assets.total > 0 ? ((tax.totalPaid - tax.currentArrears) / assets.total) * 100 : null;
+
+  const reviewStat = (): { label: string; tone: StatusTone } => {
+    if (!review) return { label: '자료 없음', tone: 'neutral' };
+    const t = tallyVerdicts(review.items);
+    if (t.unsound > 0) return { label: `부적정 ${t.unsound}`, tone: 'danger' };
+    if (t.caution > 0) return { label: `주의 ${t.caution}`, tone: 'warning' };
+    return { label: '전부 적정', tone: 'positive' };
+  };
+  const rv = reviewStat();
 
   return (
-    <article
-      className={styles.CandidateSummaryCard}
-      style={{ '--reveal-index': index } as CSSProperties}
-    >
+    <article className={styles.Tile}>
+      <div className={styles.Series} style={{ background: candidate.partyColor }} />
       <div className={styles.PosterWrap}>
         <img
           className={styles.Poster}
@@ -36,62 +59,30 @@ function CandidateSummaryCard({ candidate, review, onOpenDetail, index = 0 }: Ca
           alt={`${candidate.name} 후보 선거공보 표지`}
           loading="lazy"
         />
-        <span
-          className={styles.PartyTag}
-          style={{ backgroundColor: candidate.partyColor }}
-        >
-          {candidate.party}
-        </span>
       </div>
-
       <div className={styles.Body}>
-        <div className={styles.NameRow}>
+        <div className={styles.PartyRow}>
           <CandidateBadge id={candidate.id} color={candidate.partyColor} size="md" />
-          <div className={styles.NameBox}>
-            <h3 className={styles.Name}>{candidate.name}</h3>
-            <p className={styles.Meta}>
-              만 {candidate.age}세 · {candidate.job}
-            </p>
-          </div>
+          <span className={styles.Party}>{candidate.party}</span>
         </div>
-
+        <div className={styles.Name}>{candidate.name}</div>
         <p className={styles.Slogan}>“{candidate.slogan}”</p>
 
-        <div className={styles.ChipRow}>
-          <StatusChip
+        <div className={styles.Stats}>
+          <StatRow
+            label="전과"
+            value={criminal.hasRecord ? `${criminal.items.length}건` : '없음'}
             tone={criminal.hasRecord ? 'danger' : 'positive'}
-            label={criminal.hasRecord ? `전과 ${criminal.items.length}건` : '전과 없음'}
           />
-          <StatusChip
-            tone={assets.total < 0 ? 'warning' : 'neutral'}
-            label={`재산 ${formatMoney(assets.total)}`}
+          <StatRow label="신고재산" value={formatMoney(assets.total)} />
+          <StatRow label="납세율" value={taxRate === null ? '산정 불가' : `${taxRate.toFixed(2)}%`} />
+          <StatRow label="공약검증" value={rv.label} tone={rv.tone} />
+          <StatRow
+            label="자료제출"
+            value={`${haveMaterials}/3 등록`}
+            tone={haveMaterials === 3 ? 'positive' : 'warning'}
           />
-          <StatusChip
-            tone={missingMaterials.length > 0 ? 'danger' : 'positive'}
-            label={
-              missingMaterials.length > 0
-                ? `${missingMaterials.join('·')} 미제출`
-                : '자료 3종 제출'
-            }
-          />
-          {(() => {
-            if (!review) return null;
-            const t = tallyVerdicts(review.items);
-            if (t.unsound > 0)
-              return <StatusChip tone="danger" label={`공약 검증 부적정 ${t.unsound}`} />;
-            if (t.caution > 0)
-              return <StatusChip tone="warning" label={`공약 검증 주의 ${t.caution}`} />;
-            return <StatusChip tone="positive" label="공약 검증 적정" />;
-          })()}
         </div>
-
-        <button
-          type="button"
-          className={styles.DetailButton}
-          onClick={() => onOpenDetail(candidate.id)}
-        >
-          상세 정보 보기
-        </button>
       </div>
     </article>
   );

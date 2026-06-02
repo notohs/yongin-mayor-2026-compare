@@ -2,87 +2,76 @@ import type { PledgeReviewItem } from '../data/types';
 import { splitCriterion } from '../data/types';
 import styles from './PledgeReviewDetail.module.scss';
 
-function levelTone(level: string): 'good' | 'mid' | 'bad' {
-  if (['상', '없음', '구체적'].includes(level)) return 'good';
-  if (['하', '의심', '모호'].includes(level)) return 'bad';
+function gradeLevel(level: string): 'high' | 'mid' | 'low' {
+  if (/상|구체적|없음/.test(level)) return 'high';
+  if (/하|모호|의심/.test(level)) return 'low';
   return 'mid';
 }
 
-/** 헤더·칩에 붙이는 연속(긍정)/기추진·재탕(주의) 강조 미니 배지 (분리 표시) */
+/** 헤더·칩에 붙이는 연속/기추진/재탕 미니 배지 (레거시 호환용 export) */
 export function RecycleMiniBadges({ review }: { review: PledgeReviewItem }) {
   if (!review.continuity && !review.inProgress && !review.recycled) return null;
   return (
     <>
-      {review.continuity ? (
-        <span className={`${styles.Mini} ${styles.miniContinuity}`}>연속</span>
-      ) : null}
-      {review.inProgress ? (
-        <span className={`${styles.Mini} ${styles.miniInprogress}`}>기추진</span>
-      ) : null}
+      {review.continuity ? <span className={`${styles.Mini} ${styles.miniContinuity}`}>연속</span> : null}
+      {review.inProgress ? <span className={`${styles.Mini} ${styles.miniInprogress}`}>기추진</span> : null}
       {review.recycled ? <span className={`${styles.Mini} ${styles.miniCopy}`}>재탕</span> : null}
     </>
   );
 }
 
-const CRITERIA: { key: 'feasibility' | 'specificity'; label: string }[] = [
-  { key: 'feasibility', label: '실현 가능성' },
-  { key: 'specificity', label: '구체성' },
-];
-
-/** 공약 적정성 상세 본문 — 재활용·기추진 점검(분리·강조) + 평가기준 + 종합 + 패널 */
-function PledgeReviewDetail({ review }: { review: PledgeReviewItem }) {
-  const hasFlags = Boolean(review.continuity || review.inProgress || review.recycled);
+function RecycleBox({
+  kind,
+  text,
+}: {
+  kind: 'continuity' | 'inProgress' | 'recycled';
+  text: string;
+}) {
+  const meta =
+    kind === 'continuity'
+      ? { tone: styles.posTone, glyph: '✓', label: '연속·완수(긍정)' }
+      : kind === 'inProgress'
+        ? { tone: styles.warnTone, glyph: '!', label: '기추진 편승(주의)' }
+        : { tone: styles.warnTone, glyph: '!', label: '재탕·중복(주의)' };
   return (
-    <div className={styles.Detail}>
-      {hasFlags ? (
-        <div className={styles.RecycleBox}>
-          <span className={styles.RecycleHead}>공약 연속성·재활용 점검</span>
-          {review.continuity ? (
-            <div className={`${styles.RecycleItem} ${styles.continuity}`}>
-              <span className={styles.RecycleTag}>연속·완수</span>
-              <span className={styles.RecycleNote}>{review.continuity}</span>
-            </div>
-          ) : null}
-          {review.inProgress ? (
-            <div className={`${styles.RecycleItem} ${styles.inprogress}`}>
-              <span className={styles.RecycleTag}>이미 추진 중(편승)</span>
-              <span className={styles.RecycleNote}>{review.inProgress}</span>
-            </div>
-          ) : null}
-          {review.recycled ? (
-            <div className={`${styles.RecycleItem} ${styles.copy}`}>
-              <span className={styles.RecycleTag}>재탕·베끼기</span>
-              <span className={styles.RecycleNote}>{review.recycled}</span>
-            </div>
-          ) : null}
+    <div className={styles.Recycle}>
+      <span className={`${styles.RecycleHead} ${meta.tone}`}>
+        <span aria-hidden="true">{meta.glyph}</span>
+        {meta.label}
+      </span>
+      <div className={styles.RecycleText}>{text}</div>
+    </div>
+  );
+}
+
+function GradeLine({ label, value }: { label: string; value: string }) {
+  const { level, note } = splitCriterion(value);
+  return (
+    <div className={styles.GradeLine}>
+      <span className={styles.GradeKey}>{label}</span>
+      {level ? <span className={`${styles.Grade} ${styles[gradeLevel(level)]}`}>{level}</span> : null}
+      <span className={styles.GradeNote}>{note}</span>
+    </div>
+  );
+}
+
+/** 공약 적정성 상세 — 연속성·재활용 점검 + 등급/근거 분리 + 종합 + 균형패널 */
+function PledgeReviewDetail({ review }: { review: PledgeReviewItem }) {
+  return (
+    <div className={styles.ReviewBox}>
+      {review.continuity ? <RecycleBox kind="continuity" text={review.continuity} /> : null}
+      {review.inProgress ? <RecycleBox kind="inProgress" text={review.inProgress} /> : null}
+      {review.recycled ? <RecycleBox kind="recycled" text={review.recycled} /> : null}
+
+      <GradeLine label="실현가능성" value={review.feasibility} />
+      <GradeLine label="구체성" value={review.specificity} />
+      {review.comment ? (
+        <div className={styles.GradeLine}>
+          <span className={styles.GradeKey}>종합 사유</span>
+          <span className={styles.GradeNote}>{review.comment}</span>
         </div>
       ) : null}
-
-      <div className={styles.Criteria}>
-        {CRITERIA.map(({ key, label }) => {
-          const { level, note } = splitCriterion(review[key]);
-          return (
-            <div key={key} className={styles.CritRow}>
-              <span className={styles.CritLabel}>{label}</span>
-              <span className={`${styles.Level} ${styles[levelTone(level)]}`}>{level}</span>
-              <span className={styles.CritNote}>{note}</span>
-            </div>
-          );
-        })}
-      </div>
-
-      {review.comment ? (
-        <p className={styles.Comment}>
-          <span className={styles.Tag}>종합</span>
-          {review.comment}
-        </p>
-      ) : null}
-      {review.panel ? (
-        <p className={styles.Panel}>
-          <span className={styles.Tag}>균형패널</span>
-          {review.panel}
-        </p>
-      ) : null}
+      {review.panel ? <span className={styles.PanelVote}>균형패널 표결 · {review.panel}</span> : null}
     </div>
   );
 }

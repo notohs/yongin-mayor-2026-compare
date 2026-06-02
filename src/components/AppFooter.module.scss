@@ -1,26 +1,29 @@
-@use '../styles/variables' as *;
-
 .AppFooter {
-  margin-top: $space-2xl;
-  padding: $space-xl 0 $space-2xl;
-  background-color: $color-surface;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
 }
 
 .Inner {
-  max-width: $content-max;
+  max-width: var(--content);
   margin: 0 auto;
-  padding: 0 $space-lg;
+  padding: 22px 28px 32px;
+
+  @media (max-width: 760px) {
+    padding: 20px 16px 28px;
+  }
 }
 
 .Source {
-  font-size: 13px;
-  font-weight: 600;
-  color: $color-text-sub;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+  font-family: var(--mono);
 }
 
 .Disclaimer {
-  margin-top: $space-xs;
-  font-size: 13px;
-  color: $color-text-faint;
-  line-height: 1.7;
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-3);
+  line-height: 1.65;
+  max-width: 760px;
 }

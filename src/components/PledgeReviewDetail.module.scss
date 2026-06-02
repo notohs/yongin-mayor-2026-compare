@@ -1,177 +1,123 @@
-@use '../styles/variables' as *;
-
-.Detail {
-  display: flex;
-  flex-direction: column;
-  gap: $space-md;
+.ReviewBox {
+  padding: 16px 18px;
+  background: var(--surface);
+  border-top: 1px solid var(--line-2);
 }
 
-// ── 연속성·재활용 점검 (강조 블록) — 박스는 중립, 항목 틴트·태그로 긍정/주의 구분 ──
-.RecycleBox {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: $space-sm $space-md;
-  border-radius: $radius-md;
-  background-color: $color-surface-muted;
-  border: 1px solid $color-border;
+/* 연속성·재활용 점검 박스 */
+.Recycle {
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  padding: 11px 13px;
+  margin-bottom: 10px;
 }
 
 .RecycleHead {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 0.02em;
-  color: $color-text-sub;
+  margin-bottom: 5px;
 }
 
-.RecycleItem {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 8px 10px;
-  border-radius: $radius-sm;
-  background-color: $color-surface;
-
-  // 구분은 한쪽 색깔 보더 없이 은은한 배경 틴트 + 태그 색으로만
-  &.continuity {
-    background-color: rgba($color-positive, 0.07);
-  }
-  &.inprogress {
-    background-color: rgba($color-warning, 0.07);
-  }
-  &.copy {
-    background-color: rgba($color-danger, 0.06);
-  }
+.posTone {
+  color: var(--pos-fg);
+}
+.warnTone {
+  color: var(--warn-fg);
 }
 
-.RecycleTag {
-  align-self: flex-start;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 2px 9px;
-  border-radius: $radius-pill;
-
-  .continuity & {
-    color: color-mix(in srgb, $color-positive 80%, #000);
-    background-color: rgba($color-positive, 0.16);
-  }
-  .inprogress & {
-    color: color-mix(in srgb, $color-warning 82%, #000);
-    background-color: rgba($color-warning, 0.18);
-  }
-  .copy & {
-    color: color-mix(in srgb, $color-danger 82%, #000);
-    background-color: rgba($color-danger, 0.14);
-  }
-}
-
-.RecycleNote {
-  font-size: 12.5px;
-  color: $color-text;
+.RecycleText {
+  font-size: 12px;
+  color: var(--text-2);
   line-height: 1.5;
 }
 
-// ── 평가 기준 ──
-.Criteria {
+/* 등급/근거 분리 라인 */
+.GradeLine {
   display: flex;
-  flex-direction: column;
-  gap: 9px;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
-.CritRow {
-  display: grid;
-  grid-template-columns: 78px 52px 1fr;
-  align-items: start;
-  gap: 10px;
-}
-
-.CritLabel {
-  font-size: 12px;
+.GradeKey {
+  font-size: 11px;
+  color: var(--text-3);
   font-weight: 700;
-  color: $color-text-faint;
-  padding-top: 2px;
-}
-
-.Level {
-  justify-self: stretch;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 800;
-  padding: 3px 0;
-  border-radius: $radius-sm;
-
-  &.good {
-    color: color-mix(in srgb, $color-positive 80%, #000);
-    background-color: rgba($color-positive, 0.14);
-  }
-  &.mid {
-    color: color-mix(in srgb, $color-warning 82%, #000);
-    background-color: rgba($color-warning, 0.18);
-  }
-  &.bad {
-    color: color-mix(in srgb, $color-danger 82%, #000);
-    background-color: rgba($color-danger, 0.13);
-  }
-}
-
-.CritNote {
-  font-size: 13px;
-  color: $color-text;
-  line-height: 1.55;
-}
-
-// ── 종합 / 패널 ──
-.Comment,
-.Panel {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-  margin: 0;
-  line-height: 1.55;
-}
-
-.Comment {
-  font-size: 13px;
-  font-weight: 600;
-  color: $color-text;
-}
-
-.Panel {
-  font-size: 12px;
-  color: $color-text-sub;
-}
-
-.Tag {
+  width: 76px;
   flex-shrink: 0;
-  font-size: 10.5px;
-  font-weight: 800;
-  padding: 1px 8px;
-  border-radius: $radius-pill;
-  color: $color-accent;
-  background-color: rgba($color-accent, 0.08);
+  padding-top: 3px;
 }
 
-// ── 미니 배지 (헤더·칩) ──
+.Grade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 22px;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: var(--r-xs);
+  flex-shrink: 0;
+}
+
+.high {
+  color: var(--pos-fg);
+  background: var(--pos-bg);
+}
+.mid {
+  color: var(--warn-fg);
+  background: var(--warn-bg);
+}
+.low {
+  color: var(--danger-fg);
+  background: var(--danger-bg);
+}
+
+.GradeNote {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.PanelVote {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 4px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+}
+
+/* 미니 배지 (레거시 호환) */
 .Mini {
   flex-shrink: 0;
   font-size: 10.5px;
   font-weight: 800;
   padding: 2px 8px;
-  border-radius: $radius-pill;
+  border-radius: var(--r-pill);
   white-space: nowrap;
 }
-
 .miniContinuity {
-  color: color-mix(in srgb, $color-positive 80%, #000);
-  background-color: rgba($color-positive, 0.16);
+  color: var(--pos-fg);
+  background: var(--pos-bg);
 }
-
 .miniInprogress {
-  color: color-mix(in srgb, $color-warning 82%, #000);
-  background-color: rgba($color-warning, 0.18);
+  color: var(--warn-fg);
+  background: var(--warn-bg);
 }
-
 .miniCopy {
-  color: color-mix(in srgb, $color-danger 82%, #000);
-  background-color: rgba($color-danger, 0.14);
+  color: var(--danger-fg);
+  background: var(--danger-bg);
 }

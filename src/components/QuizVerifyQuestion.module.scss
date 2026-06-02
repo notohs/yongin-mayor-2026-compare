@@ -1,193 +1,159 @@
-@use 'sass:color';
-@use '../styles/variables' as *;
-
 .QuizVerifyQuestion {
-  max-width: 640px;
-  margin: 0 auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 28px;
+
+  @media (max-width: 760px) {
+    padding: 20px 16px;
+  }
+}
+
+.Head {
   display: flex;
-  flex-direction: column;
-  gap: $space-md;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.StepCount {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+  flex-shrink: 0;
 }
 
 .ProgressBar {
+  flex: 1;
   height: 6px;
-  border-radius: $radius-pill;
-  background-color: $color-border;
+  background: var(--surface-3);
   overflow: hidden;
 }
 
 .ProgressFill {
-  display: block;
   height: 100%;
-  border-radius: $radius-pill;
-  background-color: $color-warning;
-  transition: width 0.3s ease;
-}
-
-.StepCount {
-  font-size: 13px;
-  font-weight: 700;
-  color: $color-text-faint;
-  text-align: center;
-}
-
-.Head {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-sm;
+  background: var(--text);
+  transition: width 0.4s var(--ease);
 }
 
 .KindChip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-3);
   font-weight: 700;
-  color: color.adjust($color-warning, $lightness: -8%);
-  background-color: rgba($color-warning, 0.12);
-  padding: 6px 14px;
-  border-radius: $radius-pill;
+  margin-bottom: 10px;
 }
 
 .Question {
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 800;
+  line-height: 1.35;
   letter-spacing: -0.01em;
-  color: $color-text;
-  line-height: 1.45;
+  margin: 0 0 16px;
+  text-wrap: pretty;
+
+  @media (max-width: 760px) {
+    font-size: 18px;
+  }
 }
 
 .Record {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background-color: $color-surface;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-  padding: $space-md;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  padding: 13px 15px;
+  margin-bottom: 18px;
 }
 
 .RecordLabel {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  color: $color-text-faint;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
 .RecordText {
-  font-size: 15px;
-  font-weight: 600;
-  color: $color-text;
+  font-size: 13.5px;
+  color: var(--text);
   line-height: 1.55;
 }
 
 .Choices {
   display: flex;
   flex-direction: column;
-  gap: $space-sm;
 }
 
 .ChoiceButton {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-md;
+  flex-direction: column;
+  gap: 3px;
   width: 100%;
   text-align: left;
-  border: 2px solid transparent;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-  padding: 15px $space-md;
-  background-color: $color-surface;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  padding: 14px 18px;
+  margin-bottom: 11px;
+  cursor: pointer;
   transition:
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease;
+    background 0.15s,
+    border-color 0.15s;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-md;
+    background: var(--surface-hi);
+    border-color: var(--text-3);
+  }
+
+  &.selected {
+    border-color: var(--text);
+    background: var(--surface-hi);
+    box-shadow: inset 0 0 0 1px var(--text);
   }
 }
 
 .ChoiceLabel {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
-  line-height: 1.45;
 }
 
 .ChoiceNote {
-  flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 700;
-  color: $color-text-faint;
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.45;
 }
 
-.ok {
-  color: color.adjust($color-positive, $lightness: -8%);
-  &:hover,
-  &.selected {
-    border-color: $color-positive;
-    background-color: rgba($color-positive, 0.06);
-  }
-}
-
-.reluctant {
-  color: color.adjust($color-warning, $lightness: -8%);
-  &:hover,
-  &.selected {
-    border-color: $color-warning;
-    background-color: rgba($color-warning, 0.07);
-  }
-}
-
-.never {
-  color: color.adjust($color-danger, $lightness: -4%);
-  &:hover,
-  &.selected {
-    border-color: $color-danger;
-    background-color: rgba($color-danger, 0.06);
-  }
+.Hint {
+  font-size: 11.5px;
+  color: var(--text-3);
+  margin: 0 0 14px;
+  line-height: 1.5;
 }
 
 .Footer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: $space-sm;
+  gap: 12px;
+  margin-top: 22px;
 }
 
 .BackButton {
-  border: none;
-  background-color: transparent;
-  color: $color-text-sub;
+  appearance: none;
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: $radius-pill;
+  font-weight: 700;
+  padding: 12px 22px;
 
   &:hover {
-    background-color: $color-surface;
-    box-shadow: $shadow-sm;
-  }
-}
-
-.Hint {
-  font-size: 12.5px;
-  color: $color-text-faint;
-  text-align: right;
-}
-
-@media (max-width: $bp-mobile) {
-  .Question {
-    font-size: 18px;
+    background: var(--surface-hi);
   }
 
-  .ChoiceButton {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }

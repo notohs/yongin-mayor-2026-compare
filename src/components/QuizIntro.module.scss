@@ -1,186 +1,174 @@
-@use '../styles/variables' as *;
-
 .QuizIntro {
-  display: flex;
-  flex-direction: column;
-  gap: $space-lg;
-}
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 28px;
 
-.Hero {
-  background-color: $color-surface;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  padding: $space-xl;
-  text-align: center;
+  @media (max-width: 760px) {
+    padding: 20px 16px;
+  }
 }
 
 .Badge {
-  display: inline-block;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-3);
   font-weight: 700;
-  color: $color-accent;
-  background-color: rgba($color-accent, 0.08);
-  padding: 5px 12px;
-  border-radius: $radius-pill;
+  margin-bottom: 10px;
 }
 
 .Title {
-  margin-top: $space-sm;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  color: $color-text;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+  text-wrap: pretty;
+
+  @media (max-width: 760px) {
+    font-size: 19px;
+  }
+}
+
+.Hero {
+  margin-bottom: 14px;
 }
 
 .Desc {
-  margin: $space-sm auto 0;
-  max-width: 540px;
-  font-size: 15px;
-  color: $color-text-sub;
-  line-height: 1.65;
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0 0 18px;
 }
 
 .Form {
-  margin-top: $space-lg;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
-.FieldLabel {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: $color-text-sub;
-  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
 }
 
 .FieldRow {
   display: flex;
-  gap: $space-sm;
+  flex-direction: column;
+}
+
+.FieldLabel {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 700;
 }
 
 .Input {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  color: var(--text);
   font-size: 15px;
-  padding: 12px 14px;
-  border: 1.5px solid $color-border;
-  border-radius: $radius-md;
-  background-color: $color-surface-muted;
-  color: $color-text;
-  transition: border-color 0.15s ease;
+  padding: 13px 14px;
+  margin: 8px 0 0;
+  font-family: inherit;
 
   &:focus {
     outline: none;
-    border-color: $color-accent;
-    background-color: $color-surface;
+    border-color: var(--text-3);
   }
 }
 
 .StartButton {
-  flex-shrink: 0;
-  border: none;
-  background-color: $color-text;
-  color: #fff;
-  font-size: 15px;
+  appearance: none;
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  font-size: 14px;
   font-weight: 700;
   padding: 12px 22px;
-  border-radius: $radius-md;
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
+  margin-top: 22px;
+  align-self: flex-end;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-1px);
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  &:hover {
+    filter: brightness(0.92);
   }
 }
 
 .Hint {
-  margin-top: $space-sm;
-  font-size: 12.5px;
-  color: $color-text-faint;
-  line-height: 1.6;
+  font-size: 11.5px;
+  color: var(--text-3);
+  margin: 12px 0 0;
+  line-height: 1.5;
 }
 
 .Recent {
-  background-color: $color-surface;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  padding: $space-lg;
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
 }
 
 .RecentHead {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: $space-sm;
-}
-
-.RecentTitle {
-  font-size: 16px;
-  font-weight: 800;
-  color: $color-text;
-}
-
-.LinkButton {
-  border: none;
-  background-color: transparent;
-  color: $color-accent;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 4px;
+  align-items: baseline;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .RecentList {
-  margin-top: $space-sm;
   display: flex;
   flex-direction: column;
-  gap: $space-xs;
+  gap: 2px;
 }
 
 .RecentItem {
   display: flex;
   align-items: center;
-  gap: $space-sm;
-  padding: 10px 12px;
-  background-color: $color-surface-muted;
-  border-radius: $radius-md;
-  font-size: 14px;
-}
-
-.RecentNick {
-  font-weight: 700;
-  color: $color-text;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+  padding: 5px 0;
 }
 
 .RecentRec {
-  flex: 1;
-  color: $color-text-sub;
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: var(--mono);
+  flex-shrink: 0;
+}
+
+.RecentTitle {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.RecentNick {
+  color: var(--text-3);
 }
 
 .RecentDate {
-  font-size: 12.5px;
-  color: $color-text-faint;
+  margin-left: auto;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  font-family: var(--mono);
 }
 
-@media (max-width: $bp-mobile) {
-  .Hero {
-    padding: $space-lg;
-  }
+.LinkButton {
+  appearance: none;
+  background: none;
+  border: none;
+  color: var(--text-3);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
 
-  .RecentItem {
-    flex-wrap: wrap;
-  }
-
-  .RecentRec {
-    flex-basis: 100%;
-    order: 3;
+  &:hover {
+    color: var(--text);
   }
 }

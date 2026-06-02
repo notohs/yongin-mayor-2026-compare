@@ -1,11 +1,82 @@
 @use 'variables' as *;
 
-// 인라인 style에서 참조하는 색상 토큰
+/* ===========================================================================
+   VoteWise — 다크 브로드캐스트 디자인 시스템 (일렉션 보드)
+   런타임 테마 토글을 위해 모든 색은 CSS 커스텀 프로퍼티로 관리.
+   다크 기본 + :root[data-theme="light"] 에서 시맨틱 토큰만 스왑.
+   HARD RULE: 색만으로 상태 구분 금지(글리프·텍스트 병기), 각진 타일·헤어라인,
+   정보 화면 장식 이모지 금지(퀴즈 탭 예외).
+   =========================================================================== */
 :root {
-  --danger: #{$color-danger};
-  --warning: #{$color-warning};
-  --positive: #{$color-positive};
-  --muted: #{$color-text-sub};
+  /* 원시·시맨틱 색 (다크) */
+  --bg: #0b0d13;
+  --surface: #141822;
+  --surface-2: #1a1f2c;
+  --surface-3: #20283a;
+  --surface-hi: #222838;
+  --line: #242a38;
+  --line-2: #2e3647;
+  --text: #eef1f6;
+  --text-2: #aeb6c4;
+  --text-3: #7e8799;
+  --text-faint: #5c6477;
+
+  /* 상태 3색 — 전경/배경틴트/테두리 */
+  --pos-fg: #46d086;  --pos-bg: rgba(70, 208, 134, 0.12);  --pos-line: rgba(70, 208, 134, 0.4);
+  --warn-fg: #e7ad42; --warn-bg: rgba(231, 173, 66, 0.12); --warn-line: rgba(231, 173, 66, 0.4);
+  --danger-fg: #ff6b5f; --danger-bg: rgba(255, 107, 95, 0.12); --danger-line: rgba(255, 107, 95, 0.42);
+
+  /* 타이포 */
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Segoe UI', Roboto, sans-serif;
+  --mono: 'SF Mono', 'JetBrains Mono', 'Menlo', ui-monospace, monospace;
+
+  /* 컴포넌트 보조 토큰(테마별 스왑) */
+  --topbar-bg: rgba(11, 13, 19, 0.86);
+  --scroll: #333a4c;
+  --poster-bg: #0c0f16;
+
+  /* 형태·그림자·모션 */
+  --r-xs: 3px;
+  --r-sm: 5px;
+  --r-pill: 999px;
+  --shadow-tile: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-hi: 0 18px 44px -22px rgba(0, 0, 0, 0.85);
+  --shadow-pop: 0 20px 60px -16px rgba(0, 0, 0, 0.7);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --content: 1280px;
+
+  /* 인라인 style 호환 토큰 (레거시 컴포넌트 참조) */
+  --danger: var(--danger-fg);
+  --warning: var(--warn-fg);
+  --positive: var(--pos-fg);
+  --muted: var(--text-3);
+}
+
+/* ── 라이트 테마 — 시맨틱 토큰만 스왑(컴포넌트 규칙은 그대로) ── */
+:root[data-theme='light'] {
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --surface-2: #f5f7fa;
+  --surface-3: #eceff4;
+  --surface-hi: #e6eaf1;
+  --line: #e2e6ed;
+  --line-2: #d2d8e2;
+  --text: #15171c;
+  --text-2: #4c5563;
+  --text-3: #6b7482;
+  --text-faint: #9aa1ad;
+
+  --pos-fg: #1f8a4d;  --pos-bg: rgba(31, 138, 77, 0.12);  --pos-line: rgba(31, 138, 77, 0.4);
+  --warn-fg: #9a6a08; --warn-bg: rgba(154, 106, 8, 0.13); --warn-line: rgba(154, 106, 8, 0.4);
+  --danger-fg: #c0392b; --danger-bg: rgba(192, 57, 43, 0.1); --danger-line: rgba(192, 57, 43, 0.4);
+
+  --topbar-bg: rgba(255, 255, 255, 0.86);
+  --scroll: #c4cbd6;
+  --poster-bg: #eceff4;
+
+  --shadow-tile: 0 1px 2px rgba(20, 24, 33, 0.06);
+  --shadow-hi: 0 18px 40px -22px rgba(20, 24, 33, 0.2);
+  --shadow-pop: 0 20px 50px -16px rgba(20, 24, 33, 0.22);
 }
 
 *,
@@ -20,9 +91,9 @@ html {
 
 body {
   margin: 0;
-  font-family: $font-sans;
-  background-color: $color-bg;
-  color: $color-text;
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text);
   font-size: 15px;
   line-height: 1.62;
   letter-spacing: -0.005em;
@@ -69,18 +140,31 @@ a {
 
 // 숫자 정렬용 모노 (재산·점수·납세 등) — 컴포넌트에서 className 으로 사용
 .num {
-  font-family: $font-mono;
+  font-family: var(--mono);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
 ::selection {
-  background-color: rgba($color-accent, 0.14);
+  background-color: rgba(120, 135, 153, 0.28);
 }
 
 :focus-visible {
-  outline: 2px solid $color-accent;
+  outline: 2px solid var(--text-3);
   outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scroll);
+  border-radius: 6px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {

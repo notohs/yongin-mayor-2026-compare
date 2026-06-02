@@ -1,7 +1,4 @@
-@use '../styles/variables' as *;
-
 .QuizView {
-  display: flex;
-  flex-direction: column;
-  gap: $space-lg;
+  max-width: 720px;
+  margin: 0 auto;
 }

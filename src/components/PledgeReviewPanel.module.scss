@@ -1,260 +1,156 @@
-@use '../styles/variables' as *;
-
 .PledgeReviewPanel {
+  margin-top: 30px;
+}
+
+.Sec {
   display: flex;
-  flex-direction: column;
-  gap: $space-lg;
-  margin-top: $space-xl;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin: 6px 0 12px;
 }
 
-.Grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-md;
+.SecTitle {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
-.Card {
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
-  background-color: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  padding: $space-md;
-}
-
-.Head {
-  display: flex;
-  align-items: center;
-  gap: $space-sm;
-  flex-wrap: wrap;
-}
-
-.HeadName {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.3;
-  min-width: 0;
-
-  strong {
-    font-size: 16px;
-    font-weight: 800;
-    color: $color-text;
-  }
-}
-
-.Reviewer {
+.SecMeta {
   font-size: 11.5px;
-  color: $color-text-faint;
-}
-
-.Tally {
-  margin-left: auto;
-  display: flex;
-  gap: 4px;
-}
-
-.TallyChip {
-  font-family: $font-mono;
-  font-variant-numeric: tabular-nums;
-  font-size: 11.5px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: $radius-pill;
+  color: var(--text-3);
+  font-family: var(--mono);
   white-space: nowrap;
 }
 
-// 등급 톤 (배지·집계 공용)
-.good {
-  color: color-mix(in srgb, $color-positive 80%, #000);
-  background-color: rgba($color-positive, 0.14);
-}
-.mid {
-  color: color-mix(in srgb, $color-warning 82%, #000);
-  background-color: rgba($color-warning, 0.18);
-}
-.bad {
-  color: color-mix(in srgb, $color-danger 82%, #000);
-  background-color: rgba($color-danger, 0.13);
-}
-
-.Items {
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
-}
-
-.Item {
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
-  padding: $space-sm $space-md;
-  border-radius: $radius-md;
-  background-color: $color-surface-muted;
-}
-
-.ItemTop {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.Rank {
-  font-family: $font-mono;
-  font-size: 11px;
-  font-weight: 700;
-  color: $color-text-faint;
-  flex-shrink: 0;
-}
-
-.Nature {
-  flex-shrink: 0;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: $radius-pill;
-
-  &.commitment {
-    color: #fff;
-    background-color: $color-accent;
-  }
-  &.aspiration {
-    color: $color-text-sub;
-    background-color: transparent;
-    border: 1px solid $color-border;
-  }
-}
-
-.ItemTitle {
-  flex: 1;
-  min-width: 0;
-  font-size: 14px;
-  font-weight: 800;
-  color: $color-text;
-  line-height: 1.35;
-}
-
-.Recycle {
-  flex-shrink: 0;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 2px 9px;
-  border-radius: $radius-pill;
-  color: color-mix(in srgb, $color-warning 82%, #000);
-  background-color: rgba($color-warning, 0.16);
-  white-space: nowrap;
-}
-
-.Verdict {
-  flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 800;
-  padding: 3px 11px;
-  border-radius: $radius-pill;
-  color: #fff;
-
-  &.sound {
-    background-color: $color-positive;
-  }
-  &.caution {
-    background-color: $color-warning;
-  }
-  &.unsound {
-    background-color: $color-danger;
-  }
-}
-
-.Criteria {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  background-color: $color-surface;
-  border-radius: $radius-sm;
-  padding: 10px 12px;
-}
-
-.CritRow {
-  display: grid;
-  grid-template-columns: 72px 56px 1fr;
-  align-items: start;
-  gap: 10px;
-}
-
-.CritLabel {
-  font-size: 12px;
-  font-weight: 700;
-  color: $color-text-faint;
-  padding-top: 2px;
-}
-
-.Level {
-  justify-self: start;
-  font-size: 12px;
-  font-weight: 800;
-  padding: 2px 0;
-  width: 100%;
-  text-align: center;
-  border-radius: $radius-sm;
-}
-
-.CritNote {
-  font-size: 13px;
-  color: $color-text;
-  line-height: 1.5;
-}
-
-.Comment {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: $color-text;
-  line-height: 1.5;
-}
-
-.CommentTag,
-.RebuttalTag {
-  display: inline-block;
-  font-size: 10.5px;
-  font-weight: 800;
-  padding: 1px 7px;
-  border-radius: $radius-pill;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
-.CommentTag {
-  color: $color-text-sub;
-  background-color: $color-surface;
-  border: 1px solid $color-border;
-}
-
-.Rebuttal {
-  margin: 0;
+.Desc {
   font-size: 12.5px;
-  color: $color-text-sub;
-  line-height: 1.5;
+  color: var(--text-3);
+  line-height: 1.55;
+  margin: 0 0 16px;
+  max-width: 760px;
 }
 
-.RebuttalTag {
-  color: $color-accent;
-  background-color: rgba($color-accent, 0.08);
-}
+.RevGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
 
-@media (max-width: $bp-tablet) {
-  .Grid {
+  @media (max-width: 1080px) {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: $bp-mobile) {
-  .Tally {
-    margin-left: 0;
-    flex-basis: 100%;
+.RevCard {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.RevHead {
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.RevWho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.RevName {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.RevParty {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+.RevSrc {
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.45;
+}
+
+.StackBar {
+  display: flex;
+  height: 8px;
+  width: 100%;
+  border: 1px solid var(--line);
+  margin-top: 9px;
+  overflow: hidden;
+}
+
+.RevTally {
+  display: flex;
+  gap: 12px;
+  margin-top: 9px;
+  flex-wrap: wrap;
+}
+
+.RevList {
+  padding: 6px 0;
+}
+
+.RevItem {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:last-child {
+    border-bottom: none;
   }
-  .CritRow {
-    grid-template-columns: 64px 50px 1fr;
-    gap: 8px;
+  &:hover {
+    background: var(--surface-2);
   }
+}
+
+.RevItemTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.RevRank {
+  font-size: 10.5px;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+.RevTitle {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.RevBody {
+  margin-top: 9px;
+  cursor: default;
+}
+
+.Tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--line-2);
+  color: var(--text-2);
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+
+.commitment {
+  color: var(--text);
+}
+
+.aspiration {
+  color: var(--text-3);
+  border-style: dashed;
 }

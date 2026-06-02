@@ -1,123 +1,129 @@
-@use 'sass:color';
-@use '../styles/variables' as *;
+.Tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  box-shadow: var(--shadow-tile);
+  transition:
+    transform 0.2s var(--ease),
+    border-color 0.2s,
+    box-shadow 0.2s;
 
-@keyframes cardReveal {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-2);
+    box-shadow: var(--shadow-hi);
   }
 }
 
-.CandidateSummaryCard {
-  display: flex;
-  flex-direction: column;
-  background-color: $color-surface;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  overflow: hidden;
-  border: 1px solid $color-border;
-  transition:
-    transform 0.4s $ease-spring,
-    box-shadow 0.4s $ease-spring;
-  // 그리드 진입 시 순차 등장 (stagger)
-  animation: cardReveal 0.55s $ease-spring backwards;
-  animation-delay: calc(var(--reveal-index, 0) * 70ms);
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-lg;
-  }
+.Series {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 1;
 }
 
 .PosterWrap {
-  position: relative;
-  background-color: $color-surface-muted;
-  // 책자형 선거공보 법정 규격(너비 19cm × 길이 27cm) 비율로 통일
-  aspect-ratio: 19 / 27;
+  aspect-ratio: 19 / 26;
+  overflow: hidden;
+  background: var(--poster-bg);
+  display: grid;
+  place-items: center;
+  border-bottom: 1px solid var(--line);
 }
 
 .Poster {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center; // 상단(기호·이름·얼굴) 기준
-}
-
-.PartyTag {
-  position: absolute;
-  top: $space-sm;
-  left: $space-sm;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: $radius-pill;
-  box-shadow: $shadow-sm;
+  object-fit: contain;
 }
 
 .Body {
+  padding: 15px 16px 16px;
   display: flex;
   flex-direction: column;
-  gap: $space-sm;
-  padding: $space-md;
+  flex: 1;
 }
 
-.NameRow {
+.PartyRow {
   display: flex;
   align-items: center;
-  gap: $space-sm;
+  gap: 8px;
+  margin-bottom: 7px;
 }
 
-.NameBox {
-  min-width: 0;
+.Party {
+  font-size: 11.5px;
+  color: var(--text-3);
+  font-weight: 600;
 }
 
 .Name {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: -0.01em;
-}
-
-.Meta {
-  font-size: 13px;
-  color: $color-text-sub;
+  line-height: 1;
 }
 
 .Slogan {
-  font-size: 14px;
-  font-weight: 600;
-  color: $color-text;
-  line-height: 1.5;
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.4;
+  margin: 8px 0 12px;
+  min-height: 34px;
 }
 
-.ChipRow {
+.Stats {
+  margin-top: auto;
+}
+
+.StatRow {
   display: flex;
-  flex-wrap: wrap;
-  gap: $space-xs;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
 }
 
-.DetailButton {
-  margin-top: $space-xs;
-  border: none;
-  background-color: $color-surface-muted;
-  color: $color-text;
-  font-size: 14px;
+.StatLabel {
+  font-size: 11.5px;
+  color: var(--text-3);
   font-weight: 600;
-  padding: 11px;
-  border-radius: $radius-md;
-  transition:
-    background-color 0.2s $ease-spring,
-    transform 0.2s $ease-spring;
+}
 
-  &:hover {
-    background-color: color.adjust($color-surface-muted, $lightness: -4%);
+.StatValue {
+  font-size: 13.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* 좁은 폭: 포스터를 좌측 세로 띠로 (가로 배치) */
+@media (max-width: 1080px) {
+  .Tile {
+    flex-direction: row;
   }
-
-  &:active {
-    transform: scale(0.98);
+  .Series {
+    width: 3px;
+    height: 100%;
+  }
+  .PosterWrap {
+    width: 120px;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+    align-self: stretch;
+    border-bottom: none;
+    border-right: 1px solid var(--line);
+  }
+  .Body {
+    flex: 1;
+  }
+  .Slogan {
+    min-height: 0;
   }
 }

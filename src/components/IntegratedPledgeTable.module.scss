@@ -1,433 +1,395 @@
-@use 'sass:color';
-@use '../styles/variables' as *;
-
 .IntegratedPledgeTable {
-  display: flex;
-  flex-direction: column;
-  gap: $space-lg;
+  display: block;
 }
 
-.Scroll {
+.Desc {
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.55;
+  margin: 0 0 16px;
+  max-width: 760px;
+}
+
+/* ── 데스크톱 매트릭스 ── */
+.MatrixWrap {
+  border: 1px solid var(--line);
+  background: var(--surface);
   overflow-x: auto;
-  border-radius: $radius-lg;
-  border: 1px solid $color-border;
-  background-color: $color-surface;
-  -webkit-overflow-scrolling: touch;
 }
 
-.Grid {
-  display: grid;
-  min-width: 640px;
+.Matrix {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 940px;
+
+  th,
+  td {
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--surface-2);
+    border-bottom: 2px solid var(--line-2);
+    padding: 0;
+  }
+
+  thead .Corner {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    background: var(--surface-2);
+  }
 }
 
-.Cell {
-  padding: $space-sm $space-md;
-  border-bottom: 1px solid $color-border;
-}
-
-.cornerCell {
-  position: sticky;
-  left: 0;
-  z-index: 3;
-  background-color: $color-surface;
-}
-
-.headCell {
+.MCand {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  text-align: center;
-  background-color: $color-surface;
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  gap: 6px;
+  padding: 12px 8px;
 }
 
-.HeadName {
+.MCandName {
   font-size: 15px;
   font-weight: 800;
-  color: $color-text;
 }
 
-.HeadParty {
-  font-size: 11.5px;
-  color: $color-text-sub;
+.MCandParty {
+  font-size: 11px;
+  color: var(--text-3);
 }
 
-.labelCell {
+.RowHead {
   position: sticky;
   left: 0;
-  z-index: 1;
-  background-color: $color-surface-muted;
-  font-size: 13px;
-  font-weight: 700;
-  color: $color-text-sub;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  z-index: 4;
+  background: var(--surface-2);
+  width: 150px;
+  min-width: 150px;
+  padding: 13px 14px;
+  text-align: left;
 }
 
-.dataCell {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  vertical-align: top;
+.RowHeadLabel {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.CornerLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.MCell {
+  padding: 10px;
+  min-width: 150px;
+}
+
+.MCellEmpty {
+  text-align: center;
+  padding-top: 22px;
 }
 
 .Empty {
-  color: $color-text-faint;
+  color: var(--text-faint);
+  font-size: 13px;
 }
 
-// ── 공약 칩 ──
-.PledgeChip {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+/* ── 공약 칩 ── */
+.PChip {
+  display: block;
   width: 100%;
   text-align: left;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background-color: $color-surface;
-  padding: 8px 10px;
+  background: var(--surface-3);
+  border: 1px solid var(--line-2);
   cursor: pointer;
+  padding: 9px 10px;
+  margin-bottom: 7px;
+  color: var(--text);
   transition:
-    border-color 0.15s ease,
-    background-color 0.15s ease,
-    transform 0.15s $ease-spring;
+    background 0.15s,
+    border-color 0.15s;
 
-  &:hover,
-  &:focus-visible {
-    border-color: $color-accent;
-    transform: translateY(-1px);
+  &:last-child {
+    margin-bottom: 0;
   }
-  &.pinned {
-    border-color: $color-accent;
-    box-shadow: $shadow-sm;
+
+  &:hover {
+    background: var(--surface-hi);
+  }
+
+  &.active {
+    border-color: var(--text-3);
+    background: var(--surface-hi);
   }
 }
 
-.ChipTop {
+.PChipTop {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-bottom: 5px;
 }
 
-.ChipRank {
-  font-family: $font-mono;
+.PChipRank {
+  font-family: var(--mono);
   font-size: 10.5px;
+  color: var(--text-3);
   font-weight: 700;
-  color: $color-text-faint;
 }
 
-.ChipNature {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: $radius-pill;
-
-  &.commitment {
-    color: #fff;
-    background-color: $color-accent;
-  }
-  &.aspiration {
-    color: $color-text-sub;
-    border: 1px solid $color-border;
-  }
-}
-
-.ChipRecycle {
-  font-size: 11px;
-  color: color.adjust($color-warning, $lightness: -8%);
-}
-
-.ChipDot {
+.PChipVerd {
   margin-left: auto;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-
-  &.sound {
-    background-color: $color-positive;
-  }
-  &.caution {
-    background-color: $color-warning;
-  }
-  &.unsound {
-    background-color: $color-danger;
-  }
 }
 
-.ChipTitle {
-  font-size: 13px;
+.PChipTitle {
+  display: block;
+  font-size: 12.5px;
   font-weight: 600;
-  color: $color-text;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
-// ── 선거공보 칩 ──
-.BulletinChip {
+/* 성격 태그 */
+.Tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--line-2);
+  color: var(--text-2);
+  background: var(--surface-2);
+}
+
+.commitment {
+  color: var(--text);
+}
+
+.aspiration {
+  color: var(--text-3);
+  border-style: dashed;
+}
+
+/* 선거공보 보조 칩 */
+.BChip {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   width: 100%;
   text-align: left;
-  border: 1px dashed $color-border;
-  border-radius: $radius-md;
-  background-color: $color-surface-muted;
-  padding: 7px 10px;
+  background: var(--surface-2);
+  border: 1px dashed var(--line-2);
   cursor: pointer;
-  transition: border-color 0.15s ease;
+  padding: 8px 10px;
+  margin-bottom: 7px;
+  color: var(--text-2);
+  transition: background 0.15s;
 
-  &:hover,
-  &:focus-visible {
-    border-color: $color-accent;
+  &:last-child {
+    margin-bottom: 0;
   }
-  &.pinned {
-    border-style: solid;
-    border-color: $color-accent;
+  &:hover {
+    background: var(--surface-hi);
+  }
+  &.active {
+    border-color: var(--text-3);
+    color: var(--text);
   }
 }
 
-.ChipDoc {
-  font-size: 12px;
-  font-weight: 700;
-  color: $color-text-sub;
+.BChipDoc {
+  font-size: 11.5px;
+  font-weight: 600;
 }
 
-.ChipCount {
-  font-family: $font-mono;
+.BChipCount {
   font-size: 11px;
-  font-weight: 700;
-  color: $color-text-faint;
+  color: var(--text-3);
   flex-shrink: 0;
 }
 
-// ── 툴팁 ──
-.Tooltip {
-  position: fixed;
-  z-index: 60;
-  width: 360px;
-  max-width: calc(100vw - 16px);
-  max-height: 70vh;
-  overflow-y: auto;
-  background-color: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-lg;
-  padding: $space-md;
-  pointer-events: none;
-  animation: tipIn 0.14s $ease-spring;
-}
-
-.tooltipPinned {
-  pointer-events: auto;
-}
-
-@keyframes tipIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-}
-
-.PinHint {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: $color-accent;
-  margin-bottom: 6px;
-}
-
-.TipBody {
-  display: flex;
-  flex-direction: column;
-  gap: $space-sm;
-}
-
-.TipHead {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.TipRank {
-  font-family: $font-mono;
-  font-size: 11px;
-  font-weight: 700;
-  color: $color-text-faint;
-}
-
-.TipTitle {
-  font-size: 14.5px;
-  font-weight: 800;
-  color: $color-text;
-  line-height: 1.35;
-}
-
-.TipStatus {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+/* ── 모바일: 후보 토글 + 분야 카드 ── */
+.MobToggle {
+  display: none;
+  gap: 7px;
   flex-wrap: wrap;
+  margin-bottom: 14px;
 }
 
-.TipReview {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 10px;
-  border-radius: $radius-md;
-  background-color: $color-surface-muted;
-}
-
-.TipReviewTop {
-  display: flex;
+.MobBtn {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.TipNature {
-  font-size: 10.5px;
-  font-weight: 800;
-  padding: 1px 7px;
-  border-radius: $radius-pill;
-
-  &.commitment {
-    color: #fff;
-    background-color: $color-accent;
-  }
-  &.aspiration {
-    color: $color-text-sub;
-    border: 1px solid $color-border;
-  }
-}
-
-.TipVerdict {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 2px 9px;
-  border-radius: $radius-pill;
-  color: #fff;
-
-  &.sound {
-    background-color: $color-positive;
-  }
-  &.caution {
-    background-color: $color-warning;
-  }
-  &.unsound {
-    background-color: $color-danger;
-  }
-}
-
-.TipRecycle {
-  font-size: 10.5px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: $radius-pill;
-  color: color.adjust($color-warning, $lightness: -10%);
-  background-color: rgba($color-warning, 0.16);
-}
-
-.TipCrit {
-  display: grid;
-  grid-template-columns: 64px 48px 1fr;
-  align-items: start;
-  gap: 8px;
-}
-
-.TipCritLabel {
-  font-size: 11px;
-  font-weight: 700;
-  color: $color-text-faint;
-  padding-top: 1px;
-}
-
-.TipLevel {
-  font-size: 11px;
-  font-weight: 800;
-  text-align: center;
-  padding: 1px 0;
-  border-radius: $radius-sm;
-
-  &.good {
-    color: color-mix(in srgb, $color-positive 80%, #000);
-    background-color: rgba($color-positive, 0.14);
-  }
-  &.mid {
-    color: color-mix(in srgb, $color-warning 82%, #000);
-    background-color: rgba($color-warning, 0.18);
-  }
-  &.bad {
-    color: color-mix(in srgb, $color-danger 82%, #000);
-    background-color: rgba($color-danger, 0.13);
-  }
-}
-
-.TipCritNote {
-  font-size: 12px;
-  color: $color-text-sub;
-  line-height: 1.45;
-}
-
-.TipComment {
-  margin: 0;
-  font-size: 12.5px;
+  gap: 7px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  color: var(--text-2);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
   font-weight: 600;
-  color: $color-text;
-  line-height: 1.45;
+
+  &.on {
+    color: var(--text);
+    border-color: var(--text-3);
+    background: var(--surface-hi);
+  }
 }
 
-.TipPanel {
-  margin: 0;
-  font-size: 11.5px;
-  color: $color-text-sub;
+.FieldCards {
+  display: none;
 }
 
-.TipSection {
+@media (max-width: 760px) {
+  .MatrixWrap {
+    display: none;
+  }
+  .MobToggle {
+    display: flex;
+  }
+  .FieldCards {
+    display: block;
+  }
+}
+
+.FieldCard {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  margin-bottom: 12px;
+}
+
+.FieldCardHead {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+
+  b {
+    font-size: 14px;
+    font-weight: 800;
+  }
+}
+
+.FieldCardBody {
+  padding: 12px 14px;
+}
+
+/* ── 핀 상세 패널 ── */
+.DetailPanel {
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  margin-top: 14px;
+}
+
+.DetailHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.DetailHeadText {
+  min-width: 0;
+}
+
+.DetailTitle {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.DetailSub {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+.DetailClose {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--line-2);
+  color: var(--text-2);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+
+  &:hover {
+    background: var(--surface-hi);
+  }
+}
+
+.DetailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.DSec {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
 
   ul {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    margin: 0;
+    padding-left: 16px;
+    list-style: disc;
   }
 
   li {
-    position: relative;
-    padding-left: 12px;
-    font-size: 12.5px;
-    color: $color-text;
-    line-height: 1.45;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 2px;
-      top: 8px;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background-color: $color-text-faint;
-    }
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+    margin-bottom: 5px;
   }
 }
 
-.TipLabel {
+.DSecLabel {
   font-size: 11px;
-  font-weight: 800;
-  color: $color-text-faint;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 
-@media (max-width: $bp-mobile) {
-  .Tooltip {
-    width: calc(100vw - 16px);
-  }
+.DetailVerdictRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.DetailVerdictLabel {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 700;
+}
+
+.DetailReviewer {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+.Foot {
+  font-size: 11.5px;
+  color: var(--text-3);
+  line-height: 1.55;
+  margin: 14px 0 0;
 }
